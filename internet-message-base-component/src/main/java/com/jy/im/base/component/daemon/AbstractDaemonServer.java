@@ -23,7 +23,7 @@ public abstract class AbstractDaemonServer implements Daemon {
 
     /**
      * 服务器会阻塞在这里
-     * */
+     */
     public abstract void doStart(Launcher launcher);
 
     /**
@@ -31,7 +31,8 @@ public abstract class AbstractDaemonServer implements Daemon {
      * */
     public abstract void doClose(Launcher launcher);
 
-    public AbstractDaemonServer() {}
+    public AbstractDaemonServer() {
+    }
 
     public AbstractDaemonServer(int port) {
         this.port = port;

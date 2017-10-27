@@ -11,6 +11,7 @@ public final class EnvConstants {
     public static final String SPRING_PROFILE_SWAGGER = "swagger";
 
     public static final String SPRING_PROFILE_DEFAULT = "spring.profiles.default";
+
     private EnvConstants() {
     }
 }

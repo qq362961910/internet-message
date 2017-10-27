@@ -16,4 +16,5 @@ public abstract class NettyMessageAnalyser<Out> extends AbstractMessageAnalyser<
     public NettyMessageAnalyser(MessageProtocol messageProtocol) {
         this.messageProtocol = messageProtocol;
     }
+
 }

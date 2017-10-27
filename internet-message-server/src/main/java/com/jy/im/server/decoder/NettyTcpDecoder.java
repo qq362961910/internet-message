@@ -49,8 +49,7 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
                 //未找到消息解析器
                 if (messageAnalyser == null) {
                     close(channelHandlerContext, "no MessageAnalyser found");
-                }
-                else {
+                } else {
                     currentMessageAnalyser = messageAnalyser;
                 }
             }
@@ -63,8 +62,7 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
                     out.add(message);
                     //读取完一条消息后reset当前handler
                     reset();
-                }
-                else {
+                } else {
                     //reset reader index
                     resetReaderIndex(in);
                 }
@@ -89,6 +87,7 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
     public void markReaderIndex(ByteBuf in) {
         in.markReaderIndex();
     }
+
     public void resetReaderIndex(ByteBuf in) {
         in.resetReaderIndex();
     }

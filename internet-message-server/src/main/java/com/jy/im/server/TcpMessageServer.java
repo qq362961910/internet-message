@@ -1,11 +1,14 @@
-package com.jy.im.server.server;
+package com.jy.im.server;
 
 import com.jy.im.base.component.daemon.AbstractDaemonServer;
 import com.jy.im.base.component.daemon.listener.DaemonListener;
 import com.jy.im.base.component.launcher.Launcher;
 import com.jy.im.server.initializer.NettyTcpServerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.slf4j.Logger;
@@ -30,25 +33,25 @@ public class TcpMessageServer extends AbstractDaemonServer {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         ServerBootstrap bootstrap = new ServerBootstrap();
         try {
-            bootstrap.group(bossGroup,workerGroup)
-                    .channel(NioServerSocketChannel.class)
-                    .childHandler(channelInitializer)
-                    .option(ChannelOption.SO_BACKLOG,128)
-                    .childOption(ChannelOption.SO_KEEPALIVE,true);
+            bootstrap.group(bossGroup, workerGroup)
+                .channel(NioServerSocketChannel.class)
+                .childHandler(channelInitializer)
+                .option(ChannelOption.SO_BACKLOG, 128)
+                .childOption(ChannelOption.SO_KEEPALIVE, true);
             ChannelFuture future = bootstrap.bind(getPort()).sync();
             logger.info(String.format("TCP Server: %s has been started successfully, port: %d", name, port));
             if (!demonListenerList.isEmpty()) {
-                for (DaemonListener listener: demonListenerList) {
+                for (DaemonListener listener : demonListenerList) {
                     listener.startup(this);
                 }
             }
-            if(launcher != null) {
+            if (launcher != null) {
                 launcher.serverStartSuccess(this);
             }
             serverChannel = future.channel();
             serverChannel.closeFuture().sync().addListener(closeFuture -> {
                 if (!demonListenerList.isEmpty()) {
-                    for (DaemonListener listener: demonListenerList) {
+                    for (DaemonListener listener : demonListenerList) {
                         listener.close(TcpMessageServer.this);
                     }
                 }
@@ -65,7 +68,7 @@ public class TcpMessageServer extends AbstractDaemonServer {
 
     @Override
     public void doClose(Launcher launcher) {
-        if(serverChannel != null) {
+        if (serverChannel != null) {
             serverChannel.close();
         }
     }

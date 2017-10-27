@@ -25,7 +25,7 @@ public abstract class AbstractDaemonClient implements Daemon {
 
     /**
      * 服务器会阻塞在这里
-     * */
+     */
     public abstract void doStart(Launcher launcher);
 
     /**

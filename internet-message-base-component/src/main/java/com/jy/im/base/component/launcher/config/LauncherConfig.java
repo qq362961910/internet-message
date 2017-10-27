@@ -6,16 +6,16 @@ package com.jy.im.base.component.launcher.config;
 public class LauncherConfig {
     /**
      * 启动超时时间
-     * */
+     */
     private int timeout = 10000;
     /**
      * 是否自动重启
-     * */
+     */
     private boolean autoRestart = true;
 
     /**
      * 健康检查频率
-     * */
+     */
     private int healthyCheckInSecond = 10;
 
     public int getTimeout() {

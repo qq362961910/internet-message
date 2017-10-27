@@ -1,8 +1,8 @@
 package com.jy.im.base.component.launcher;
 
 
-import com.jy.im.base.component.launcher.listener.LauncherListener;
 import com.jy.im.base.component.daemon.Daemon;
+import com.jy.im.base.component.launcher.listener.LauncherListener;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.Log4JLoggerFactory;
 
@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public abstract class AbstractLauncher implements Launcher{
+public abstract class AbstractLauncher implements Launcher {
 
     private InternalLogger logger = Log4JLoggerFactory.getInstance(AbstractLauncher.class);
 
@@ -27,7 +27,7 @@ public abstract class AbstractLauncher implements Launcher{
 
     /**
      * 启动
-     * */
+     */
     @Override
     public void startup() {
         logger.info("launcher begin to startup");
@@ -35,8 +35,8 @@ public abstract class AbstractLauncher implements Launcher{
         doStart();
         //回调监听器
         if (!launcherListenerList.isEmpty()) {
-            logger.info(String.format("launcher listener size: %d, begin to call launcher listeners",launcherListenerList.size()));
-            for (LauncherListener listener: launcherListenerList) {
+            logger.info(String.format("launcher listener size: %d, begin to call launcher listeners", launcherListenerList.size()));
+            for (LauncherListener listener : launcherListenerList) {
                 listener.startup(this);
             }
         }
@@ -47,7 +47,7 @@ public abstract class AbstractLauncher implements Launcher{
 
     /**
      * 关闭
-     * */
+     */
     @Override
     public void close() {
         logger.info("launcher begin to shutdown");
@@ -62,14 +62,18 @@ public abstract class AbstractLauncher implements Launcher{
         }
         //回调监听器
         if (!launcherListenerList.isEmpty()) {
-            for (LauncherListener listener: launcherListenerList) {
-                try { listener.close(this); } catch (Exception e) { }
+            for (LauncherListener listener : launcherListenerList) {
+                try {
+                    listener.close(this);
+                } catch (Exception e) {
+                }
             }
         }
         logger.info("launcher shutdown successfully");
         //关闭日志
         //todo
     }
+
     protected void startServer(Daemon server) {
         if (!executorService.isShutdown()) {
             executorService.submit(() -> server.start(this));
@@ -95,7 +99,7 @@ public abstract class AbstractLauncher implements Launcher{
     }
 
     public AbstractLauncher setDaemonList(List<Daemon> daemonList) {
-        if(daemonList != null && !daemonList.isEmpty()) {
+        if (daemonList != null && !daemonList.isEmpty()) {
             this.daemonList.addAll(daemonList);
         }
         return this;
@@ -106,7 +110,7 @@ public abstract class AbstractLauncher implements Launcher{
     }
 
     public AbstractLauncher setLauncherListenerList(List<LauncherListener> launcherListenerList) {
-        if(launcherListenerList != null && !launcherListenerList.isEmpty()) {
+        if (launcherListenerList != null && !launcherListenerList.isEmpty()) {
             this.launcherListenerList.addAll(launcherListenerList);
         }
         return this;
