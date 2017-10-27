@@ -16,7 +16,7 @@ public class LauncherConfig {
     /**
      * 健康检查频率
      * */
-    private int healthyCheckInSecond = 5;
+    private int healthyCheckInSecond = 10;
 
     public int getTimeout() {
         return timeout;

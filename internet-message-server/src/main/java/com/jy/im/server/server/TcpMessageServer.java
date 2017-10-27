@@ -61,7 +61,6 @@ public class TcpMessageServer extends AbstractDaemonServer {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
-
     }
 
     @Override
