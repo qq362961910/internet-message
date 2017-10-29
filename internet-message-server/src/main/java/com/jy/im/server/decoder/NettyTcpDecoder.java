@@ -33,7 +33,6 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> out) throws Exception {
 
         if (in.isReadable()) {
-
             ByteBuf copied = in.copy();
             byte[] content = new byte[copied.readableBytes()];
             copied.readBytes(content);
@@ -41,7 +40,6 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
             logger.info("hex: \r\n" + hex);
             logger.info("string: \r\n" + new String(content));
             logger.info("bytes: \r\n" + Arrays.toString(content));
-
             if (currentMessageAnalyser == null) {
                 markReaderIndex(in);
                 MessageAnalyser messageAnalyser = messageAnalyserManager.selectMessageAnalyser(in);

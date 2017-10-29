@@ -14,7 +14,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TcpMessageServer extends AbstractDaemonServer {
@@ -22,10 +21,7 @@ public class TcpMessageServer extends AbstractDaemonServer {
     private Logger logger = LoggerFactory.getLogger(TcpMessageServer.class);
 
     private Channel serverChannel;
-    private List<DaemonListener> demonListenerList = new ArrayList<>();
-
     private NettyTcpServerInitializer channelInitializer;
-
 
     @Override
     public void doStart(Launcher launcher) {
@@ -39,17 +35,17 @@ public class TcpMessageServer extends AbstractDaemonServer {
                 .option(ChannelOption.SO_BACKLOG, 128)
                 .childOption(ChannelOption.SO_KEEPALIVE, true);
             ChannelFuture future = bootstrap.bind(getPort()).sync();
-            logger.info(String.format("TCP Server: %s has been started successfully, port: %d", name, port));
+            //调用监听器#start()
             if (!demonListenerList.isEmpty()) {
-                for (DaemonListener listener : demonListenerList) {
-                    listener.startup(this);
-                }
+                demonListenerList.forEach(listener -> listener.startup(this));
             }
             if (launcher != null) {
                 launcher.serverStartSuccess(this);
             }
             serverChannel = future.channel();
+            logger.info("TCP Server: {} has been started successfully, port: {}", name, port);
             serverChannel.closeFuture().sync().addListener(closeFuture -> {
+                //调用监听器#close()
                 if (!demonListenerList.isEmpty()) {
                     for (DaemonListener listener : demonListenerList) {
                         listener.close(TcpMessageServer.this);
@@ -59,8 +55,10 @@ public class TcpMessageServer extends AbstractDaemonServer {
         } catch (Exception e) {
             logger.error(String.format("TCP Server: %s Down, port: %d ", name, port), e);
         } finally {
-            launcher.serverShutdownSuccess(TcpMessageServer.this);
-            logger.info(String.format("[TCP Server]: %s closed, port: %d ", name, port));
+            if (launcher != null) {
+                launcher.serverShutdownSuccess(TcpMessageServer.this);
+            }
+            logger.info("[TCP Server]: {} closed, port: {}", name, port);
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }

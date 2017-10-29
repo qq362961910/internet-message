@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.jy.im.server")
 public class ImServerStarter {
 
     private static final Logger logger = LoggerFactory.getLogger(ImServerStarter.class);

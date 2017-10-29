@@ -11,10 +11,15 @@ public interface ProtocolAnalyser<In> {
     /**
      * 判断是否支持该入参
      */
-    boolean support(In in);
+    boolean support(Object in);
 
     /**
      * 解析消息
      */
     MessageProtocol analyser(In in);
+
+    /**
+     * 获取支持的协议类型
+     */
+    MessageProtocol getSupportMessageProtocol();
 }

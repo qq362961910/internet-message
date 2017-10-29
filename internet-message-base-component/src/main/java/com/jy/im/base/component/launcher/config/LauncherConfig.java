@@ -12,7 +12,6 @@ public class LauncherConfig {
      * 是否自动重启
      */
     private boolean autoRestart = true;
-
     /**
      * 健康检查频率
      */

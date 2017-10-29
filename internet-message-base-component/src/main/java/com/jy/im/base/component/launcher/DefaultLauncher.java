@@ -21,9 +21,7 @@ public class DefaultLauncher extends AbstractLauncher {
             logger.info(String.format("server list size: %d", getDaemonList().size()));
             long before = System.currentTimeMillis();
             boolean notTimeout = true;
-            for (final Daemon server : getDaemonList()) {
-                startServer(server);
-            }
+            getDaemonList().forEach(this::startServer);
             //等待直到超时
             while (serverSuccessCount.get() != getDaemonList().size() && (notTimeout = System.currentTimeMillis() - before < launcherConfig.getTimeout())) {
                 try {
@@ -35,7 +33,6 @@ public class DefaultLauncher extends AbstractLauncher {
                 logger.error("Launcher starts timeout!");
             }
         }
-
         //故障服务器检查
         if (launcherConfig.isAutoRestart() && !stop) {
             logger.info("launcher config server restart: true");

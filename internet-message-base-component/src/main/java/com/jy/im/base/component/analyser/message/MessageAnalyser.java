@@ -24,7 +24,9 @@ public interface MessageAnalyser<In, Out> {
     Out analyse(In t);
 
     /**
-     * 设置消息协议解析器
+     * 一个消息解析器捆绑一个协议解析器(限定协议解析器和消息解析器入参类型一致)
+     * 1.限定入参类型
+     * 2.限定协议类型
      */
     ProtocolAnalyser<In> getProtocolAnalyser();
 

@@ -16,14 +16,33 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class AbstractLauncher implements Launcher {
 
-    private InternalLogger logger = Log4JLoggerFactory.getInstance(AbstractLauncher.class);
+    private static final InternalLogger logger = Log4JLoggerFactory.getInstance(AbstractLauncher.class);
 
+    /**
+     * 启动器状态
+     */
     protected volatile boolean stop = false;
-    protected AtomicInteger serverSuccessCount = new AtomicInteger(0);
-    private List<Daemon> daemonList = new ArrayList<>();
-    protected List<Daemon> downDaemonList = new Vector<>();
-    private List<LauncherListener> launcherListenerList = new ArrayList<>();
-    private ExecutorService executorService = Executors.newFixedThreadPool(5);
+    /**
+     * 服务器成功启动数量
+     */
+    protected final AtomicInteger serverSuccessCount = new AtomicInteger(0);
+    /**
+     * 服务器实例
+     */
+    private final List<Daemon> daemonList = new ArrayList<>();
+    /**
+     * 停机实例
+     */
+    protected final List<Daemon> downDaemonList = new Vector<>();
+    /**
+     * 启动器监听器
+     */
+    private final List<LauncherListener> launcherListenerList = new ArrayList<>();
+
+    /**
+     * 线程池
+     */
+    private final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     /**
      * 启动
@@ -35,7 +54,7 @@ public abstract class AbstractLauncher implements Launcher {
         doStart();
         //回调监听器
         if (!launcherListenerList.isEmpty()) {
-            logger.info(String.format("launcher listener size: %d, begin to call launcher listeners", launcherListenerList.size()));
+            logger.info("launcher listener size: {}, begin to call launcher listeners", launcherListenerList.size());
             for (LauncherListener listener : launcherListenerList) {
                 listener.startup(this);
             }
