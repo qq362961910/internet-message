@@ -50,7 +50,6 @@ public abstract class AbstractLauncher implements Launcher {
     @Override
     public void startup() {
         logger.info("launcher begin to startup");
-        Runtime.getRuntime().addShutdownHook(new Thread(this::close));
         doStart();
         //回调监听器
         if (!launcherListenerList.isEmpty()) {
