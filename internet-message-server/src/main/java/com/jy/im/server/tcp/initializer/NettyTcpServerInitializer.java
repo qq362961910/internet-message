@@ -1,6 +1,6 @@
-package com.jy.im.server.initializer;
+package com.jy.im.server.tcp.initializer;
 
-import com.jy.im.server.decoder.NettyTcpDecoder;
+import com.jy.im.server.tcp.decoder.NettyTcpDecoder;
 import com.jy.im.server.handler.StringMessageHandler;
 import com.jy.im.server.helper.ApplicationContextHelper;
 import io.netty.channel.Channel;

@@ -1,4 +1,4 @@
-package com.jy.im.server.analyser;
+package com.jy.im.server.tcp.analyser;
 
 import com.jy.im.base.component.analyser.message.AbstractMessageAnalyserManager;
 import io.netty.buffer.ByteBuf;

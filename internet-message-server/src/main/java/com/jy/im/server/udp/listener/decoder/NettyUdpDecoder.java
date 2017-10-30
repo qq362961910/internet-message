@@ -1,4 +1,4 @@
-package com.jy.im.server.decoder;
+package com.jy.im.server.udp.listener.decoder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.handler.codec.DatagramPacketDecoder;

@@ -26,8 +26,7 @@ public class DefaultLauncher extends AbstractLauncher {
             while (serverSuccessCount.get() != getDaemonList().size() && (notTimeout = System.currentTimeMillis() - before < launcherConfig.getTimeout())) {
                 try {
                     Thread.sleep(500);
-                } catch (InterruptedException e) {
-                }
+                } catch (InterruptedException e) {}
             }
             if (!notTimeout) {
                 logger.error("Launcher starts timeout!");

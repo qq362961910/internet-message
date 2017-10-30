@@ -1,15 +1,12 @@
-package com.jy.im.server.listener;
+package com.jy.im.base.component.launcher.listener;
 
 import com.jy.im.base.component.launcher.AbstractLauncher;
-import com.jy.im.base.component.launcher.listener.LauncherListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import io.netty.util.internal.logging.InternalLogger;
+import io.netty.util.internal.logging.Log4JLoggerFactory;
 
-@Component
 public class DefaultLauncherListener implements LauncherListener {
 
-    private static final Logger logger = LoggerFactory.getLogger(DefaultLauncherListener.class);
+    private static final InternalLogger logger = Log4JLoggerFactory.getInstance(DefaultLauncherListener.class);
 
     @Override
     public void startup(AbstractLauncher launcher) {

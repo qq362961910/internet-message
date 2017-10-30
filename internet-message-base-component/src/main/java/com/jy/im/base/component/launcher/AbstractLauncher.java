@@ -69,7 +69,7 @@ public abstract class AbstractLauncher implements Launcher {
      */
     @Override
     public void close() {
-        logger.info("launcher begin to shutdown");
+        logger.info("launcher begin to shutdown!!!");
         stop = true;
         doClose();
         executorService.shutdown();
@@ -89,8 +89,6 @@ public abstract class AbstractLauncher implements Launcher {
             }
         }
         logger.info("launcher shutdown successfully");
-        //关闭日志
-        //todo
     }
 
     protected void startServer(Daemon server) {

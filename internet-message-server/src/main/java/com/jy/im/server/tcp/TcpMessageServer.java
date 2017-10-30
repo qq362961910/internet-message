@@ -1,9 +1,10 @@
-package com.jy.im.server;
+package com.jy.im.server.tcp;
 
 import com.jy.im.base.component.daemon.AbstractDaemonServer;
 import com.jy.im.base.component.daemon.listener.DaemonListener;
 import com.jy.im.base.component.launcher.Launcher;
-import com.jy.im.server.initializer.NettyTcpServerInitializer;
+import com.jy.im.server.tcp.initializer.NettyTcpServerInitializer;
+import com.jy.im.server.tcp.listener.NettyTcpDaemonListener;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -16,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class TcpMessageServer extends AbstractDaemonServer {
+public class TcpMessageServer extends AbstractDaemonServer<NettyTcpDaemonListener> {
 
     private Logger logger = LoggerFactory.getLogger(TcpMessageServer.class);
 
@@ -71,7 +72,7 @@ public class TcpMessageServer extends AbstractDaemonServer {
         }
     }
 
-    public TcpMessageServer(String name, int port, List<DaemonListener> demonListenerList, NettyTcpServerInitializer channelInitializer) {
+    public TcpMessageServer(String name, int port, List<NettyTcpDaemonListener> demonListenerList, NettyTcpServerInitializer channelInitializer) {
         super(name, port);
         if (demonListenerList != null && !demonListenerList.isEmpty()) {
             this.demonListenerList.addAll(demonListenerList);

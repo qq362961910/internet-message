@@ -8,11 +8,11 @@ import io.netty.util.internal.logging.Log4JLoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractDaemonServer implements Daemon {
+public abstract class AbstractDaemonServer<Listener extends DaemonListener> implements Daemon {
 
     private InternalLogger logger = Log4JLoggerFactory.getInstance(AbstractDaemonServer.class);
 
-    protected List<DaemonListener> demonListenerList = new ArrayList<>();
+    protected List<Listener> demonListenerList = new ArrayList<>();
 
     protected String name;
     protected int port;
