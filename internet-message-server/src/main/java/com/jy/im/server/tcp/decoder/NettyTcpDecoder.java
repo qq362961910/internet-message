@@ -25,6 +25,7 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
     private static final Logger logger = LoggerFactory.getLogger(NettyTcpDecoder.class);
 
     private MessageAnalyser<ByteBuf> currentMessageAnalyser;
+    private int currentReaderIndex = -1;
 
     @Autowired
     private NettyMessageAnalyserManager nettyMessageAnalyserManager;
@@ -74,11 +75,12 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
     }
 
     private void markReaderIndex(ByteBuf in) {
-        in.markReaderIndex();
+        currentReaderIndex = in.readerIndex();
     }
 
     private void resetReaderIndex(ByteBuf in) {
-        in.resetReaderIndex();
+        in.readerIndex(currentReaderIndex);
+        currentReaderIndex = -1;
     }
 
 

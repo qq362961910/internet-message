@@ -1,4 +1,4 @@
-package com.jy.im.server.handler;
+package com.jy.im.server.tcp.handler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
