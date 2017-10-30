@@ -1,7 +1,7 @@
 package com.jy.im.server.decoder;
 
 import com.jy.im.base.component.analyser.message.MessageAnalyser;
-import com.jy.im.base.component.analyser.message.MessageAnalyserManager;
+import com.jy.im.server.analyser.NettyMessageAnalyserManager;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -24,10 +24,10 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
 
     private static final Logger logger = LoggerFactory.getLogger(NettyTcpDecoder.class);
 
-    private MessageAnalyser currentMessageAnalyser;
+    private MessageAnalyser<ByteBuf> currentMessageAnalyser;
 
     @Autowired
-    private MessageAnalyserManager messageAnalyserManager;
+    private NettyMessageAnalyserManager nettyMessageAnalyserManager;
 
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> out) throws Exception {
@@ -42,7 +42,7 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
             logger.info("bytes: \r\n" + Arrays.toString(content));
             if (currentMessageAnalyser == null) {
                 markReaderIndex(in);
-                MessageAnalyser messageAnalyser = messageAnalyserManager.selectMessageAnalyser(in);
+                MessageAnalyser<ByteBuf> messageAnalyser = nettyMessageAnalyserManager.selectMessageAnalyser(in);
                 resetReaderIndex(in);
                 //未找到消息解析器
                 if (messageAnalyser == null) {
@@ -68,34 +68,25 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
         }
     }
 
-    public MessageAnalyserManager getMessageAnalyserManager() {
-        return messageAnalyserManager;
-    }
-
-    public NettyTcpDecoder setMessageAnalyserManager(MessageAnalyserManager messageAnalyserManager) {
-        this.messageAnalyserManager = messageAnalyserManager;
-        return this;
-    }
-
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         logger.error("app analyse message from: " + ctx.channel().localAddress() + "exception, connection is closing!", cause);
     }
 
-    public void markReaderIndex(ByteBuf in) {
+    private void markReaderIndex(ByteBuf in) {
         in.markReaderIndex();
     }
 
-    public void resetReaderIndex(ByteBuf in) {
+    private void resetReaderIndex(ByteBuf in) {
         in.resetReaderIndex();
     }
 
 
-    public void reset() {
+    private void reset() {
         currentMessageAnalyser = null;
     }
 
-    public void close(ChannelHandlerContext channelHandlerContext, String message) {
+    private void close(ChannelHandlerContext channelHandlerContext, String message) {
         logger.error(message);
         channelHandlerContext.close();
     }

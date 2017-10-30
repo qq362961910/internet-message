@@ -4,10 +4,10 @@ package com.jy.im.base.component.analyser.message;
 /**
  * 消息解析器管理器
  */
-public interface MessageAnalyserManager {
+public interface MessageAnalyserManager<In> {
 
     /**
      * 选取消息解析器
      */
-    MessageAnalyser selectMessageAnalyser(Object in);
+    MessageAnalyser selectMessageAnalyser(In in);
 }

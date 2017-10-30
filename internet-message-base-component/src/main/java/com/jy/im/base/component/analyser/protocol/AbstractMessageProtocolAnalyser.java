@@ -8,10 +8,10 @@ public abstract class AbstractMessageProtocolAnalyser<In> implements ProtocolAna
     private final TypeParameterMatcher matcher;
 
     @Override
-    public boolean support(Object in) {
+    public boolean support(In in) {
         boolean match = matcher.match(in);
         if (match) {
-            MessageProtocol messageProtocol = analyser((In) in);
+            MessageProtocol messageProtocol = analyser(in);
             return getSupportMessageProtocol() == messageProtocol;
         }
         return false;

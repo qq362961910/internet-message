@@ -6,16 +6,16 @@ import java.util.List;
 /**
  * 消息解析器Manager抽象类
  */
-public class AbstractMessageAnalyserManager implements MessageAnalyserManager {
+public abstract class AbstractMessageAnalyserManager<In> implements MessageAnalyserManager<In> {
 
-    private List<MessageAnalyser> messageAnalyserList = new ArrayList<>();
+    private List<MessageAnalyser<In>> messageAnalyserList = new ArrayList<>();
 
     @Override
-    public MessageAnalyser selectMessageAnalyser(Object msg) {
+    public MessageAnalyser<In> selectMessageAnalyser(In msg) {
         if (messageAnalyserList.isEmpty()) {
             return null;
         }
-        for (MessageAnalyser analyser : messageAnalyserList) {
+        for (MessageAnalyser<In> analyser : messageAnalyserList) {
             if (analyser.support(msg)) {
                 return analyser;
             }
@@ -23,7 +23,7 @@ public class AbstractMessageAnalyserManager implements MessageAnalyserManager {
         return null;
     }
 
-    public void addMessageAnalyser(MessageAnalyser messageAnalyser) {
+    public void addMessageAnalyser(MessageAnalyser<In> messageAnalyser) {
         if (messageAnalyser != null) {
             messageAnalyserList.add(messageAnalyser);
         }

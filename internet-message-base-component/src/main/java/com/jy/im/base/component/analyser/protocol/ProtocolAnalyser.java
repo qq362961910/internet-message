@@ -11,7 +11,7 @@ public interface ProtocolAnalyser<In> {
     /**
      * 判断是否支持该入参
      */
-    boolean support(Object in);
+    boolean support(In in);
 
     /**
      * 解析消息
