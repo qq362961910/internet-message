@@ -1,6 +1,6 @@
 package com.jy.im.base.component.analyser.protocol;
 
-import com.jy.im.base.component.enums.MessageProtocol;
+import com.jy.im.common.constants.MessageProtocol;
 
 /**
  * 消息协议解析器

@@ -1,6 +1,6 @@
 package com.jy.im.base.component.analyser.protocol;
 
-import com.jy.im.base.component.enums.MessageProtocol;
+import com.jy.im.common.constants.MessageProtocol;
 import io.netty.util.internal.TypeParameterMatcher;
 
 public abstract class AbstractMessageProtocolAnalyser<In> implements ProtocolAnalyser<In> {

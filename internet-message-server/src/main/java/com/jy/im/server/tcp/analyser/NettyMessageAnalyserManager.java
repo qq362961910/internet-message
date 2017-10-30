@@ -11,11 +11,11 @@ import javax.annotation.PostConstruct;
 public class NettyMessageAnalyserManager extends AbstractMessageAnalyserManager<ByteBuf> {
 
     @Autowired
-    private NettyStringMessageAnalyser nettyStringMessageAnalyser;
+    private NettyCommonMessageAnalyser nettyCommonMessageAnalyser;
 
     @PostConstruct
     public void init() {
-        addMessageAnalyser(nettyStringMessageAnalyser);
+        addMessageAnalyser(nettyCommonMessageAnalyser);
     }
 
 }

@@ -1,26 +1,24 @@
-package com.jy.im.base.component.enums;
+package com.jy.im.common.constants;
 
+/**
+ * 协议位占一个长度,一个厂商一个协议
+ * 消息结构为: T(1 byte) L(2 bytes) V(XXX)
+ * */
 public enum MessageProtocol {
 
     /**
-     * EVENT MESSAGE
+     * COMMON
      */
-    EVENT_MESSAGE(1, "EVENT_MESSAGE"),
+    COMMON((byte)0, "COMMON");
 
-    /**
-     * String
-     */
-    STRING(Integer.MAX_VALUE, "String");
-
-    public final int value;
+    public final byte value;
     public final String name;
 
     public static void main(String[] args) {
         System.out.println((char) 0xFA);
     }
 
-
-    public static MessageProtocol getMessageProtocol(int value) {
+    public static MessageProtocol getMessageProtocol(byte value) {
         for (MessageProtocol protocol : values()) {
             if (protocol.value == value) {
                 return protocol;
@@ -29,7 +27,7 @@ public enum MessageProtocol {
         return null;
     }
 
-    MessageProtocol(int value, String name) {
+    MessageProtocol(byte value, String name) {
         this.value = value;
         this.name = name;
     }
