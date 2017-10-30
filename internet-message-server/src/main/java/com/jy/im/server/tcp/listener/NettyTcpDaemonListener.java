@@ -15,11 +15,11 @@ public class NettyTcpDaemonListener implements DaemonListener {
 
     @Override
     public void startup(Daemon server) {
-        logger.info(server.getClass() + " start....");
+        logger.info("NettyTcpDaemonListener run startup()....");
     }
 
     @Override
     public void close(Daemon server) {
-        logger.info(server.getClass() + " stop....");
+        logger.info("NettyTcpDaemonListener run close()....");
     }
 }

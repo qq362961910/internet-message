@@ -17,44 +17,27 @@ public abstract class AbstractDaemonServer<Listener extends DaemonListener> impl
     protected String name;
     protected int port;
 
-    @Override
-    public void start(Launcher launcher) {
-        doStart(launcher);
-        //listener::start()
-        //因为服务器启动会阻塞，监听器不能在这里执行,只能在具体的服务器实例里面启动
-    }
-
-    @Override
-    public void close(Launcher launcher) {
-        doClose(launcher);
-        //listener::close()
-        //在具体的服务器实例里面启动
-    }
-
-    /**
-     * 阻塞
-     * 启动服务器
-     */
-    public abstract void doStart(Launcher launcher);
-
-    /**
-     * 阻塞
-     * 关闭服务器
-     */
-    public abstract void doClose(Launcher launcher);
-
-    public AbstractDaemonServer() {
-    }
-
-    public AbstractDaemonServer(int port) {
-        this.port = port;
-    }
-
     public AbstractDaemonServer(String name, int port) {
         this.name = name;
         this.port = port;
     }
 
+    @Override
+    public void afterStart() {
+        //调用监听器#start()
+        if (!demonListenerList.isEmpty()) {
+            demonListenerList.forEach(listener -> listener.startup(this));
+        }
+    }
+    @Override
+    public void afterShutdown() {
+        //调用监听器#start()
+        if (!demonListenerList.isEmpty()) {
+            for (DaemonListener listener : demonListenerList) {
+                listener.close(this);
+            }
+        }
+    }
     public String getName() {
         return name;
     }

@@ -10,11 +10,11 @@ public class DefaultLauncherListener implements LauncherListener {
 
     @Override
     public void startup(AbstractLauncher launcher) {
-        logger.info(launcher.getClass() + " start....");
+        logger.info("DefaultLauncherListener run startup()....");
     }
 
     @Override
     public void close(AbstractLauncher launcher) {
-        logger.info(launcher.getClass() + " stop....");
+        logger.info("DefaultLauncherListener run close()....");
     }
 }

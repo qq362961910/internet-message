@@ -16,6 +16,16 @@ public interface Daemon {
     /**
      * 结束
      */
-    void close(Launcher launcher);
+    void shutdown(Launcher launcher);
 
+    /**
+     * after start
+     * */
+
+    void afterStart();
+
+    /**
+     * after stop
+     * */
+    void afterShutdown();
 }

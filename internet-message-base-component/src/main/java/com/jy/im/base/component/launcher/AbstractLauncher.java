@@ -83,8 +83,7 @@ public abstract class AbstractLauncher implements Launcher {
             for (LauncherListener listener : launcherListenerList) {
                 try {
                     listener.close(this);
-                } catch (Exception e) {
-                }
+                } catch (Exception e) {}
             }
         }
         logger.info("launcher shutdown successfully");
@@ -102,12 +101,14 @@ public abstract class AbstractLauncher implements Launcher {
     public void serverStartSuccess(Daemon server) {
         serverSuccessCount.addAndGet(1);
         logger.info("server alive count: " + serverSuccessCount.get());
+        server.afterStart();
     }
 
     @Override
     public void serverShutdownSuccess(Daemon server) {
         serverSuccessCount.addAndGet(-1);
         downDaemonList.add(server);
+        server.afterShutdown();
     }
 
     public List<Daemon> getDaemonList() {

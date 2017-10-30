@@ -25,7 +25,7 @@ public class TcpMessageServer extends AbstractDaemonServer<NettyTcpDaemonListene
     private NettyTcpServerInitializer channelInitializer;
 
     @Override
-    public void doStart(Launcher launcher) {
+    public void start(Launcher launcher) {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         ServerBootstrap bootstrap = new ServerBootstrap();
@@ -36,23 +36,12 @@ public class TcpMessageServer extends AbstractDaemonServer<NettyTcpDaemonListene
                 .option(ChannelOption.SO_BACKLOG, 128)
                 .childOption(ChannelOption.SO_KEEPALIVE, true);
             ChannelFuture future = bootstrap.bind(getPort()).sync();
-            //调用监听器#start()
-            if (!demonListenerList.isEmpty()) {
-                demonListenerList.forEach(listener -> listener.startup(this));
-            }
             if (launcher != null) {
                 launcher.serverStartSuccess(this);
             }
             serverChannel = future.channel();
             logger.info("TCP Server: {} has been started successfully, port: {}", name, port);
-            serverChannel.closeFuture().sync().addListener(closeFuture -> {
-                //调用监听器#close()
-                if (!demonListenerList.isEmpty()) {
-                    for (DaemonListener listener : demonListenerList) {
-                        listener.close(TcpMessageServer.this);
-                    }
-                }
-            });
+            serverChannel.closeFuture().sync();
         } catch (Exception e) {
             logger.error(String.format("TCP Server: %s Down, port: %d ", name, port), e);
         } finally {
@@ -66,7 +55,7 @@ public class TcpMessageServer extends AbstractDaemonServer<NettyTcpDaemonListene
     }
 
     @Override
-    public void doClose(Launcher launcher) {
+    public void shutdown(Launcher launcher) {
         if (serverChannel != null) {
             serverChannel.close();
         }

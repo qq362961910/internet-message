@@ -19,7 +19,7 @@ public abstract class AbstractDaemonClient implements Daemon {
     }
 
     @Override
-    public void close(Launcher launcher) {
+    public void shutdown(Launcher launcher) {
         doClose(launcher);
     }
 
