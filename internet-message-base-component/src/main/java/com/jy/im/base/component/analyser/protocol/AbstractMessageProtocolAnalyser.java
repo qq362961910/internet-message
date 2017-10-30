@@ -17,6 +17,11 @@ public abstract class AbstractMessageProtocolAnalyser<In> implements ProtocolAna
         return false;
     }
 
+    /**
+     * 获取支持的协议类型
+     */
+    public abstract MessageProtocol getSupportMessageProtocol();
+
     public AbstractMessageProtocolAnalyser() {
         matcher = TypeParameterMatcher.find(this, AbstractMessageProtocolAnalyser.class, "In");
     }

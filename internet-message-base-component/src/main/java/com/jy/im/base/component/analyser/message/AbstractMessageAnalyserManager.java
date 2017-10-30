@@ -8,7 +8,7 @@ import java.util.List;
  */
 public abstract class AbstractMessageAnalyserManager<In> implements MessageAnalyserManager<In> {
 
-    private List<MessageAnalyser<In>> messageAnalyserList = new ArrayList<>();
+    private final List<MessageAnalyser<In>> messageAnalyserList = new ArrayList<>();
 
     @Override
     public MessageAnalyser<In> selectMessageAnalyser(In msg) {
@@ -23,6 +23,7 @@ public abstract class AbstractMessageAnalyserManager<In> implements MessageAnaly
         return null;
     }
 
+    @Override
     public void addMessageAnalyser(MessageAnalyser<In> messageAnalyser) {
         if (messageAnalyser != null) {
             messageAnalyserList.add(messageAnalyser);

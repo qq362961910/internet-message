@@ -18,8 +18,4 @@ public interface ProtocolAnalyser<In> {
      */
     MessageProtocol analyser(In in);
 
-    /**
-     * 获取支持的协议类型
-     */
-    MessageProtocol getSupportMessageProtocol();
 }
