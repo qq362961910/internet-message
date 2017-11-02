@@ -21,10 +21,10 @@ public interface Launcher {
     /**
      * 启动器启动回调
      */
-    void serverStartSuccess(Daemon server);
+    void daemonStartSuccess(Daemon server);
 
     /**
      * 启动器停止回调
      */
-    void serverShutdownSuccess(Daemon server);
+    void daemonShutdownSuccess(Daemon server);
 }

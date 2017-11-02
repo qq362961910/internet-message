@@ -7,6 +7,8 @@ import com.jy.im.base.component.launcher.listener.LauncherListener;
 import com.jy.im.server.tcp.TcpMessageServer;
 import com.jy.im.server.tcp.initializer.NettyTcpServerInitializer;
 import com.jy.im.server.tcp.listener.NettyTcpDaemonListener;
+import com.jy.im.service.UserService;
+import com.jy.im.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,5 +47,10 @@ public class AppConfig {
     @Bean
     public DefaultLauncherListener defaultLauncherListener() {
         return new DefaultLauncherListener();
+    }
+
+    @Bean
+    public UserService userService() {
+        return new UserServiceImpl();
     }
 }

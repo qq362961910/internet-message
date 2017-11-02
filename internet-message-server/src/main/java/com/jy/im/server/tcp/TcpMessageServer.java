@@ -37,7 +37,7 @@ public class TcpMessageServer extends AbstractDaemonServer<NettyTcpDaemonListene
                 .childOption(ChannelOption.SO_KEEPALIVE, true);
             ChannelFuture future = bootstrap.bind(getPort()).sync();
             if (launcher != null) {
-                launcher.serverStartSuccess(this);
+                launcher.daemonStartSuccess(this);
             }
             serverChannel = future.channel();
             logger.info("TCP Server: {} has been started successfully, port: {}", name, port);
@@ -46,7 +46,7 @@ public class TcpMessageServer extends AbstractDaemonServer<NettyTcpDaemonListene
             logger.error(String.format("TCP Server: %s Down, port: %d ", name, port), e);
         } finally {
             if (launcher != null) {
-                launcher.serverShutdownSuccess(TcpMessageServer.this);
+                launcher.daemonShutdownSuccess(this);
             }
             logger.info("[TCP Server]: {} closed, port: {}", name, port);
             bossGroup.shutdownGracefully();

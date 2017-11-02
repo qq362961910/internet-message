@@ -34,8 +34,17 @@ public enum CommonMessageType {
     /**
      * EVENT MESSAGE
      */
-    EVENT_MESSAGE((byte)1, "EVENT_MESSAGE");
+    EVENT_MESSAGE((byte)5, "EVENT_MESSAGE"),
 
+    /**
+     * LOGIN
+     * */
+    LOGIN((byte)126, "LOGIN"),
+
+    /**
+     * LOGOUT
+     * */
+    LOGOUT((byte)127, "LOGOUT");
 
     public final byte value;
     public final String name;

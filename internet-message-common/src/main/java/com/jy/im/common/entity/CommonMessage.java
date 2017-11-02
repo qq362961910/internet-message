@@ -1,40 +1,41 @@
 package com.jy.im.common.entity;
 
+import java.util.Arrays;
+
 /**
  *通用消息
  */
-public class CommonMessage {
-
-    /**
-     * 消息类型
-     * */
-    private byte messageType;
-
-    /**
-     * length
-     * */
-    private short length;
+public class CommonMessage extends BaseMessage{
 
     /**
      * 消息内容
      * */
     private byte[] content;
 
-    public byte getMessageType() {
-        return messageType;
-    }
+    /**
+     * fromId
+     * */
+    private long fromId;
 
-    public void setMessageType(byte messageType) {
-        this.messageType = messageType;
-    }
+    /**
+     * fromIdType
+     * */
+    private byte fromIdType;
 
-    public short getLength() {
-        return length;
-    }
+    /**
+     * toId
+     * */
+    private int toId;
 
-    public void setLength(short length) {
-        this.length = length;
-    }
+    /**
+     * toIdType
+     * */
+    private byte toIdType;
+
+    /**
+     * ticket
+     * */
+    private byte[] ticket;
 
     public byte[] getContent() {
         return content;
@@ -42,5 +43,57 @@ public class CommonMessage {
 
     public void setContent(byte[] content) {
         this.content = content;
+    }
+
+    public long getFromId() {
+        return fromId;
+    }
+
+    public void setFromId(long fromId) {
+        this.fromId = fromId;
+    }
+
+    public byte getFromIdType() {
+        return fromIdType;
+    }
+
+    public void setFromIdType(byte fromIdType) {
+        this.fromIdType = fromIdType;
+    }
+
+    public int getToId() {
+        return toId;
+    }
+
+    public void setToId(int toId) {
+        this.toId = toId;
+    }
+
+    public byte getToIdType() {
+        return toIdType;
+    }
+
+    public void setToIdType(byte toIdType) {
+        this.toIdType = toIdType;
+    }
+
+    public byte[] getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(byte[] ticket) {
+        this.ticket = ticket;
+    }
+
+    @Override
+    public String toString() {
+        return "CommonMessage{" +
+            "content=" + Arrays.toString(content) +
+            ", fromId=" + fromId +
+            ", fromIdType=" + fromIdType +
+            ", toId=" + toId +
+            ", toIdType=" + toIdType +
+            ", ticket=" + Arrays.toString(ticket) +
+            "} " + super.toString();
     }
 }

@@ -98,14 +98,14 @@ public abstract class AbstractLauncher implements Launcher {
     public abstract void doClose();
 
     @Override
-    public void serverStartSuccess(Daemon server) {
+    public void daemonStartSuccess(Daemon server) {
         serverSuccessCount.addAndGet(1);
         logger.info("server alive count: " + serverSuccessCount.get());
         server.afterStart();
     }
 
     @Override
-    public void serverShutdownSuccess(Daemon server) {
+    public void daemonShutdownSuccess(Daemon server) {
         serverSuccessCount.addAndGet(-1);
         downDaemonList.add(server);
         server.afterShutdown();
