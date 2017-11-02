@@ -115,9 +115,15 @@ public abstract class AbstractLauncher implements Launcher {
         return daemonList;
     }
 
-    public AbstractLauncher setDaemonList(List<Daemon> daemonList) {
+    public AbstractLauncher addDaemonList(List<Daemon> daemonList) {
         if (daemonList != null && !daemonList.isEmpty()) {
             this.daemonList.addAll(daemonList);
+        }
+        return this;
+    }
+    public AbstractLauncher addDaemon(Daemon daemon) {
+        if(daemon != null) {
+            daemonList.add(daemon);
         }
         return this;
     }

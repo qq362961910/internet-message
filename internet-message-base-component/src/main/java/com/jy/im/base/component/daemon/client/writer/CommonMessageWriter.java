@@ -1,4 +1,4 @@
-package com.jy.im.base.component.daemon.client;
+package com.jy.im.base.component.daemon.client.writer;
 
 import com.jy.im.common.entity.CommonMessage;
 import io.netty.buffer.ByteBuf;

@@ -5,7 +5,7 @@ import com.jy.im.base.component.daemon.Daemon;
 
 public interface DaemonListener {
 
-    void startup(Daemon server);
+    void startup(Daemon daemon);
 
-    void close(Daemon server);
+    void close(Daemon daemon);
 }

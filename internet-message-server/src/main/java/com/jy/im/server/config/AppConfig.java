@@ -6,7 +6,7 @@ import com.jy.im.base.component.launcher.listener.DefaultLauncherListener;
 import com.jy.im.base.component.launcher.listener.LauncherListener;
 import com.jy.im.server.tcp.TcpMessageServer;
 import com.jy.im.server.tcp.initializer.NettyTcpServerInitializer;
-import com.jy.im.server.tcp.listener.NettyTcpDaemonListener;
+import com.jy.im.server.tcp.listener.NettyTcpServerDaemonListener;
 import com.jy.im.service.UserService;
 import com.jy.im.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class AppConfig {
     @Autowired
     private NettyTcpServerInitializer nettyTcpServerInitializer;
     @Autowired
-    private List<NettyTcpDaemonListener> demonListenerList;
+    private List<NettyTcpServerDaemonListener> demonListenerList;
     @Autowired
     private List<Daemon> daemonList;
     @Autowired
@@ -40,7 +40,7 @@ public class AppConfig {
         //launch listener
         defaultLauncher.setLauncherListenerList(launcherListenerList);
         //daemon list
-        defaultLauncher.setDaemonList(daemonList);
+        defaultLauncher.addDaemonList(daemonList);
         return defaultLauncher;
     }
     @Scope("prototype")

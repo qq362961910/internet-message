@@ -1,4 +1,4 @@
-package com.jy.im.base.component.daemon.client;
+package com.jy.im.base.component.daemon.client.handler;
 
 import com.jy.im.base.component.daemon.listener.MessageListener;
 import com.jy.im.common.constants.CommonMessageType;
@@ -16,7 +16,6 @@ public class CommonMessageHandler extends ChannelInboundHandlerAdapter {
     private static final InternalLogger logger = Log4JLoggerFactory.getInstance(CommonMessageHandler.class);
 
     private List<MessageListener<?>> messageListenerList = new ArrayList<>();
-
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -41,10 +40,15 @@ public class CommonMessageHandler extends ChannelInboundHandlerAdapter {
         return message;
     }
     public void addMessageListener(MessageListener<?> messageListener) {
-        messageListenerList.add(messageListener);
+        if(messageListener != null) {
+            messageListenerList.add(messageListener);
+        }
     }
 
     public CommonMessageHandler(List<MessageListener<?>> messageListenerList) {
-        this.messageListenerList = messageListenerList;
+        if(messageListenerList != null && !messageListenerList.isEmpty()) {
+            this.messageListenerList.addAll(messageListenerList);
+        }
+
     }
 }

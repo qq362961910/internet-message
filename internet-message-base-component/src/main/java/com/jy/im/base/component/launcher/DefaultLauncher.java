@@ -78,5 +78,7 @@ public class DefaultLauncher extends AbstractLauncher {
             }
         }
     }
-
+    public boolean isStartUpOk() {
+        return serverSuccessCount.get() == getDaemonList().size();
+    }
 }
