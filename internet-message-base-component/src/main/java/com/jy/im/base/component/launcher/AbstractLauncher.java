@@ -83,7 +83,8 @@ public abstract class AbstractLauncher implements Launcher {
             for (LauncherListener listener : launcherListenerList) {
                 try {
                     listener.close(this);
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                }
             }
         }
         logger.info("launcher shutdown successfully");
@@ -121,8 +122,9 @@ public abstract class AbstractLauncher implements Launcher {
         }
         return this;
     }
+
     public AbstractLauncher addDaemon(Daemon daemon) {
-        if(daemon != null) {
+        if (daemon != null) {
             daemonList.add(daemon);
         }
         return this;

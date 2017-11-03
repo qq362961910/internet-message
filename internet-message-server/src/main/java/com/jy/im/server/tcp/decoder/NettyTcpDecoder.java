@@ -41,30 +41,25 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
             logger.info("hex: \r\n" + hex);
             logger.info("string: \r\n" + new String(content));
             logger.info("bytes: \r\n" + Arrays.toString(content));
+            markReaderIndex(in);
             if (currentMessageAnalyser == null) {
-                markReaderIndex(in);
                 MessageAnalyser<ByteBuf> messageAnalyser = nettyMessageAnalyserManager.selectMessageAnalyser(in);
-                resetReaderIndex(in);
                 //未找到消息解析器
                 if (messageAnalyser == null) {
                     close(channelHandlerContext, "no MessageAnalyser found");
-                } else {
-                    currentMessageAnalyser = messageAnalyser;
+                    return;
                 }
+                currentMessageAnalyser = messageAnalyser;
             }
-            if (currentMessageAnalyser != null) {
-                //mark reader index
-                markReaderIndex(in);
-                Object message = currentMessageAnalyser.analyse(in);
-                if (message != null) {
-                    logger.info(message.toString());
-                    out.add(message);
-                    //读取完一条消息后reset当前handler
-                    reset();
-                } else {
-                    //reset reader index
-                    resetReaderIndex(in);
-                }
+            Object message = currentMessageAnalyser.analyse(in);
+            if (message != null) {
+                logger.info(message.toString());
+                out.add(message);
+                //读取完一条消息后reset当前handler
+                reset();
+            } else {
+                //reset reader index
+                resetReaderIndex(in);
             }
         }
     }

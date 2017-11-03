@@ -1,7 +1,6 @@
 package com.jy.im.base.component.daemon;
 
 import com.jy.im.base.component.daemon.listener.DaemonListener;
-import com.jy.im.base.component.launcher.Launcher;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.Log4JLoggerFactory;
 
@@ -29,6 +28,7 @@ public abstract class AbstractDaemonServer<Listener extends DaemonListener> impl
             demonListenerList.forEach(listener -> listener.startup(this));
         }
     }
+
     @Override
     public void afterShutdown() {
         //调用监听器#start()
@@ -38,6 +38,7 @@ public abstract class AbstractDaemonServer<Listener extends DaemonListener> impl
             }
         }
     }
+
     public String getName() {
         return name;
     }

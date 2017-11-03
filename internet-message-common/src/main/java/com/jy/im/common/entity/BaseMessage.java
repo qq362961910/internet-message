@@ -3,15 +3,26 @@ package com.jy.im.common.entity;
 public class BaseMessage {
 
     /**
-     * 消息类型
-     * */
-    protected byte messageType;
-
+     * 协议
+     */
+    protected byte protocol;
     /**
      * length
-     * */
+     */
     protected short length;
 
+    /**
+     * 消息类型
+     */
+    protected byte messageType;
+
+    public byte getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(byte protocol) {
+        this.protocol = protocol;
+    }
 
     public byte getMessageType() {
         return messageType;

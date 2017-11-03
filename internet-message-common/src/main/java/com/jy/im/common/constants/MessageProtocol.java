@@ -3,13 +3,13 @@ package com.jy.im.common.constants;
 /**
  * 协议位占一个长度,一个厂商一个协议
  * 消息结构为: T(1 byte) L(2 bytes) V(XXX)
- * */
+ */
 public enum MessageProtocol {
 
     /**
      * COMMON
      */
-    COMMON((byte)0, "COMMON");
+    COMMON((byte) 0, "COMMON");
 
     public final byte value;
     public final String name;

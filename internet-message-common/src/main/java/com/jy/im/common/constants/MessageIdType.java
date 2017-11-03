@@ -5,20 +5,19 @@ package com.jy.im.common.constants;
  */
 public enum MessageIdType {
 
-    USER_ID_TYPE((byte)0, "user"),
+    USER_ID_TYPE((byte) 0, "user"),
 
-    GROUP_ID_TYPE((byte)1, "group"),
+    GROUP_ID_TYPE((byte) 1, "group"),
 
-    SYSTEM_ID_TYPE((byte)2, "system"),
-    ;
+    SYSTEM_ID_TYPE((byte) 2, "system"),;
 
     public final byte value;
 
     public final String name;
 
     public static MessageIdType getMessageIdType(byte value) {
-        for (MessageIdType type: values()) {
-            if(type.value == value) {
+        for (MessageIdType type : values()) {
+            if (type.value == value) {
                 return type;
             }
         }

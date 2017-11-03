@@ -20,12 +20,12 @@ public interface Daemon {
 
     /**
      * after start
-     * */
+     */
 
     void afterStart();
 
     /**
      * after stop
-     * */
+     */
     void afterShutdown();
 }

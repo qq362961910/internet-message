@@ -25,9 +25,11 @@ public abstract class AbstractDaemonClient<Listener extends DaemonListener> impl
             demonListenerList.forEach(listener -> listener.startup(this));
         }
     }
+
     @Override
     public void afterShutdown() {
     }
+
     public String getName() {
         return name;
     }

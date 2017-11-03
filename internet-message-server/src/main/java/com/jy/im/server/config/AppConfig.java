@@ -43,6 +43,7 @@ public class AppConfig {
         defaultLauncher.addDaemonList(daemonList);
         return defaultLauncher;
     }
+
     @Scope("prototype")
     @Bean
     public DefaultLauncherListener defaultLauncherListener() {

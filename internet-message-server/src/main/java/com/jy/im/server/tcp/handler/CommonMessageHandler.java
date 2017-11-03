@@ -1,7 +1,7 @@
 package com.jy.im.server.tcp.handler;
 
-import com.jy.im.common.constants.CommonMessageType;
 import com.jy.im.common.constants.MessageIdType;
+import com.jy.im.common.constants.MessageType;
 import com.jy.im.common.entity.CommonMessage;
 import com.jy.im.server.resource.TicketsHolder;
 import com.jy.im.service.entity.User;
@@ -24,7 +24,7 @@ public class CommonMessageHandler extends SimpleChannelInboundHandler<CommonMess
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CommonMessage msg) throws Exception {
-        logger.info("receive a message, type: {}", CommonMessageType.getCommonMessageType(msg.getMessageType()));
+        logger.info("receive a message, type: {}", MessageType.getCommonMessageType(msg.getMessageType()));
         logger.info("length: {}", msg.getLength());
         logger.info("fromId: {}", msg.getFromId());
         logger.info("toId: {}", msg.getToId());
@@ -34,13 +34,13 @@ public class CommonMessageHandler extends SimpleChannelInboundHandler<CommonMess
         if (msg.getFromIdType() == MessageIdType.USER_ID_TYPE.value) {
             //ticket检查
             byte[] ticket = msg.getTicket();
-            if(ticket == null) {
+            if (ticket == null) {
                 logger.error("receive a invalid message:\r\n {}", msg);
                 ctx.close();
                 return;
             }
             User user = ticketsHolder.getUserByTicket(new String(ticket));
-            if(user == null) {
+            if (user == null) {
                 logger.error("expired ticket, message:\r\n {}", msg);
 
             }
@@ -48,7 +48,7 @@ public class CommonMessageHandler extends SimpleChannelInboundHandler<CommonMess
         }
         //其他消息
         else {
-            logger.error("unhandled message, message type: {}", CommonMessageType.getCommonMessageType(msg.getMessageType()));
+            logger.error("unhandled message, message type: {}", MessageType.getCommonMessageType(msg.getMessageType()));
         }
     }
 

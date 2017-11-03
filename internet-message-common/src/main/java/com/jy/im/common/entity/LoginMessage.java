@@ -1,20 +1,22 @@
 package com.jy.im.common.entity;
 
+import com.jy.im.common.constants.MessageType;
+
 public class LoginMessage extends BaseMessage {
 
     /**
      * userId
-     * */
+     */
     private long userId;
 
     /**
      * password
-     * */
+     */
     private byte[] password;
 
     /**
      * code
-     * */
+     */
     private byte[] code;
 
     public long getUserId() {
@@ -39,5 +41,9 @@ public class LoginMessage extends BaseMessage {
 
     public void setCode(byte[] code) {
         this.code = code;
+    }
+
+    public LoginMessage() {
+        messageType = MessageType.LOGIN.value;
     }
 }

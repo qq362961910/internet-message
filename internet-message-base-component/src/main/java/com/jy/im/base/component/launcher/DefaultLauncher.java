@@ -24,7 +24,10 @@ public class DefaultLauncher extends AbstractLauncher {
             getDaemonList().forEach(this::startServer);
             //等待直到超时
             while (serverSuccessCount.get() != getDaemonList().size() && (notTimeout = System.currentTimeMillis() - before < launcherConfig.getTimeout())) {
-                try { Thread.sleep(500); } catch (InterruptedException e) {}
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                }
             }
             if (!notTimeout) {
                 logger.error("Launcher starts timeout!");
@@ -78,6 +81,7 @@ public class DefaultLauncher extends AbstractLauncher {
             }
         }
     }
+
     public boolean isStartUpOk() {
         return serverSuccessCount.get() == getDaemonList().size();
     }

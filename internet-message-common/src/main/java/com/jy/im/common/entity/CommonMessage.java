@@ -3,38 +3,38 @@ package com.jy.im.common.entity;
 import java.util.Arrays;
 
 /**
- *通用消息
+ * 通用消息
  */
-public class CommonMessage extends BaseMessage{
+public class CommonMessage extends BaseMessage {
 
     /**
      * 消息内容
-     * */
+     */
     private byte[] content;
 
     /**
      * fromId
-     * */
+     */
     private long fromId;
 
     /**
      * fromIdType
-     * */
+     */
     private byte fromIdType;
 
     /**
      * toId
-     * */
-    private int toId;
+     */
+    private long toId;
 
     /**
      * toIdType
-     * */
+     */
     private byte toIdType;
 
     /**
      * ticket
-     * */
+     */
     private byte[] ticket;
 
     public byte[] getContent() {
@@ -61,11 +61,11 @@ public class CommonMessage extends BaseMessage{
         this.fromIdType = fromIdType;
     }
 
-    public int getToId() {
+    public long getToId() {
         return toId;
     }
 
-    public void setToId(int toId) {
+    public void setToId(long toId) {
         this.toId = toId;
     }
 

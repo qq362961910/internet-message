@@ -2,7 +2,7 @@ package com.jy.im.service.entity;
 
 /**
  * 该类在实际中应该脱离该模块
- * */
+ */
 public class User {
 
     private long id;

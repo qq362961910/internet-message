@@ -30,7 +30,7 @@ public class TcpMessageClient extends AbstractDaemonClient<NettyTcpClientDaemonL
             .option(ChannelOption.SO_KEEPALIVE, true)
             .handler(new NettyTcpClientInitializer());
         try {
-            if(launcher != null) {
+            if (launcher != null) {
                 launcher.daemonStartSuccess(this);
             }
             ChannelFuture channelFuture = bootstrap.connect(host, port).sync();
@@ -38,7 +38,7 @@ public class TcpMessageClient extends AbstractDaemonClient<NettyTcpClientDaemonL
             clientChannel.closeFuture().sync();
         } catch (Exception e) {
             logger.error(String.format("TCP Client: %s Down,host: %s port: %d ", name, host, port), e);
-        }finally {
+        } finally {
             launcher.daemonShutdownSuccess(this);
             logger.info(String.format("[TCP Client]: %s closed, port: %d ", name, port));
             workerGroup.shutdownGracefully();
@@ -52,18 +52,19 @@ public class TcpMessageClient extends AbstractDaemonClient<NettyTcpClientDaemonL
         }
     }
 
-    public TcpMessageClient(String host, int port) {
-        super("netty-tcp-client", host, port);
-    }
     public void writeMessage(Object message) {
         if (message instanceof String) {
-            byte[] content = ((String)message).getBytes();
+            byte[] content = ((String) message).getBytes();
             ByteBuf buf = ByteBufAllocator.DEFAULT.buffer(content.length);
             buf.writeBytes(content);
             clientChannel.writeAndFlush(buf);
-        }
-        else {
-            System.out.println("write error");
+        } else {
+            clientChannel.writeAndFlush(message);
         }
     }
+
+    public TcpMessageClient(String host, int port) {
+        super("netty-tcp-client", host, port);
+    }
+
 }

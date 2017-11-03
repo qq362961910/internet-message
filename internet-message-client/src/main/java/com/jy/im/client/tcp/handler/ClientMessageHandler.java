@@ -1,7 +1,7 @@
-package com.jy.im.base.component.daemon.client.handler;
+package com.jy.im.client.tcp.handler;
 
 import com.jy.im.base.component.daemon.listener.MessageListener;
-import com.jy.im.common.constants.CommonMessageType;
+import com.jy.im.common.constants.MessageType;
 import com.jy.im.common.entity.CommonMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -11,16 +11,16 @@ import io.netty.util.internal.logging.Log4JLoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommonMessageHandler extends ChannelInboundHandlerAdapter {
+public class ClientMessageHandler extends ChannelInboundHandlerAdapter {
 
-    private static final InternalLogger logger = Log4JLoggerFactory.getInstance(CommonMessageHandler.class);
+    private static final InternalLogger logger = Log4JLoggerFactory.getInstance(ClientMessageHandler.class);
 
     private List<MessageListener<?>> messageListenerList = new ArrayList<>();
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        for (MessageListener messageListener: messageListenerList) {
-            if(messageListener.apply(msg)) {
+        for (MessageListener messageListener : messageListenerList) {
+            if (messageListener.apply(msg)) {
                 messageListener.callback(msg);
                 return;
             }
@@ -32,23 +32,18 @@ public class CommonMessageHandler extends ChannelInboundHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         logger.info("client ---> active");
     }
+
     public CommonMessage buildStringCommonMessage(String content) {
         CommonMessage message = new CommonMessage();
-        message.setMessageType(CommonMessageType.STRING.value);
-        message.setLength((short)content.getBytes().length);
+        message.setMessageType(MessageType.STRING.value);
+        message.setLength((short) content.getBytes().length);
         message.setContent(content.getBytes());
         return message;
     }
+
     public void addMessageListener(MessageListener<?> messageListener) {
-        if(messageListener != null) {
+        if (messageListener != null) {
             messageListenerList.add(messageListener);
         }
-    }
-
-    public CommonMessageHandler(List<MessageListener<?>> messageListenerList) {
-        if(messageListenerList != null && !messageListenerList.isEmpty()) {
-            this.messageListenerList.addAll(messageListenerList);
-        }
-
     }
 }
