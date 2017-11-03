@@ -1,10 +1,13 @@
 package com.jy.im.server.config;
 
+import com.jy.im.base.component.analyser.message.NettyCommonMessageAnalyser;
+import com.jy.im.base.component.analyser.message.NettyMessageAnalyser;
+import com.jy.im.base.component.analyser.message.NettyMessageAnalyserManager;
 import com.jy.im.base.component.daemon.Daemon;
 import com.jy.im.base.component.launcher.DefaultLauncher;
 import com.jy.im.base.component.launcher.listener.DefaultLauncherListener;
 import com.jy.im.base.component.launcher.listener.LauncherListener;
-import com.jy.im.server.tcp.TcpMessageServer;
+import com.jy.im.server.tcp.NettyTcpMessageServer;
 import com.jy.im.server.tcp.initializer.NettyTcpServerInitializer;
 import com.jy.im.server.tcp.listener.NettyTcpServerDaemonListener;
 import com.jy.im.service.UserService;
@@ -28,10 +31,29 @@ public class AppConfig {
     @Autowired
     private List<LauncherListener> launcherListenerList;
 
+    /**
+     * netty common message analyser
+     * */
+    @Bean
+    public NettyCommonMessageAnalyser nettyCommonMessageAnalyser() {
+        return new NettyCommonMessageAnalyser();
+    }
+
+    /**
+     * netty message analyser manager
+     * */
+    @Bean
+    public NettyMessageAnalyserManager nettyMessageAnalyserManager(NettyMessageAnalyser... nettyMessageAnalysers) {
+        return new NettyMessageAnalyserManager(nettyMessageAnalysers);
+    }
+
+    /**
+     * netty tcp server
+     * */
     @Scope("prototype")
     @Bean
-    public TcpMessageServer tcpMessageServer() {
-        return new TcpMessageServer("tcp-server", 5000, demonListenerList, nettyTcpServerInitializer);
+    public NettyTcpMessageServer tcpMessageServer() {
+        return new NettyTcpMessageServer("tcp-server", 5000, demonListenerList, nettyTcpServerInitializer);
     }
 
     @Bean

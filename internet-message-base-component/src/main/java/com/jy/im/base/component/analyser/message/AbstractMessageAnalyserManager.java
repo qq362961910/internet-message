@@ -1,6 +1,7 @@
 package com.jy.im.base.component.analyser.message;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,10 +25,9 @@ public abstract class AbstractMessageAnalyserManager<In> implements MessageAnaly
     }
 
     @Override
-    public void addMessageAnalyser(MessageAnalyser<In> messageAnalyser) {
-        if (messageAnalyser != null) {
-            messageAnalyserList.add(messageAnalyser);
+    public void addMessageAnalyser(MessageAnalyser<In>... messageAnalysers) {
+        if (messageAnalysers != null && messageAnalysers.length > 0) {
+            messageAnalyserList.addAll(Arrays.asList(messageAnalysers));
         }
     }
-
 }

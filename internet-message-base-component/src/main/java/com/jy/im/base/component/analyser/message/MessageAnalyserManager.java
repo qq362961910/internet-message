@@ -14,5 +14,5 @@ public interface MessageAnalyserManager<In> {
     /**
      * 添加消息解析器
      */
-    void addMessageAnalyser(MessageAnalyser<In> messageAnalyser);
+    void addMessageAnalyser(MessageAnalyser<In>... messageAnalysers);
 }

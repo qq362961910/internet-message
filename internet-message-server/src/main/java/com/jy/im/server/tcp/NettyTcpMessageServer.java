@@ -16,9 +16,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class TcpMessageServer extends AbstractDaemonServer<NettyTcpServerDaemonListener> {
+public class NettyTcpMessageServer extends AbstractDaemonServer<NettyTcpServerDaemonListener> {
 
-    private Logger logger = LoggerFactory.getLogger(TcpMessageServer.class);
+    private Logger logger = LoggerFactory.getLogger(NettyTcpMessageServer.class);
 
     private Channel serverChannel;
     private NettyTcpServerInitializer channelInitializer;
@@ -60,7 +60,7 @@ public class TcpMessageServer extends AbstractDaemonServer<NettyTcpServerDaemonL
         }
     }
 
-    public TcpMessageServer(String name, int port, List<NettyTcpServerDaemonListener> demonListenerList, NettyTcpServerInitializer channelInitializer) {
+    public NettyTcpMessageServer(String name, int port, List<NettyTcpServerDaemonListener> demonListenerList, NettyTcpServerInitializer channelInitializer) {
         super(name, port);
         if (demonListenerList != null && !demonListenerList.isEmpty()) {
             this.demonListenerList.addAll(demonListenerList);

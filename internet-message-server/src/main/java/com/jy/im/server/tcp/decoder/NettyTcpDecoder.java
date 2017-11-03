@@ -1,7 +1,7 @@
 package com.jy.im.server.tcp.decoder;
 
 import com.jy.im.base.component.analyser.message.MessageAnalyser;
-import com.jy.im.server.tcp.analyser.NettyMessageAnalyserManager;
+import com.jy.im.base.component.analyser.message.NettyMessageAnalyserManager;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
