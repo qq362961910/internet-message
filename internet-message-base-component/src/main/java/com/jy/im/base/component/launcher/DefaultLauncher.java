@@ -1,7 +1,6 @@
 package com.jy.im.base.component.launcher;
 
 import com.jy.im.base.component.daemon.Daemon;
-import com.jy.im.base.component.launcher.config.LauncherConfig;
 import io.netty.util.HashedWheelTimer;
 import io.netty.util.Timeout;
 import io.netty.util.TimerTask;

@@ -39,4 +39,5 @@ public class BaseMessage {
     public void setLength(short length) {
         this.length = length;
     }
+
 }

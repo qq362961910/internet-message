@@ -36,21 +36,26 @@ public enum MessageType {
      */
     EVENT_MESSAGE((byte) 5, "EVENT_MESSAGE"),
 
-    /**
-     * TICKET
-     */
-
-    TICKET((byte) 125, "TICKET"),
 
     /**
-     * LOGIN
+     * LOGIN_REQUEST
      */
-    LOGIN((byte) 126, "LOGIN"),
+    LOGIN((byte) 124, "LOGIN_REQUEST"),
 
     /**
-     * LOGOUT
+     * LOGIN_RESPONSE
      */
-    LOGOUT((byte) 127, "LOGOUT");
+    LOGIN_RESPONSE((byte) 125, "LOGIN_RESPONSE"),
+
+    /**
+     * LOGOUT_REQUEST
+     */
+    LOGOUT_REQUEST((byte) 126, "LOGOUT_REQUEST"),
+
+    /**
+     * LOGOUT_RESPONSE
+     */
+    LOGOUT_RESPONSE((byte) 127, "LOGOUT_RESPONSE");
 
     public final byte value;
     public final String name;

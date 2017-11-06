@@ -1,8 +1,10 @@
 package com.jy.im.server.resource;
 
+import com.jy.im.common.util.PasswordUtil;
 import com.jy.im.service.entity.User;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,5 +21,13 @@ public class TicketsHolder {
         return userTicket.get(ticket);
     }
 
+    public static String generateTicket() {
+        try {
+            return PasswordUtil.encryptPassword(String.valueOf(System.currentTimeMillis()));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }

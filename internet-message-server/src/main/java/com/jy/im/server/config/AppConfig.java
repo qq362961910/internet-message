@@ -1,15 +1,16 @@
 package com.jy.im.server.config;
 
-import com.jy.im.base.component.analyser.message.NettyCommonMessageAnalyser;
-import com.jy.im.base.component.analyser.message.NettyMessageAnalyser;
-import com.jy.im.base.component.analyser.message.NettyMessageAnalyserManager;
+import com.jy.im.base.component.analyser.message.tcp.netty.NettyMessageAnalyser;
+import com.jy.im.base.component.analyser.message.tcp.netty.NettyMessageAnalyserManager;
+import com.jy.im.base.component.analyser.message.tcp.netty.NettyServerMessageAnalyser;
 import com.jy.im.base.component.daemon.Daemon;
+import com.jy.im.base.component.decoder.tcp.netty.NettyTcpDecoder;
 import com.jy.im.base.component.launcher.DefaultLauncher;
-import com.jy.im.base.component.launcher.listener.DefaultLauncherListener;
-import com.jy.im.base.component.launcher.listener.LauncherListener;
-import com.jy.im.server.tcp.NettyTcpMessageServer;
-import com.jy.im.server.tcp.initializer.NettyTcpServerInitializer;
-import com.jy.im.server.tcp.listener.NettyTcpServerDaemonListener;
+import com.jy.im.base.component.launcher.DefaultLauncherListener;
+import com.jy.im.base.component.launcher.LauncherListener;
+import com.jy.im.server.tcp.netty.NettyTcpMessageServer;
+import com.jy.im.server.tcp.netty.initializer.NettyTcpServerInitializer;
+import com.jy.im.server.tcp.netty.listener.NettyTcpServerDaemonListener;
 import com.jy.im.service.UserService;
 import com.jy.im.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,25 +32,35 @@ public class AppConfig {
     @Autowired
     private List<LauncherListener> launcherListenerList;
 
+
     /**
      * netty common message analyser
-     * */
+     */
     @Bean
-    public NettyCommonMessageAnalyser nettyCommonMessageAnalyser() {
-        return new NettyCommonMessageAnalyser();
+    public NettyServerMessageAnalyser nettyCommonMessageAnalyser() {
+        return new NettyServerMessageAnalyser();
     }
 
     /**
      * netty message analyser manager
-     * */
+     */
     @Bean
     public NettyMessageAnalyserManager nettyMessageAnalyserManager(NettyMessageAnalyser... nettyMessageAnalysers) {
         return new NettyMessageAnalyserManager(nettyMessageAnalysers);
     }
 
     /**
+     * netty tcp decoder
+     */
+    @Scope("prototype")
+    @Bean
+    public NettyTcpDecoder nettyTcpDecoder(NettyMessageAnalyserManager nettyMessageAnalyserManager) {
+        return new NettyTcpDecoder(nettyMessageAnalyserManager);
+    }
+
+    /**
      * netty tcp server
-     * */
+     */
     @Scope("prototype")
     @Bean
     public NettyTcpMessageServer tcpMessageServer() {

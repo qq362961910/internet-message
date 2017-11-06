@@ -1,5 +1,7 @@
 package com.jy.im.common.entity;
 
+import com.jy.im.common.constants.MessageType;
+
 import java.util.Arrays;
 
 /**
@@ -83,6 +85,10 @@ public class CommonMessage extends BaseMessage {
 
     public void setTicket(byte[] ticket) {
         this.ticket = ticket;
+    }
+
+    public CommonMessage() {
+        messageType = MessageType.STRING.value;
     }
 
     @Override
