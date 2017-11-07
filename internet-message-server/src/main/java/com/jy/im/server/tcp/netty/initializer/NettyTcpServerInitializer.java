@@ -5,7 +5,7 @@ import com.jy.im.base.component.initializer.AbstractNettyTcpInitializer;
 import com.jy.im.base.component.writer.tcp.netty.NettyMessageWriter;
 import com.jy.im.server.helper.ApplicationContextHelper;
 import com.jy.im.server.tcp.netty.handler.CommonLoginMessageHandler;
-import com.jy.im.server.tcp.netty.handler.CommonUserMessageHandler;
+import com.jy.im.server.tcp.netty.handler.CommonUserStringMessageHandler;
 import com.jy.im.server.tcp.netty.writer.CommonLoginResponseMessageWriter;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -38,7 +38,7 @@ public class NettyTcpServerInitializer extends AbstractNettyTcpInitializer {
     public List<ChannelInboundHandlerAdapter> getMessageHandlerList() {
         List<ChannelInboundHandlerAdapter> channelInboundHandlerAdapters = new ArrayList<>();
         channelInboundHandlerAdapters.add(applicationContextHelper.getBean(CommonLoginMessageHandler.class));
-        channelInboundHandlerAdapters.add(applicationContextHelper.getBean(CommonUserMessageHandler.class));
+        channelInboundHandlerAdapters.add(applicationContextHelper.getBean(CommonUserStringMessageHandler.class));
         return channelInboundHandlerAdapters;
     }
 }

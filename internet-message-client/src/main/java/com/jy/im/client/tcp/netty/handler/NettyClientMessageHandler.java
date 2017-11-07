@@ -1,6 +1,6 @@
 package com.jy.im.client.tcp.netty.handler;
 
-import com.jy.im.base.component.daemon.client.MessageListener;
+import com.jy.im.base.component.daemon.client.AbstractMessageListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.internal.logging.InternalLogger;
@@ -13,11 +13,11 @@ public class NettyClientMessageHandler extends ChannelInboundHandlerAdapter {
 
     private static final InternalLogger logger = Log4JLoggerFactory.getInstance(NettyClientMessageHandler.class);
 
-    private List<MessageListener<?>> messageListenerList = new ArrayList<>();
+    private List<AbstractMessageListener<?>> messageListenerList = new ArrayList<>();
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        for (MessageListener messageListener : messageListenerList) {
+        for (AbstractMessageListener messageListener : messageListenerList) {
             if (messageListener.apply(msg)) {
                 messageListener.callback(msg);
                 return;
@@ -31,7 +31,7 @@ public class NettyClientMessageHandler extends ChannelInboundHandlerAdapter {
         logger.info("client ---> active");
     }
 
-    public void addMessageListener(MessageListener<?> messageListener) {
+    public void addMessageListener(AbstractMessageListener<?> messageListener) {
         if (messageListener != null) {
             messageListenerList.add(messageListener);
         }

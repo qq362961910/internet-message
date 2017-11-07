@@ -1,51 +1,31 @@
 package com.jy.im.common.entity;
 
-import com.jy.im.common.constants.MessageType;
-
-import java.util.Arrays;
-
-/**
- * 通用消息
- */
-public class CommonUserMessage extends BaseMessage {
-
-    /**
-     * 消息内容
-     */
-    private byte[] content;
+public abstract class CommonUserMessage extends BaseMessage {
 
     /**
      * fromId
      */
-    private long fromId;
+    protected long fromId;
 
     /**
      * fromIdType
      */
-    private byte fromIdType;
+    protected byte fromIdType;
 
     /**
      * toId
      */
-    private long toId;
+    protected long toId;
 
     /**
      * toIdType
      */
-    private byte toIdType;
+    protected byte toIdType;
 
     /**
      * ticket
      */
-    private byte[] ticket;
-
-    public byte[] getContent() {
-        return content;
-    }
-
-    public void setContent(byte[] content) {
-        this.content = content;
-    }
+    protected byte[] ticket;
 
     public long getFromId() {
         return fromId;
@@ -85,21 +65,5 @@ public class CommonUserMessage extends BaseMessage {
 
     public void setTicket(byte[] ticket) {
         this.ticket = ticket;
-    }
-
-    public CommonUserMessage() {
-        messageType = MessageType.STRING.value;
-    }
-
-    @Override
-    public String toString() {
-        return "CommonMessage{" +
-            "content=" + Arrays.toString(content) +
-            ", fromId=" + fromId +
-            ", fromIdType=" + fromIdType +
-            ", toId=" + toId +
-            ", toIdType=" + toIdType +
-            ", ticket=" + Arrays.toString(ticket) +
-            "} " + super.toString();
     }
 }
