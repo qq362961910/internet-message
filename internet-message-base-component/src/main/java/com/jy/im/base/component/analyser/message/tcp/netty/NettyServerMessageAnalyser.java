@@ -1,8 +1,8 @@
 package com.jy.im.base.component.analyser.message.tcp.netty;
 
 import com.jy.im.base.component.analyser.protocol.netty.NettyCommonMessageProtocolAnalyser;
-import com.jy.im.base.component.translator.tcp.netty.CommonUserMessageTranslator;
 import com.jy.im.base.component.translator.tcp.netty.CommonLoginRequestMessageTranslator;
+import com.jy.im.base.component.translator.tcp.netty.CommonUserMessageTranslator;
 
 public class NettyServerMessageAnalyser extends NettyMessageAnalyser {
 

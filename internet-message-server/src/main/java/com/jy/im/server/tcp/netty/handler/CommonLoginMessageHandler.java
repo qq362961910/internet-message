@@ -39,8 +39,8 @@ public class CommonLoginMessageHandler extends SimpleChannelInboundHandler<Commo
             byte[] ticket = TicketsHolder.generateTicket().getBytes();
             ticketsHolder.addUserTicket(user, new String(ticket));
             response.setTicket(ticket);
+            logger.info("user: {} login success with ticket: {}", userId, new String(ticket));
         }
         ctx.writeAndFlush(response);
-        logger.info("user: {} login success", userId);
     }
 }
