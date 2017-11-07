@@ -2,13 +2,13 @@ package com.jy.im.base.component.translator.tcp.netty;
 
 import com.jy.im.base.component.translator.MessageTranslator;
 import com.jy.im.common.constants.MessageType;
-import com.jy.im.common.entity.LoginMessageRequest;
+import com.jy.im.common.entity.CommonLoginRequestMessage;
 import io.netty.buffer.ByteBuf;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoginCommonMessageTranslator implements MessageTranslator<ByteBuf> {
+public class CommonLoginRequestMessageTranslator implements MessageTranslator<ByteBuf> {
 
     private static final List<MessageType> SUPPORT_MESSAGE_TYPES = new ArrayList<>();
 
@@ -22,7 +22,7 @@ public class LoginCommonMessageTranslator implements MessageTranslator<ByteBuf> 
         //3.code
         //todo
         //package the message
-        LoginMessageRequest message = new LoginMessageRequest();
+        CommonLoginRequestMessage message = new CommonLoginRequestMessage();
         message.setMessageType(MessageType.LOGIN.value);
         message.setUserId(userId);
         message.setPassword(password);
@@ -34,7 +34,7 @@ public class LoginCommonMessageTranslator implements MessageTranslator<ByteBuf> 
         return MessageType.LOGIN == type;
     }
 
-    public LoginCommonMessageTranslator() {
+    public CommonLoginRequestMessageTranslator() {
         SUPPORT_MESSAGE_TYPES.add(MessageType.STRING);
     }
 }

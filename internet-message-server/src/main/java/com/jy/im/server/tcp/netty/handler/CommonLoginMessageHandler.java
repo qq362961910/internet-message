@@ -1,8 +1,8 @@
 package com.jy.im.server.tcp.netty.handler;
 
 import com.jy.im.common.constants.ResponseCode;
-import com.jy.im.common.entity.LoginMessageRequest;
-import com.jy.im.common.entity.LoginMessageResponse;
+import com.jy.im.common.entity.CommonLoginRequestMessage;
+import com.jy.im.common.entity.CommonLoginResponseMessage;
 import com.jy.im.server.resource.TicketsHolder;
 import com.jy.im.service.UserService;
 import com.jy.im.service.entity.User;
@@ -16,9 +16,9 @@ import org.springframework.stereotype.Component;
 
 @Scope("prototype")
 @Component
-public class LoginMessageHandler extends SimpleChannelInboundHandler<LoginMessageRequest> {
+public class CommonLoginMessageHandler extends SimpleChannelInboundHandler<CommonLoginRequestMessage> {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginMessageHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(CommonLoginMessageHandler.class);
 
     @Autowired
     private UserService userService;
@@ -26,11 +26,11 @@ public class LoginMessageHandler extends SimpleChannelInboundHandler<LoginMessag
     private TicketsHolder ticketsHolder;
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, LoginMessageRequest msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, CommonLoginRequestMessage msg) throws Exception {
         long userId = msg.getUserId();
         String password = new String(msg.getPassword());
         User user = userService.queryUserByUserIdAndPassword(userId, password);
-        LoginMessageResponse response = new LoginMessageResponse();
+        CommonLoginResponseMessage response = new CommonLoginResponseMessage();
         if (user == null) {
             response.setCode(ResponseCode.USERNAME_OR_PASSWORD_ERROR.value);
             logger.info("userId: {}, submit wrong password: {}", userId, password);

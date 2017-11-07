@@ -1,7 +1,7 @@
 package com.jy.im.client.tcp.netty;
 
 import com.jy.im.base.component.launcher.DefaultLauncher;
-import com.jy.im.common.entity.LoginMessageRequest;
+import com.jy.im.common.entity.CommonLoginRequestMessage;
 import com.jy.im.common.util.PasswordUtil;
 
 import java.security.NoSuchAlgorithmException;
@@ -34,7 +34,7 @@ public class TcpCommonMessageClient {
     }
 
     public void login(long userId, String password) throws NoSuchAlgorithmException {
-        LoginMessageRequest loginMessage = new LoginMessageRequest();
+        CommonLoginRequestMessage loginMessage = new CommonLoginRequestMessage();
         loginMessage.setUserId(userId);
         loginMessage.setPassword(PasswordUtil.encryptPassword(password).getBytes());
         sendMessage(loginMessage);

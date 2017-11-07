@@ -2,15 +2,15 @@ package com.jy.im.base.component.translator.tcp.netty;
 
 import com.jy.im.base.component.translator.MessageTranslator;
 import com.jy.im.common.constants.MessageType;
-import com.jy.im.common.entity.CommonMessage;
+import com.jy.im.common.entity.CommonUserMessage;
 import io.netty.buffer.ByteBuf;
 
-public class CommonMessageMessageTranslator implements MessageTranslator<ByteBuf> {
+public class CommonUserMessageTranslator implements MessageTranslator<ByteBuf> {
 
     @Override
     public Object translate(ByteBuf in) {
         //package the message
-        CommonMessage message = new CommonMessage();
+        CommonUserMessage message = new CommonUserMessage();
         //toId(8)
         message.setToId(in.readLong());
         //toIdType(1)

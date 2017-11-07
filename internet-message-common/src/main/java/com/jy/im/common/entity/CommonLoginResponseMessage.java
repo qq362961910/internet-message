@@ -2,7 +2,7 @@ package com.jy.im.common.entity;
 
 import com.jy.im.common.constants.MessageType;
 
-public class LoginMessageResponse extends ResponsiveMessage {
+public class CommonLoginResponseMessage extends ResponsiveMessage {
 
     private byte[] ticket;
 
@@ -14,7 +14,7 @@ public class LoginMessageResponse extends ResponsiveMessage {
         this.ticket = ticket;
     }
 
-    public LoginMessageResponse() {
+    public CommonLoginResponseMessage() {
         messageType = MessageType.LOGIN_RESPONSE.value;
     }
 }

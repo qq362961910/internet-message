@@ -3,19 +3,19 @@ package com.jy.im.base.component.translator.tcp.netty;
 import com.jy.im.base.component.translator.MessageTranslator;
 import com.jy.im.common.constants.MessageType;
 import com.jy.im.common.constants.ResponseCode;
-import com.jy.im.common.entity.LoginMessageResponse;
+import com.jy.im.common.entity.CommonLoginResponseMessage;
 import io.netty.buffer.ByteBuf;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoginResponseMessageTranslator implements MessageTranslator<ByteBuf> {
+public class CommonLoginResponseMessageTranslator implements MessageTranslator<ByteBuf> {
 
     private static final List<MessageType> SUPPORT_MESSAGE_TYPES = new ArrayList<>();
 
     @Override
     public Object translate(ByteBuf in) {
-        LoginMessageResponse message = new LoginMessageResponse();
+        CommonLoginResponseMessage message = new CommonLoginResponseMessage();
         //1. code
         message.setCode(in.readInt());
         if (message.getCode() == ResponseCode.SUCCESS.value) {
@@ -33,7 +33,7 @@ public class LoginResponseMessageTranslator implements MessageTranslator<ByteBuf
         return MessageType.LOGIN_RESPONSE == type;
     }
 
-    public LoginResponseMessageTranslator() {
+    public CommonLoginResponseMessageTranslator() {
         SUPPORT_MESSAGE_TYPES.add(MessageType.STRING);
     }
 }

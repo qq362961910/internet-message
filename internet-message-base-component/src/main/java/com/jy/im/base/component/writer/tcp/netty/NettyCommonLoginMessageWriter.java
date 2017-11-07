@@ -1,13 +1,13 @@
 package com.jy.im.base.component.writer.tcp.netty;
 
-import com.jy.im.common.entity.LoginMessageRequest;
+import com.jy.im.common.entity.CommonLoginRequestMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
-public class NettyLoginMessageWriter extends NettyMessageWriter<LoginMessageRequest> {
+public class NettyCommonLoginMessageWriter extends NettyMessageWriter<CommonLoginRequestMessage> {
 
     @Override
-    public void doEncode(ChannelHandlerContext ctx, LoginMessageRequest message, ByteBuf out) {
+    public void doEncode(ChannelHandlerContext ctx, CommonLoginRequestMessage message, ByteBuf out) {
         //userId(8)
         out.writeLong(message.getUserId());
         //password(32)

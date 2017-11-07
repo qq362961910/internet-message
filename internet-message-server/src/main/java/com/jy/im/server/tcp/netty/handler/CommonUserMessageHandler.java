@@ -2,7 +2,7 @@ package com.jy.im.server.tcp.netty.handler;
 
 import com.jy.im.common.constants.MessageIdType;
 import com.jy.im.common.constants.MessageType;
-import com.jy.im.common.entity.CommonMessage;
+import com.jy.im.common.entity.CommonUserMessage;
 import com.jy.im.server.resource.TicketsHolder;
 import com.jy.im.service.entity.User;
 import io.netty.channel.ChannelHandlerContext;
@@ -15,15 +15,15 @@ import org.springframework.stereotype.Component;
 
 @Scope("prototype")
 @Component
-public class CommonMessageHandler extends SimpleChannelInboundHandler<CommonMessage> {
+public class CommonUserMessageHandler extends SimpleChannelInboundHandler<CommonUserMessage> {
 
-    private Logger logger = LoggerFactory.getLogger(CommonMessageHandler.class);
+    private Logger logger = LoggerFactory.getLogger(CommonUserMessageHandler.class);
 
     @Autowired
     private TicketsHolder ticketsHolder;
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, CommonMessage msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, CommonUserMessage msg) throws Exception {
         logger.info("receive a message, type: {}", MessageType.getCommonMessageType(msg.getMessageType()));
         logger.info("length: {}", msg.getLength());
         logger.info("fromId: {}", msg.getFromId());

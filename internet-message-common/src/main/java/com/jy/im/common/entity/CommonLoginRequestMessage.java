@@ -2,7 +2,7 @@ package com.jy.im.common.entity;
 
 import com.jy.im.common.constants.MessageType;
 
-public class LoginMessageRequest extends BaseMessage {
+public class CommonLoginRequestMessage extends BaseMessage {
 
     /**
      * userId
@@ -43,7 +43,7 @@ public class LoginMessageRequest extends BaseMessage {
         this.code = code;
     }
 
-    public LoginMessageRequest() {
+    public CommonLoginRequestMessage() {
         messageType = MessageType.LOGIN.value;
     }
 }

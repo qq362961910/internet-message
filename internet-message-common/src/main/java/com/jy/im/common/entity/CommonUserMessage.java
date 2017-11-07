@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * 通用消息
  */
-public class CommonMessage extends BaseMessage {
+public class CommonUserMessage extends BaseMessage {
 
     /**
      * 消息内容
@@ -87,7 +87,7 @@ public class CommonMessage extends BaseMessage {
         this.ticket = ticket;
     }
 
-    public CommonMessage() {
+    public CommonUserMessage() {
         messageType = MessageType.STRING.value;
     }
 

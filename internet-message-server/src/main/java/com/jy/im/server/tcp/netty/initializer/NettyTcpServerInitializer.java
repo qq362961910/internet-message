@@ -2,9 +2,9 @@ package com.jy.im.server.tcp.netty.initializer;
 
 import com.jy.im.base.component.decoder.tcp.netty.NettyTcpDecoder;
 import com.jy.im.server.helper.ApplicationContextHelper;
-import com.jy.im.server.tcp.netty.handler.CommonMessageHandler;
-import com.jy.im.server.tcp.netty.handler.LoginMessageHandler;
-import com.jy.im.server.tcp.netty.writer.LoginMessageResponseWriter;
+import com.jy.im.server.tcp.netty.handler.CommonUserMessageHandler;
+import com.jy.im.server.tcp.netty.handler.CommonLoginMessageHandler;
+import com.jy.im.server.tcp.netty.writer.CommonLoginResponseMessageWriter;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -23,9 +23,9 @@ public class NettyTcpServerInitializer extends ChannelInitializer {
     protected void initChannel(Channel ch) throws Exception {
         ChannelPipeline channelPipeline = ch.pipeline();
         channelPipeline.addLast(applicationContextHelper.getBean(NettyTcpDecoder.class));
-        channelPipeline.addLast(applicationContextHelper.getBean(LoginMessageResponseWriter.class));
-        channelPipeline.addLast(applicationContextHelper.getBean(LoginMessageHandler.class));
-        channelPipeline.addLast(applicationContextHelper.getBean(CommonMessageHandler.class));
+        channelPipeline.addLast(applicationContextHelper.getBean(CommonLoginResponseMessageWriter.class));
+        channelPipeline.addLast(applicationContextHelper.getBean(CommonLoginMessageHandler.class));
+        channelPipeline.addLast(applicationContextHelper.getBean(CommonUserMessageHandler.class));
 
     }
 }

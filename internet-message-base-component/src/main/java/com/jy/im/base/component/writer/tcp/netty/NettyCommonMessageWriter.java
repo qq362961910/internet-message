@@ -1,13 +1,13 @@
 package com.jy.im.base.component.writer.tcp.netty;
 
-import com.jy.im.common.entity.CommonMessage;
+import com.jy.im.common.entity.CommonUserMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
-public class NettyCommonMessageWriter extends NettyMessageWriter<CommonMessage> {
+public class NettyCommonMessageWriter extends NettyMessageWriter<CommonUserMessage> {
 
     @Override
-    public void doEncode(ChannelHandlerContext ctx, CommonMessage message, ByteBuf out) {
+    public void doEncode(ChannelHandlerContext ctx, CommonUserMessage message, ByteBuf out) {
         //toId(8)
         out.writeLong(message.getToId());
         //toIdType(1)
