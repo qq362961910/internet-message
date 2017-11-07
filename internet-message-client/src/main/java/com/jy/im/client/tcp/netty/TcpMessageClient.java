@@ -39,7 +39,9 @@ public class TcpMessageClient extends AbstractDaemonClient<NettyTcpClientDaemonL
         } catch (Exception e) {
             logger.error(String.format("TCP Client: %s Down,host: %s port: %d ", name, host, port), e);
         } finally {
-            launcher.daemonShutdownSuccess(this);
+            if (launcher != null) {
+                launcher.daemonShutdownSuccess(this);
+            }
             logger.info(String.format("[TCP Client]: %s closed, port: %d ", name, port));
             workerGroup.shutdownGracefully();
         }
@@ -53,14 +55,7 @@ public class TcpMessageClient extends AbstractDaemonClient<NettyTcpClientDaemonL
     }
 
     public void writeMessage(Object message) {
-        if (message instanceof String) {
-            byte[] content = ((String) message).getBytes();
-            ByteBuf buf = ByteBufAllocator.DEFAULT.buffer(content.length);
-            buf.writeBytes(content);
-            clientChannel.writeAndFlush(buf);
-        } else {
-            clientChannel.writeAndFlush(message);
-        }
+        clientChannel.writeAndFlush(message);
     }
 
     public TcpMessageClient(String host, int port) {

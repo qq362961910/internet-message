@@ -4,8 +4,12 @@ import com.jy.im.common.entity.BaseMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
+import io.netty.util.internal.logging.InternalLogger;
+import io.netty.util.internal.logging.Slf4JLoggerFactory;
 
 public abstract class NettyMessageWriter <Entity extends BaseMessage> extends MessageToByteEncoder<Entity> {
+
+    private static final InternalLogger logger = Slf4JLoggerFactory.getInstance(NettyMessageWriter.class);
 
     private byte lengthBytes = 2;
 

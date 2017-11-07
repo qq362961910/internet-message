@@ -56,7 +56,7 @@ public class DefaultLauncher extends AbstractLauncher {
                     if (!stop) {
                         timer.newTimeout(this, period, TimeUnit.SECONDS);
                     } else {
-                        logger.info("server health check monitor stop....");
+                        new Thread(timer::stop).start();
                     }
                 }
             }, period, TimeUnit.SECONDS);
