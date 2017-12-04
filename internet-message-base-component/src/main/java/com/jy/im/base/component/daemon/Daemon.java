@@ -9,20 +9,30 @@ import com.jy.im.base.component.launcher.Launcher;
 public interface Daemon {
 
     /**
+     * before start
+     * */
+    void beforeStart();
+
+    /**
      * 启动
      */
     void start(Launcher launcher);
-
-    /**
-     * 结束
-     */
-    void shutdown(Launcher launcher);
 
     /**
      * after start
      */
 
     void afterStart();
+
+    /**
+     * before shutdown
+     * */
+    void beforeShutdown();
+
+    /**
+     * 结束
+     */
+    void shutdown(Launcher launcher);
 
     /**
      * after stop

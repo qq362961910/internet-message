@@ -15,7 +15,7 @@ public class NettyTcpClientDaemonListener implements DaemonListener {
     }
 
     @Override
-    public void close(Daemon daemon) {
-        logger.info("NettyTcpClientDaemonListener run startup()....");
+    public void afterShutdown(Daemon daemon) {
+        logger.info("NettyTcpClientDaemonListener run afterShutdown()....");
     }
 }

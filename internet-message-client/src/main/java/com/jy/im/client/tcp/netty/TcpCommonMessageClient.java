@@ -109,10 +109,6 @@ public class TcpCommonMessageClient {
         client.shutdown();
     }
 
-
-
-
-
     private static void printMessageTypeOpt() {
         System.out.println("chose message type: ");
         for(Map.Entry<String, String> entry: options.entrySet()) {

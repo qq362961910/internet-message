@@ -3,7 +3,7 @@ package com.jy.im.base.component.launcher;
 
 public interface LauncherListener {
 
-    void startup(AbstractLauncher launcher);
+    void afterStartup(AbstractLauncher launcher);
 
-    void close(AbstractLauncher launcher);
+    void afterClose(AbstractLauncher launcher);
 }

@@ -8,12 +8,12 @@ public class DefaultLauncherListener implements LauncherListener {
     private static final InternalLogger logger = Log4JLoggerFactory.getInstance(DefaultLauncherListener.class);
 
     @Override
-    public void startup(AbstractLauncher launcher) {
-        logger.info("DefaultLauncherListener run startup()....");
+    public void afterStartup(AbstractLauncher launcher) {
+        logger.info("DefaultLauncherListener run afterStartup()....");
     }
 
     @Override
-    public void close(AbstractLauncher launcher) {
-        logger.info("DefaultLauncherListener run close()....");
+    public void afterClose(AbstractLauncher launcher) {
+        logger.info("DefaultLauncherListener run afterClose()....");
     }
 }

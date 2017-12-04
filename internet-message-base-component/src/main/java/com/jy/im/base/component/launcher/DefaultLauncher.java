@@ -16,17 +16,14 @@ public class DefaultLauncher extends AbstractLauncher {
 
     public void doStart() {
         //启动所有服务器
-        if (!getDaemonList().isEmpty()) {
-            logger.info(String.format("server to start list size: %d", getDaemonList().size()));
+        if (!daemonList.isEmpty()) {
+            logger.info("server to start list size: {}", daemonList.size());
             long before = System.currentTimeMillis();
             boolean notTimeout = true;
-            getDaemonList().forEach(this::startServer);
+            daemonList.forEach(this::startServer);
             //等待直到超时
-            while (serverSuccessCount.get() != getDaemonList().size() && (notTimeout = System.currentTimeMillis() - before < launcherConfig.getTimeout())) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                }
+            while (serverSuccessCount.get() != daemonList.size() && (notTimeout = System.currentTimeMillis() - before < launcherConfig.getTimeout())) {
+                try { Thread.sleep(500); } catch (InterruptedException e) { /* do nothing */ }
             }
             if (!notTimeout) {
                 logger.error("Launcher starts timeout!");
@@ -66,22 +63,19 @@ public class DefaultLauncher extends AbstractLauncher {
 
     public void doClose() {
         //停止所有服务器
-        if (!getDaemonList().isEmpty()) {
-            logger.info(getDaemonList().size() + " servers to stop");
-            for (Daemon server : getDaemonList()) {
-                server.shutdown(this);
-            }
+        if (!daemonList.isEmpty()) {
+            logger.info(String.format("server to stop list size: %d", daemonList.size()));
+            daemonList.forEach(this::shutdownServer);
             while (serverSuccessCount.get() != 0) {
                 try {
                     Thread.sleep(500);
                     logger.info("alive alive remain: " + serverSuccessCount.get());
-                } catch (InterruptedException e) {
-                }
+                } catch (InterruptedException e) { /* do nothing */ }
             }
         }
     }
 
     public boolean isStartUpOk() {
-        return serverSuccessCount.get() == getDaemonList().size();
+        return serverSuccessCount.get() == daemonList.size();
     }
 }

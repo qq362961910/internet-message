@@ -19,7 +19,7 @@ public class NettyUdpDaemonListener implements DaemonListener {
     }
 
     @Override
-    public void close(Daemon server) {
-        logger.info(server.getClass() + " stop....");
+    public void afterShutdown(Daemon server) {
+        logger.info(server.getClass() + " afterShutdown....");
     }
 }

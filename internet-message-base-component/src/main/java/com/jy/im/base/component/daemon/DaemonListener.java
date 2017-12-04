@@ -5,5 +5,5 @@ public interface DaemonListener {
 
     void afterStartup(Daemon daemon);
 
-    void close(Daemon daemon);
+    void afterShutdown(Daemon daemon);
 }

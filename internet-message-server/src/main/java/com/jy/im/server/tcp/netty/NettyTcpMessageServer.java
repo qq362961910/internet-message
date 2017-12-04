@@ -20,51 +20,18 @@ public class NettyTcpMessageServer extends AbstractDaemonServer<NettyTcpServerDa
 
     private Logger logger = LoggerFactory.getLogger(NettyTcpMessageServer.class);
 
-    private Channel serverChannel;
     private NettyTcpServerInitializer channelInitializer;
 
     @Override
-    public void start(Launcher launcher) {
-        EventLoopGroup bossGroup = new NioEventLoopGroup();
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
-        ServerBootstrap bootstrap = new ServerBootstrap();
-        try {
-            bootstrap.group(bossGroup, workerGroup)
-                .channel(NioServerSocketChannel.class)
-                .childHandler(channelInitializer)
-                .option(ChannelOption.SO_BACKLOG, 128)
-                .childOption(ChannelOption.SO_KEEPALIVE, true);
-            ChannelFuture future = bootstrap.bind(getPort()).sync();
-            if (launcher != null) {
-                launcher.daemonStartSuccess(this);
-            }
-            serverChannel = future.channel();
-            logger.info("TCP Server: {} has been started successfully, port: {}", name, port);
-            serverChannel.closeFuture().sync();
-        } catch (Exception e) {
-            logger.error(String.format("TCP Server: %s Down, port: %d ", name, port), e);
-        } finally {
-            if (launcher != null) {
-                launcher.daemonShutdownSuccess(this);
-            }
-            logger.info("[TCP Server]: {} closed, port: {}", name, port);
-            bossGroup.shutdownGracefully();
-            workerGroup.shutdownGracefully();
-        }
+    public void configBootstrap(ServerBootstrap serverBootstrap) {
+        serverBootstrap.childHandler(channelInitializer)
+                       .option(ChannelOption.SO_BACKLOG, 128)
+                       .childOption(ChannelOption.SO_KEEPALIVE, true);
     }
 
-    @Override
-    public void shutdown(Launcher launcher) {
-        if (serverChannel != null) {
-            serverChannel.close();
-        }
-    }
 
     public NettyTcpMessageServer(String name, int port, List<NettyTcpServerDaemonListener> demonListenerList, NettyTcpServerInitializer channelInitializer) {
-        super(name, port);
-        if (demonListenerList != null && !demonListenerList.isEmpty()) {
-            this.demonListenerList.addAll(demonListenerList);
-        }
+        super(name, port, demonListenerList);
         this.channelInitializer = channelInitializer;
     }
 }

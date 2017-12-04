@@ -28,7 +28,7 @@ public abstract class AbstractLauncher implements Launcher {
     /**
      * 服务器实例
      */
-    private final List<Daemon> daemonList = new ArrayList<>();
+    protected final List<Daemon> daemonList = new ArrayList<>();
     /**
      * 停机实例
      */
@@ -53,9 +53,7 @@ public abstract class AbstractLauncher implements Launcher {
         //回调监听器
         if (!launcherListenerList.isEmpty()) {
             logger.info("launcher listener size: {}, begin to call launcher listeners", launcherListenerList.size());
-            for (LauncherListener listener : launcherListenerList) {
-                listener.startup(this);
-            }
+            launcherListenerList.forEach(listener -> listener.afterStartup(AbstractLauncher.this));
         }
         logger.info("launcher startup successfully");
     }
@@ -79,19 +77,28 @@ public abstract class AbstractLauncher implements Launcher {
         }
         //回调监听器
         if (!launcherListenerList.isEmpty()) {
-            for (LauncherListener listener : launcherListenerList) {
-                try {
-                    listener.close(this);
-                } catch (Exception e) {
-                }
-            }
+            launcherListenerList.forEach(listener -> listener.afterClose(AbstractLauncher.this));
         }
         logger.info("launcher shutdown successfully");
     }
 
     protected void startServer(Daemon server) {
         if (!executorService.isShutdown()) {
-            executorService.submit(() -> server.start(this));
+            executorService.submit(() -> {
+                server.beforeStart();
+                server.start(this);
+                server.afterStart();
+            });
+        }
+    }
+
+    protected void shutdownServer(Daemon server) {
+        if (!executorService.isShutdown()) {
+            executorService.submit(() -> {
+                server.beforeShutdown();
+                server.shutdown(this);
+                server.afterShutdown();
+            });
         }
     }
 
@@ -109,10 +116,6 @@ public abstract class AbstractLauncher implements Launcher {
         serverSuccessCount.addAndGet(-1);
         downDaemonList.add(server);
         server.afterShutdown();
-    }
-
-    public List<Daemon> getDaemonList() {
-        return daemonList;
     }
 
     public AbstractLauncher addDaemonList(List<Daemon> daemonList) {
