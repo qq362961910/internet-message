@@ -10,7 +10,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -20,10 +19,13 @@ public class CommonLoginMessageHandler extends SimpleChannelInboundHandler<Commo
 
     private static final Logger logger = LoggerFactory.getLogger(CommonLoginMessageHandler.class);
 
-    @Autowired
     private UserService userService;
-    @Autowired
     private TicketsHolder ticketsHolder;
+
+    public CommonLoginMessageHandler(UserService userService, TicketsHolder ticketsHolder) {
+        this.userService = userService;
+        this.ticketsHolder = ticketsHolder;
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CommonLoginRequestMessage msg) throws Exception {

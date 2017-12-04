@@ -14,8 +14,8 @@ public class NettyUdpDaemonListener implements DaemonListener {
     private static final Logger logger = LoggerFactory.getLogger(NettyUdpDaemonListener.class);
 
     @Override
-    public void startup(Daemon server) {
-        logger.info(server.getClass() + " start....");
+    public void afterStartup(Daemon server) {
+        logger.info(server.getClass() + " afterStartup....");
     }
 
     @Override

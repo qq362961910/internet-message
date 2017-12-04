@@ -10,8 +10,8 @@ public class NettyTcpClientDaemonListener implements DaemonListener {
     private static final InternalLogger logger = Log4JLoggerFactory.getInstance(NettyTcpClientDaemonListener.class);
 
     @Override
-    public void startup(Daemon daemon) {
-        logger.info("NettyTcpClientDaemonListener run startup()....");
+    public void afterStartup(Daemon daemon) {
+        logger.info("NettyTcpClientDaemonListener run afterStartup()....");
     }
 
     @Override

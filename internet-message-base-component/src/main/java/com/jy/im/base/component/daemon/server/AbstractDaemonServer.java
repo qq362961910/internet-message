@@ -26,7 +26,7 @@ public abstract class AbstractDaemonServer<Listener extends DaemonListener> impl
     public void afterStart() {
         //调用监听器#start()
         if (!demonListenerList.isEmpty()) {
-            demonListenerList.forEach(listener -> listener.startup(this));
+            demonListenerList.forEach(listener -> listener.afterStartup(this));
         }
     }
 

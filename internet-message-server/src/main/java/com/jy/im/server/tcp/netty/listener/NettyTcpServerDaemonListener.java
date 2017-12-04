@@ -14,8 +14,8 @@ public class NettyTcpServerDaemonListener implements DaemonListener {
     private static final Logger logger = LoggerFactory.getLogger(NettyTcpServerDaemonListener.class);
 
     @Override
-    public void startup(Daemon daemon) {
-        logger.info("NettyTcpServerDaemonListener run startup()....");
+    public void afterStartup(Daemon daemon) {
+        logger.info("NettyTcpServerDaemonListener run afterStartup()....");
     }
 
     @Override

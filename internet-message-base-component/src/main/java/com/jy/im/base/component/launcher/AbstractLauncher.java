@@ -139,4 +139,7 @@ public abstract class AbstractLauncher implements Launcher {
         }
         return this;
     }
+    public boolean getLauncherStatus() {
+        return !stop;
+    }
 }

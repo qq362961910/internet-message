@@ -54,6 +54,7 @@ public class TcpMessageClient extends AbstractDaemonClient<NettyTcpClientDaemonL
         }
     }
 
+    @Override
     public void writeMessage(Object message) {
         clientChannel.writeAndFlush(message);
     }

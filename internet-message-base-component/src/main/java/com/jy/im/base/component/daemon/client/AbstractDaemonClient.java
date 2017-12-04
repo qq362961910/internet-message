@@ -21,9 +21,9 @@ public abstract class AbstractDaemonClient<Listener extends DaemonListener> impl
 
     @Override
     public void afterStart() {
-        //调用监听器#start()
+        //调用监听器#afterStart()
         if (!demonListenerList.isEmpty()) {
-            demonListenerList.forEach(listener -> listener.startup(this));
+            demonListenerList.forEach(listener -> listener.afterStartup(this));
         }
     }
 
@@ -44,4 +44,5 @@ public abstract class AbstractDaemonClient<Listener extends DaemonListener> impl
         this.host = host;
         this.port = port;
     }
+    public abstract void writeMessage(Object message);
 }
