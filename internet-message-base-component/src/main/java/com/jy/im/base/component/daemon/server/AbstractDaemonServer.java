@@ -80,14 +80,14 @@ public abstract class AbstractDaemonServer<Listener extends DaemonListener> impl
             logger.info("TCP Server: {} has been started successfully, port: {}", name, port);
             serverChannel.closeFuture().sync();
         } catch (Exception e) {
-            logger.error(String.format("TCP Server: %s Down, port: %d ", name, port), e);
+            throw new RuntimeException(e);
         } finally {
+            logger.info("[TCP Server]: {} closed, port: {}", name, port);
             if (launcher != null) {
                 launcher.daemonShutdownSuccess(this);
             }
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
-            logger.info("[TCP Server]: {} closed, port: {}", name, port);
         }
     }
 

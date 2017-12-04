@@ -64,7 +64,7 @@ public class DefaultLauncher extends AbstractLauncher {
     public void doClose() {
         //停止所有服务器
         if (!daemonList.isEmpty()) {
-            logger.info(String.format("server to stop list size: %d", daemonList.size()));
+            logger.info("server to stop list size: {}", daemonList.size());
             daemonList.forEach(this::shutdownServer);
             while (serverSuccessCount.get() != 0) {
                 try {

@@ -76,12 +76,12 @@ public abstract class AbstractDaemonClient<Listener extends DaemonListener> impl
             clientChannel = channelFuture.channel();
             clientChannel.closeFuture().sync();
         } catch (Exception e) {
-            logger.error(String.format("TCP Client: %s Down,host: %s port: %d ", name, host, port), e);
+            throw new RuntimeException(e);
         } finally {
+            logger.info("[TCP Client]: {} closed, port: {} ", name, port);
             if (launcher != null) {
                 launcher.daemonShutdownSuccess(this);
             }
-            logger.info(String.format("[TCP Client]: %s closed, port: %d ", name, port));
             workerGroup.shutdownGracefully();
         }
     }
