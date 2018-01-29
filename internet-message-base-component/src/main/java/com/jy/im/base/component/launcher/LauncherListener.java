@@ -1,6 +1,9 @@
 package com.jy.im.base.component.launcher;
 
 
+/**
+ * 启动器监听器
+ * */
 public interface LauncherListener {
 
     /**

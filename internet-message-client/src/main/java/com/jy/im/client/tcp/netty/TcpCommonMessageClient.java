@@ -1,6 +1,7 @@
 package com.jy.im.client.tcp.netty;
 
 import com.jy.im.base.component.launcher.DefaultLauncher;
+import com.jy.im.client.tcp.netty.initializer.NettyTcpClientInitializer;
 import com.jy.im.common.constants.MessageIdType;
 import com.jy.im.common.entity.CommonLoginRequestMessage;
 import com.jy.im.common.entity.CommonUserStringMessage;
@@ -38,7 +39,7 @@ public class TcpCommonMessageClient {
         //第一次初始化
         if (launcher == null) {
             launcher = new DefaultLauncher();
-            tcpMessageClient = new TcpMessageClient(host, port);
+            tcpMessageClient = new TcpMessageClient(host, port, new NettyTcpClientInitializer());
             launcher.addDaemon(tcpMessageClient);
         }
         launcher.startup();

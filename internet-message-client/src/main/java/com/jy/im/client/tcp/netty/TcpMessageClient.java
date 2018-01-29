@@ -12,13 +12,16 @@ public class TcpMessageClient extends AbstractDaemonClient<NettyTcpClientDaemonL
 
     private InternalLogger logger = Log4JLoggerFactory.getInstance(TcpMessageClient.class);
 
+    private NettyTcpClientInitializer nettyTcpClientInitializer;
+
     @Override
     public void configBootstrap(Bootstrap bootstrap) {
         bootstrap.option(ChannelOption.SO_KEEPALIVE, true)
-                 .handler(new NettyTcpClientInitializer());
+                 .handler(nettyTcpClientInitializer);
         logger.info("[TcpMessageClient]:{} config bootstrap ok", name);
     }
-    public TcpMessageClient(String host, int port) {
+    public TcpMessageClient(String host, int port, NettyTcpClientInitializer nettyTcpClientInitializer) {
         super("netty-tcp-client", host, port);
+        this.nettyTcpClientInitializer = nettyTcpClientInitializer;
     }
 }
