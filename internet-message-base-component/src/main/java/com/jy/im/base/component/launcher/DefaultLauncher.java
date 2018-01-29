@@ -19,32 +19,32 @@ public class DefaultLauncher extends AbstractLauncher {
         if (!daemonList.isEmpty()) {
             logger.info("server to start list size: {}", daemonList.size());
             long before = System.currentTimeMillis();
-            boolean notTimeout = true;
             daemonList.forEach(this::startServer);
             //等待直到超时
-            while (serverSuccessCount.get() != daemonList.size() && (notTimeout = System.currentTimeMillis() - before < launcherConfig.getTimeout())) {
+            while (serverSuccessCount.get() != daemonList.size()) {
+                boolean timeout = System.currentTimeMillis() - before > launcherConfig.getTimeout();
+                if(timeout) {
+                    logger.error("Launcher starts timeout!");
+                    break;
+                }
                 try { Thread.sleep(500); } catch (InterruptedException e) { /* do nothing */ }
-            }
-            if (!notTimeout) {
-                logger.error("Launcher starts timeout!");
             }
         }
         //故障服务器检查
         if (launcherConfig.isAutoRestart() && !stop) {
-            logger.info("launcher config server restart: true");
+            logger.info("launcher config server restart: {}", launcherConfig.isAutoRestart());
             final HashedWheelTimer timer = new HashedWheelTimer();
             final int period = launcherConfig.getHealthyCheckInSecond();
             timer.newTimeout(new TimerTask() {
                 public void run(Timeout timeout) throws Exception {
                     logger.info("check down server....");
                     if (downDaemonList.size() > 0) {
-                        logger.info(stop + ", find down server, size: " + downDaemonList.size());
+                        logger.info("find down server, size: {}", downDaemonList.size());
                         while (downDaemonList.size() > 0) {
-                            Daemon daemon = downDaemonList.get(0);
-                            logger.info("server restart: " + daemon);
+                            Daemon daemon = downDaemonList.remove(0);
+                            logger.info("server restart: {}", daemon);
                             if (!stop) {
                                 startServer(daemon);
-                                downDaemonList.remove(0);
                             } else {
                                 break;
                             }
@@ -69,7 +69,7 @@ public class DefaultLauncher extends AbstractLauncher {
             while (serverSuccessCount.get() != 0) {
                 try {
                     Thread.sleep(500);
-                    logger.info("alive alive remain: " + serverSuccessCount.get());
+                    logger.info("alive alive remain: {}", serverSuccessCount.get());
                 } catch (InterruptedException e) { /* do nothing */ }
             }
         }

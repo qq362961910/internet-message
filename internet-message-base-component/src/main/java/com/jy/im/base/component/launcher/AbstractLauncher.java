@@ -52,7 +52,7 @@ public abstract class AbstractLauncher implements Launcher {
         doStart();
         //回调监听器
         if (!launcherListenerList.isEmpty()) {
-            logger.info("launcher listener size: {}, begin to call launcher listeners", launcherListenerList.size());
+            logger.info("launcher listener list size: {}, begin to call LauncherListener#afterStartup(AbstractLauncher launcher)", launcherListenerList.size());
             launcherListenerList.forEach(listener -> listener.afterStartup(AbstractLauncher.this));
         }
         logger.info("launcher startup successfully");
@@ -65,7 +65,7 @@ public abstract class AbstractLauncher implements Launcher {
      */
     @Override
     public void close() {
-        logger.info("launcher begin to shutdown!!!");
+        logger.info("launcher begin to shutdown");
         stop = true;
         doClose();
         executorService.shutdown();
@@ -77,6 +77,7 @@ public abstract class AbstractLauncher implements Launcher {
         }
         //回调监听器
         if (!launcherListenerList.isEmpty()) {
+            logger.info("launcher listener list size: {}, begin to call LauncherListener#afterClose(AbstractLauncher launcher)", launcherListenerList.size());
             launcherListenerList.forEach(listener -> listener.afterClose(AbstractLauncher.this));
         }
         logger.info("launcher shutdown successfully");
@@ -86,8 +87,7 @@ public abstract class AbstractLauncher implements Launcher {
         if (!executorService.isShutdown()) {
             executorService.submit(() -> {
                 server.beforeStart();
-                server.start(this);
-                server.afterStart();
+                server.start(AbstractLauncher.this);
             });
         }
     }
@@ -96,8 +96,7 @@ public abstract class AbstractLauncher implements Launcher {
         if (!executorService.isShutdown()) {
             executorService.submit(() -> {
                 server.beforeShutdown();
-                server.shutdown(this);
-                server.afterShutdown();
+                server.shutdown(AbstractLauncher.this);
             });
         }
     }
@@ -106,14 +105,16 @@ public abstract class AbstractLauncher implements Launcher {
 
     @Override
     public void daemonStartSuccess(Daemon server) {
-        serverSuccessCount.addAndGet(1);
-        logger.info("server alive count: " + serverSuccessCount.get());
+        int count = serverSuccessCount.addAndGet(1);
+        logger.info("server alive count: {}", count);
+        //因为server会阻塞线程,所以在这里进行调用afterStart()
         server.afterStart();
     }
 
     @Override
     public void daemonShutdownSuccess(Daemon server) {
-        serverSuccessCount.addAndGet(-1);
+        int count = serverSuccessCount.addAndGet(-1);
+        logger.info("server alive count: {}", count);
         downDaemonList.add(server);
         server.afterShutdown();
     }
