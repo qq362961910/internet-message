@@ -27,6 +27,7 @@ public class NettyTcpMessageServer extends AbstractDaemonServer<NettyTcpServerDa
         serverBootstrap.childHandler(channelInitializer)
                        .option(ChannelOption.SO_BACKLOG, 128)
                        .childOption(ChannelOption.SO_KEEPALIVE, true);
+        logger.info("[NettyTcpMessageServer]:{} config bootstrap ok", name);
     }
 
 

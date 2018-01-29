@@ -73,21 +73,21 @@ public abstract class AbstractDaemonServer<Listener extends DaemonListener> impl
     public void start(Launcher launcher) {
         try {
             ChannelFuture future = bootstrap.bind(getPort()).sync();
+            serverChannel = future.channel();
+            logger.info("[Server]: {} has been started successfully, port: {}", name, port);
             if (launcher != null) {
                 launcher.daemonStartSuccess(this);
             }
-            serverChannel = future.channel();
-            logger.info("TCP Server: {} has been started successfully, port: {}", name, port);
             serverChannel.closeFuture().sync();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error("[Server]: {} throws a exception: {}", name, e);
         } finally {
-            logger.info("[TCP Server]: {} closed, port: {}", name, port);
+            logger.info("[Server]: {} closed, port: {}", name, port);
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
             if (launcher != null) {
                 launcher.daemonShutdownSuccess(this);
             }
-            bossGroup.shutdownGracefully();
-            workerGroup.shutdownGracefully();
         }
     }
 

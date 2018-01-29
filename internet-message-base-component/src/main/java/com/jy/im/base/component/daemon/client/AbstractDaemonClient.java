@@ -38,7 +38,7 @@ public abstract class AbstractDaemonClient<Listener extends DaemonListener> impl
     /**
      * client name
      * */
-    private final String name;
+    protected final String name;
 
     /**
      * connect host
@@ -69,20 +69,20 @@ public abstract class AbstractDaemonClient<Listener extends DaemonListener> impl
     @Override
     public void start(Launcher launcher) {
         try {
+            ChannelFuture channelFuture = bootstrap.connect(host, port).sync();
+            clientChannel = channelFuture.channel();
             if (launcher != null) {
                 launcher.daemonStartSuccess(this);
             }
-            ChannelFuture channelFuture = bootstrap.connect(host, port).sync();
-            clientChannel = channelFuture.channel();
             clientChannel.closeFuture().sync();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error("[Client]: {} throws a exception: {}", name, e);
         } finally {
-            logger.info("[TCP Client]: {} closed, port: {} ", name, port);
+            logger.info("[Client]: {} closed, port: {} ", name, port);
+            workerGroup.shutdownGracefully();
             if (launcher != null) {
                 launcher.daemonShutdownSuccess(this);
             }
-            workerGroup.shutdownGracefully();
         }
     }
 
