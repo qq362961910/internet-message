@@ -10,7 +10,6 @@ public abstract class NettyMessageProtocolAnalyser extends AbstractMessageProtoc
 
     @Override
     public MessageProtocol analyser(ByteBuf byteBuf) {
-        byte p = byteBuf.readByte();
-        return MessageProtocol.getMessageProtocol(p);
+        return MessageProtocol.getMessageProtocol(byteBuf.readByte());
     }
 }

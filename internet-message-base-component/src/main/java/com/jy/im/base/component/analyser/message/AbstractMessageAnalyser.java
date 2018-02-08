@@ -8,8 +8,8 @@ import com.jy.im.base.component.analyser.protocol.ProtocolAnalyser;
 public abstract class AbstractMessageAnalyser<In> implements MessageAnalyser<In> {
 
     /**
-     * 消息协议解析器判断是否支持入参
-     * 消息解析器判断是否支持该协议
+     * 1.消息协议解析器判断是否支持入参
+     * 2.消息解析器判断是否支持该协议
      */
     @Override
     public boolean support(In in) {

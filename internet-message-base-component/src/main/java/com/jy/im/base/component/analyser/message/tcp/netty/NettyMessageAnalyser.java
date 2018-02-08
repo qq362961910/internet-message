@@ -21,19 +21,31 @@ public abstract class NettyMessageAnalyser extends AbstractMessageAnalyser<ByteB
 
     private List<MessageTranslator<ByteBuf>> messageTranslators = new ArrayList<>();
 
+    private int length = -1;
+    private byte mt = -1;
+
     @Override
     public Object analyse(ByteBuf in) {
-        short length = in.readShort();
+        //读取消息长度
+        if(length == -1) {
+            length = in.readShort();
+        }
+        //消息不完整
         if (in.readableBytes() < length) {
             return null;
         }
-        MessageType messageType = MessageType.getCommonMessageType(in.readByte());
+        mt = in.readByte();
+        //消息种类
+        MessageType messageType = MessageType.getCommonMessageType(mt);
+        if(messageType == null) {
+            logger.error("unknown message type: {}", messageType);
+        }
         for (MessageTranslator<ByteBuf> translator : messageTranslators) {
             if (translator.support(messageType)) {
                 return translator.translate(in);
             }
         }
-        logger.warn("no message found");
+        logger.error("no translator found for messageType: {}", messageType);
         return null;
     }
 

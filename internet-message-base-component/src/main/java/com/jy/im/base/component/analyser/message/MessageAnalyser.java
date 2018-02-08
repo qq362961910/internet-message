@@ -3,7 +3,6 @@ package com.jy.im.base.component.analyser.message;
 /**
  * 消息解析器
  * In 原始入参
- * Out 入参消息内容
  */
 public interface MessageAnalyser<In> {
 

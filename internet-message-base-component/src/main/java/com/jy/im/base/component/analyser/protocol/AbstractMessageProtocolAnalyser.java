@@ -9,12 +9,8 @@ public abstract class AbstractMessageProtocolAnalyser<In> implements ProtocolAna
 
     @Override
     public boolean support(In in) {
-        boolean match = matcher.match(in);
-        if (match) {
-            MessageProtocol messageProtocol = analyser(in);
-            return getSupportMessageProtocol() == messageProtocol;
-        }
-        return false;
+        //入參类型匹配, 协议匹配
+        return matcher.match(in) && getSupportMessageProtocol().equals(analyser(in));
     }
 
     /**
