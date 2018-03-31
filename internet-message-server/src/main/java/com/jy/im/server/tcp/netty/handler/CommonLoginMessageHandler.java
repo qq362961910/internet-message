@@ -1,6 +1,6 @@
 package com.jy.im.server.tcp.netty.handler;
 
-import com.jy.im.common.constants.ResponseCode;
+import com.jy.im.common.constants.CommonMessageCode;
 import com.jy.im.common.entity.CommonLoginRequestMessage;
 import com.jy.im.common.entity.CommonLoginResponseMessage;
 import com.jy.im.server.resource.TicketsHolder;
@@ -34,10 +34,10 @@ public class CommonLoginMessageHandler extends SimpleChannelInboundHandler<Commo
         User user = userService.queryUserByUserIdAndPassword(userId, password);
         CommonLoginResponseMessage response = new CommonLoginResponseMessage();
         if (user == null) {
-            response.setCode(ResponseCode.USERNAME_OR_PASSWORD_ERROR.value);
+            response.setCode(CommonMessageCode.USERNAME_OR_PASSWORD_ERROR.value);
             logger.info("userId: {}, submit wrong password: {}", userId, password);
         } else {
-            response.setCode(ResponseCode.SUCCESS.value);
+            response.setCode(CommonMessageCode.SUCCESS.value);
             byte[] ticket = TicketsHolder.generateTicket().getBytes();
             ticketsHolder.addUserTicket(user, new String(ticket));
             response.setTicket(ticket);
