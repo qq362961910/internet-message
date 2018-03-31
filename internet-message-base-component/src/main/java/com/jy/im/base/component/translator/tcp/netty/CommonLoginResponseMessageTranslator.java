@@ -25,7 +25,7 @@ public class CommonLoginResponseMessageTranslator implements MessageTranslator<B
 
     @Override
     public boolean support(MessageType type) {
-        return MessageType.STRING == type;
+        return MessageType.CONNECT == type;
     }
 
 }

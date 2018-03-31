@@ -1,5 +1,7 @@
 package com.jy.im.common.entity;
 
+import com.jy.im.common.constants.MessageProtocol;
+
 public abstract class CommonUserMessage extends BaseMessage {
 
     /**
@@ -65,5 +67,9 @@ public abstract class CommonUserMessage extends BaseMessage {
 
     public void setTicket(byte[] ticket) {
         this.ticket = ticket;
+    }
+
+    public CommonUserMessage() {
+        super(MessageProtocol.COMMON.value);
     }
 }

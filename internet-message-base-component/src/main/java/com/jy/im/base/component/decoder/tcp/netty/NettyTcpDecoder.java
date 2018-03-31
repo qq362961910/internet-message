@@ -23,9 +23,11 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
 
     private static final InternalLogger logger = Log4JLoggerFactory.getInstance(NettyTcpDecoder.class);
 
+    private int length = -1;
     private int currentReaderIndex = -1;
     private MessageAnalyser<ByteBuf> currentMessageAnalyser;
     private NettyMessageAnalyserManager nettyMessageAnalyserManager;
+
 
     @Override
     public void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> out) throws Exception {
@@ -38,6 +40,13 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
             logger.info("hex: \r\n" + hex);
             logger.info("string: \r\n" + new String(content));
             logger.info("bytes: \r\n" + Arrays.toString(content));
+            //ensure bytes enough
+            if(length == -1) {
+                length = in.readShort();
+                if(in.readableBytes() < length) {
+                    return;
+                }
+            }
             markReaderIndex(in);
             if (currentMessageAnalyser == null) {
                 MessageAnalyser<ByteBuf> messageAnalyser = nettyMessageAnalyserManager.selectMessageAnalyser(in);
@@ -81,6 +90,7 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
 
     private void reset() {
         currentMessageAnalyser = null;
+        length = -1;
     }
 
     public NettyTcpDecoder(NettyMessageAnalyserManager nettyMessageAnalyserManager) {

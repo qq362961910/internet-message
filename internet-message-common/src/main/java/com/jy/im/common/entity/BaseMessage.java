@@ -43,4 +43,7 @@ public class BaseMessage {
         this.length = length;
     }
 
+    public BaseMessage(byte protocol) {
+        this.protocol = protocol;
+    }
 }

@@ -15,11 +15,11 @@ public abstract class NettyMessageWriter <Entity extends BaseMessage> extends Me
 
     @Override
     protected void encode(ChannelHandlerContext ctx, Entity msg, ByteBuf out) throws Exception {
-        //protocol 1 byte
-        out.writeByte(msg.getProtocol());
         int beginIndex = out.writerIndex();
         //长度占位 2 bytes
         out.writeZero(lengthBytes);
+        //protocol 1 byte
+        out.writeByte(msg.getProtocol());
         //消息类型 1 byte
         out.writeByte(msg.getMessageType());
         //子类写出数据

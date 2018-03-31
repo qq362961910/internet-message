@@ -1,5 +1,6 @@
 package com.jy.im.common.entity;
 
+import com.jy.im.common.constants.MessageProtocol;
 import com.jy.im.common.constants.MessageType;
 
 public class CommonLoginRequestMessage extends BaseMessage {
@@ -44,6 +45,7 @@ public class CommonLoginRequestMessage extends BaseMessage {
     }
 
     public CommonLoginRequestMessage() {
+        super(MessageProtocol.COMMON.value);
         messageType = MessageType.CONNECT.value;
     }
 }
