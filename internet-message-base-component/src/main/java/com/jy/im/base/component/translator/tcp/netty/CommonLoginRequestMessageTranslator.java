@@ -23,7 +23,7 @@ public class CommonLoginRequestMessageTranslator implements MessageTranslator<By
         //todo
         //package the message
         CommonLoginRequestMessage message = new CommonLoginRequestMessage();
-        message.setMessageType(MessageType.LOGIN.value);
+        message.setMessageType(MessageType.CONNECT.value);
         message.setUserId(userId);
         message.setPassword(password);
         return message;
@@ -31,7 +31,7 @@ public class CommonLoginRequestMessageTranslator implements MessageTranslator<By
 
     @Override
     public boolean support(MessageType type) {
-        return MessageType.LOGIN == type;
+        return MessageType.CONNECT == type;
     }
 
     public CommonLoginRequestMessageTranslator() {

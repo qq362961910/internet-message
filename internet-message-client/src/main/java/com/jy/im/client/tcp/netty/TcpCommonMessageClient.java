@@ -2,7 +2,7 @@ package com.jy.im.client.tcp.netty;
 
 import com.jy.im.base.component.launcher.DefaultLauncher;
 import com.jy.im.client.tcp.netty.initializer.NettyTcpClientInitializer;
-import com.jy.im.common.constants.MessageIdType;
+import com.jy.im.common.constants.MessageSource;
 import com.jy.im.common.entity.CommonLoginRequestMessage;
 import com.jy.im.common.entity.CommonUserStringMessage;
 import com.jy.im.common.util.PasswordUtil;
@@ -39,7 +39,7 @@ public class TcpCommonMessageClient {
         //第一次初始化
         if (launcher == null) {
             launcher = new DefaultLauncher();
-            tcpMessageClient = new TcpMessageClient(host, port, new NettyTcpClientInitializer());
+            tcpMessageClient = new TcpMessageClient(host, port, new NettyTcpClientInitializer(null));
             launcher.addDaemon(tcpMessageClient);
         }
         launcher.startup();
@@ -64,7 +64,7 @@ public class TcpCommonMessageClient {
         CommonUserStringMessage msg = new CommonUserStringMessage();
         msg.setContent(message.getBytes());
         msg.setToId(2);
-        msg.setToIdType(MessageIdType.USER_ID_TYPE.value);
+        msg.setToIdType(MessageSource.USER_ID_TYPE.value);
         try {
             msg.setTicket(PasswordUtil.encryptPassword("123454435").getBytes());
         } catch (NoSuchAlgorithmException e) {

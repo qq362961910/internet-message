@@ -15,6 +15,6 @@ public class CommonLoginResponseMessage extends ResponsiveMessage {
     }
 
     public CommonLoginResponseMessage() {
-        messageType = MessageType.LOGIN_RESPONSE.value;
+        messageType = MessageType.CONNECT.value;
     }
 }

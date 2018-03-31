@@ -18,6 +18,8 @@ public class MultiplexerTimeServer  implements Runnable{
         //负责轮询多路复用器Selector，可以处理多个客户端的并发接入。
         MultiplexerTimeServer timeServer = new MultiplexerTimeServer(port);
         new Thread (timeServer, "NIO-MultiplexerTimeServer-001").start();
+        new Thread (new MultiplexerTimeServer(8081), "NIO-MultiplexerTimeServer-001").start();
+        new Thread (new MultiplexerTimeServer(8082), "NIO-MultiplexerTimeServer-001").start();
     }
 
     private Selector selector;

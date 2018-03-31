@@ -1,5 +1,8 @@
 package com.jy.im.base.component.analyser.message;
 
+import com.jy.im.base.component.exception.NoMessageTranslatorFoundException;
+import com.jy.im.base.component.exception.UnsupportedMessageTypeException;
+
 /**
  * 消息解析器
  * In 原始入参
@@ -15,6 +18,6 @@ public interface MessageAnalyser<In> {
     /**
      * 解析消息
      */
-    Object analyse(In t);
+    Object analyse(In t) throws UnsupportedMessageTypeException, NoMessageTranslatorFoundException;
 
 }

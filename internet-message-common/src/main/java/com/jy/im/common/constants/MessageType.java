@@ -32,30 +32,20 @@ public enum MessageType {
     FILE((byte) 4, "FILE"),
 
     /**
-     * EVENT MESSAGE
+     * EVENT
      */
-    EVENT_MESSAGE((byte) 5, "EVENT_MESSAGE"),
-
-
-    /**
-     * LOGIN_REQUEST
-     */
-    LOGIN((byte) 124, "LOGIN_REQUEST"),
+    EVENT((byte) 5, "EVENT"),
 
     /**
-     * LOGIN_RESPONSE
+     * CONNECT
      */
-    LOGIN_RESPONSE((byte) 125, "LOGIN_RESPONSE"),
+    CONNECT((byte) 124, "CONNECT"),
 
     /**
-     * LOGOUT_REQUEST
+     * CLOSE
      */
-    LOGOUT_REQUEST((byte) 126, "LOGOUT_REQUEST"),
+    CLOSE((byte) 125, "CLOSE");
 
-    /**
-     * LOGOUT_RESPONSE
-     */
-    LOGOUT_RESPONSE((byte) 127, "LOGOUT_RESPONSE");
 
     public final byte value;
     public final String name;

@@ -2,6 +2,9 @@ package com.jy.im.base.component.decoder.tcp.netty;
 
 import com.jy.im.base.component.analyser.message.MessageAnalyser;
 import com.jy.im.base.component.analyser.message.tcp.netty.NettyMessageAnalyserManager;
+import com.jy.im.base.component.exception.NoMessageAnalyserFoundException;
+import com.jy.im.base.component.exception.NoMessageTranslatorFoundException;
+import com.jy.im.base.component.exception.UnsupportedMessageTypeException;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -20,9 +23,8 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
 
     private static final InternalLogger logger = Log4JLoggerFactory.getInstance(NettyTcpDecoder.class);
 
-    private MessageAnalyser<ByteBuf> currentMessageAnalyser;
     private int currentReaderIndex = -1;
-
+    private MessageAnalyser<ByteBuf> currentMessageAnalyser;
     private NettyMessageAnalyserManager nettyMessageAnalyserManager;
 
     @Override
@@ -41,20 +43,23 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
                 MessageAnalyser<ByteBuf> messageAnalyser = nettyMessageAnalyserManager.selectMessageAnalyser(in);
                 //未找到消息解析器
                 if (messageAnalyser == null) {
-                    close(channelHandlerContext, "no MessageAnalyser found");
-                    return;
+                    throw new NoMessageAnalyserFoundException("no MessageAnalyser found");
                 }
                 currentMessageAnalyser = messageAnalyser;
             }
-            Object message = currentMessageAnalyser.analyse(in);
-            if (message != null) {
-                logger.info(message.toString());
-                out.add(message);
-                //读取完一条消息后reset当前handler
-                reset();
-            } else {
-                //reset reader index
-                resetReaderIndex(in);
+            try {
+                Object message = currentMessageAnalyser.analyse(in);
+                if (message != null) {
+                    logger.info(message.toString());
+                    out.add(message);
+                    //读取完一条消息后reset当前handler
+                    reset();
+                } else {
+                    //reset reader index
+                    resetReaderIndex(in);
+                }
+            } catch (UnsupportedMessageTypeException | NoMessageTranslatorFoundException e) {
+                logger.error("", e);
             }
         }
     }
@@ -76,11 +81,6 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
 
     private void reset() {
         currentMessageAnalyser = null;
-    }
-
-    private void close(ChannelHandlerContext channelHandlerContext, String message) {
-        logger.error(message);
-        channelHandlerContext.close();
     }
 
     public NettyTcpDecoder(NettyMessageAnalyserManager nettyMessageAnalyserManager) {

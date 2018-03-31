@@ -1,6 +1,6 @@
 package com.jy.im.server.tcp.netty.handler;
 
-import com.jy.im.common.constants.MessageIdType;
+import com.jy.im.common.constants.MessageSource;
 import com.jy.im.common.constants.MessageType;
 import com.jy.im.common.entity.CommonUserStringMessage;
 import com.jy.im.server.resource.TicketsHolder;
@@ -31,7 +31,7 @@ public class CommonUserStringMessageHandler extends SimpleChannelInboundHandler<
         logger.info("message content: {}", new String(msg.getContent()));
 
         //用户消息
-        if (msg.getFromIdType() == MessageIdType.USER_ID_TYPE.value) {
+        if (msg.getFromIdType() == MessageSource.USER_ID_TYPE.value) {
             //ticket检查
             byte[] ticket = msg.getTicket();
             if (ticket == null) {

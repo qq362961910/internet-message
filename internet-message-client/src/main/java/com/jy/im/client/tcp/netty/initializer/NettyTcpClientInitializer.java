@@ -1,6 +1,7 @@
 package com.jy.im.client.tcp.netty.initializer;
 
 import com.jy.im.base.component.analyser.message.tcp.netty.NettyClientCommonMessageAnalyser;
+import com.jy.im.base.component.analyser.message.tcp.netty.NettyMessageAnalyser;
 import com.jy.im.base.component.analyser.message.tcp.netty.NettyMessageAnalyserManager;
 import com.jy.im.base.component.decoder.tcp.netty.NettyTcpDecoder;
 import com.jy.im.base.component.initializer.AbstractNettyTcpInitializer;
@@ -18,9 +19,11 @@ import java.util.List;
 
 public class NettyTcpClientInitializer extends AbstractNettyTcpInitializer {
 
+    private final List<NettyMessageAnalyser> nettyMessageAnalyserList;
+
     @Override
     public ByteToMessageDecoder getByteToMessageDecoder() {
-        NettyMessageAnalyserManager analyserManager = new NettyMessageAnalyserManager();
+        NettyMessageAnalyserManager analyserManager = new NettyMessageAnalyserManager(nettyMessageAnalyserList);
         analyserManager.addMessageAnalyser(new NettyClientCommonMessageAnalyser());
         return new NettyTcpDecoder(analyserManager);
     }
@@ -41,5 +44,9 @@ public class NettyTcpClientInitializer extends AbstractNettyTcpInitializer {
         List<ChannelInboundHandlerAdapter> channelInboundHandlerAdapters = new ArrayList<>();
         channelInboundHandlerAdapters.add(clientMessageHandler);
         return channelInboundHandlerAdapters;
+    }
+
+    public NettyTcpClientInitializer(List<NettyMessageAnalyser> nettyMessageAnalyserList) {
+        this.nettyMessageAnalyserList = nettyMessageAnalyserList;
     }
 }

@@ -4,12 +4,16 @@ import com.jy.im.base.component.analyser.protocol.netty.NettyCommonMessageProtoc
 import com.jy.im.base.component.translator.tcp.netty.CommonLoginRequestMessageTranslator;
 import com.jy.im.base.component.translator.tcp.netty.CommonUserStringMessageTranslator;
 
-public class NettyServerMessageAnalyser extends NettyMessageAnalyser {
+/**
+ * netty common message server
+ * */
+public class NettyServerMessageAnalyser extends NettyCommonMessageAnalyser {
 
     public NettyServerMessageAnalyser() {
         //指定入參类型和协议
         setNettyMessageProtocolAnalyser(new NettyCommonMessageProtocolAnalyser());
         //添加消息翻译器
-        addMessageTranslator(new CommonLoginRequestMessageTranslator(), new CommonUserStringMessageTranslator());
+        addMessageTranslator(new CommonLoginRequestMessageTranslator());
+        addMessageTranslator(new CommonUserStringMessageTranslator());
     }
 }

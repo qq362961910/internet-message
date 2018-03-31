@@ -3,37 +3,46 @@ package com.jy.im.common.constants;
 /**
  * 消息ID类型
  */
-public enum MessageIdType {
+public enum MessageSource {
 
+    /**
+     * 用户消息
+     * */
     USER_ID_TYPE((byte) 0, "user"),
 
+    /**
+     * 群组消息
+     * */
     GROUP_ID_TYPE((byte) 1, "group"),
 
+    /**
+     * 系统消息
+     * */
     SYSTEM_ID_TYPE((byte) 2, "system"),;
 
     public final byte value;
 
     public final String name;
 
-    public static MessageIdType getMessageIdType(byte value) {
-        for (MessageIdType type : values()) {
-            if (type.value == value) {
-                return type;
+    public static MessageSource getMessageSource(byte value) {
+        for (MessageSource source : values()) {
+            if (source.value == value) {
+                return source;
             }
         }
         return null;
     }
 
-    MessageIdType(byte value, String name) {
+    MessageSource(byte value, String name) {
         this.value = value;
         this.name = name;
     }
 
     @Override
     public String toString() {
-        return "MessageIdType{" +
+        return "MessageSource{" +
             "value=" + value +
             ", name='" + name + '\'' +
-            '}';
+            "} " + super.toString();
     }
 }

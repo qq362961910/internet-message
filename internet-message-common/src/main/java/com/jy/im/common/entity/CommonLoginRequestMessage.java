@@ -44,6 +44,6 @@ public class CommonLoginRequestMessage extends BaseMessage {
     }
 
     public CommonLoginRequestMessage() {
-        messageType = MessageType.LOGIN.value;
+        messageType = MessageType.CONNECT.value;
     }
 }

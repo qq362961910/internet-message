@@ -39,4 +39,6 @@ public abstract class AbstractNettyTcpInitializer extends ChannelInitializer<Nio
 
     public abstract List<ChannelInboundHandlerAdapter> getMessageHandlerList();
 
+
+
 }

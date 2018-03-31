@@ -45,8 +45,8 @@ public class AppConfig {
      * netty message analyser manager
      */
     @Bean
-    public NettyMessageAnalyserManager nettyMessageAnalyserManager(NettyMessageAnalyser... nettyMessageAnalysers) {
-        return new NettyMessageAnalyserManager(nettyMessageAnalysers);
+    public NettyMessageAnalyserManager nettyMessageAnalyserManager(List<NettyMessageAnalyser> nettyMessageAnalyserList) {
+        return new NettyMessageAnalyserManager(nettyMessageAnalyserList);
     }
 
     /**
