@@ -26,7 +26,7 @@ public class NettyCommonMessageAnalyser extends NettyMessageAnalyser {
             throw new UnsupportedMessageTypeException("message type: " + messageType);
         }
         //找到具体消息转换器解析消息
-        MessageTranslator<ByteBuf> translator = getMessageTranslator(type);
+        MessageTranslator<ByteBuf> translator = getMessageTranslator(supportMessageProtocol(), type);
         if(translator == null) {
             throw new NoMessageTranslatorFoundException("message type: " + messageType);
         }
