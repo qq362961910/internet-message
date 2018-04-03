@@ -1,6 +1,6 @@
-package com.jy.im.base.component.translator.tcp.netty;
+package com.jy.im.base.component.translator.tcp.netty.common;
 
-import com.jy.im.base.component.translator.MessageTranslator;
+import com.jy.im.base.component.translator.tcp.netty.NettyCommonMessageTranslator;
 import com.jy.im.common.constants.MessageType;
 import com.jy.im.common.entity.CommonLoginRequestMessage;
 import io.netty.buffer.ByteBuf;
@@ -8,7 +8,7 @@ import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommonLoginRequestMessageTranslator implements MessageTranslator<ByteBuf> {
+public class CommonLoginRequestMessageTranslator extends NettyCommonMessageTranslator {
 
     private static final List<MessageType> SUPPORT_MESSAGE_TYPES = new ArrayList<>();
 

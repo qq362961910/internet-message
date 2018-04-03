@@ -1,5 +1,6 @@
 package com.jy.im.base.component.translator;
 
+import com.jy.im.common.constants.MessageProtocol;
 import com.jy.im.common.constants.MessageType;
 
 public interface MessageTranslator<In> {
@@ -7,4 +8,6 @@ public interface MessageTranslator<In> {
     Object translate(In in);
 
     boolean support(MessageType type);
+
+    MessageProtocol supportMessageProtocol();
 }

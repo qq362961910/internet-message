@@ -1,11 +1,11 @@
-package com.jy.im.base.component.translator.tcp.netty;
+package com.jy.im.base.component.translator.tcp.netty.common;
 
-import com.jy.im.base.component.translator.MessageTranslator;
+import com.jy.im.base.component.translator.tcp.netty.NettyCommonMessageTranslator;
 import com.jy.im.common.constants.MessageType;
 import com.jy.im.common.entity.CommonUserStringMessage;
 import io.netty.buffer.ByteBuf;
 
-public class CommonUserStringMessageTranslator implements MessageTranslator<ByteBuf> {
+public class CommonUserStringMessageTranslator extends NettyCommonMessageTranslator {
 
     @Override
     public Object translate(ByteBuf in) {
