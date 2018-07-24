@@ -6,8 +6,6 @@ public abstract class AbstractMessageListener<Message> implements MessageListene
 
     private final TypeParameterMatcher matcher;
 
-    public abstract void callback(Message message);
-
     public AbstractMessageListener() {
         matcher = TypeParameterMatcher.find(this, AbstractMessageListener.class, "Message");
     }

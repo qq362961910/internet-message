@@ -1,22 +1,23 @@
 package com.jy.im.client.tcp.netty.handler;
 
 import com.jy.im.base.component.daemon.client.AbstractMessageListener;
+import com.jy.im.common.entity.BaseMessage;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.Log4JLoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NettyClientMessageHandler extends ChannelInboundHandlerAdapter {
+public class NettyClientBaseMessageHandler extends SimpleChannelInboundHandler<BaseMessage> {
 
-    private static final InternalLogger logger = Log4JLoggerFactory.getInstance(NettyClientMessageHandler.class);
+    private static final InternalLogger logger = Log4JLoggerFactory.getInstance(NettyClientBaseMessageHandler.class);
 
-    private List<AbstractMessageListener<?>> messageListenerList = new ArrayList<>();
+    private List<AbstractMessageListener> messageListenerList = new ArrayList<>();
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, BaseMessage msg) {
         for (AbstractMessageListener messageListener : messageListenerList) {
             if (messageListener.apply(msg)) {
                 messageListener.callback(msg);
@@ -27,11 +28,11 @@ public class NettyClientMessageHandler extends ChannelInboundHandlerAdapter {
     }
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) {
         logger.info("client ---> active");
     }
 
-    public void addMessageListener(AbstractMessageListener<?> messageListener) {
+    public void addMessageListener(AbstractMessageListener messageListener) {
         if (messageListener != null) {
             messageListenerList.add(messageListener);
         }

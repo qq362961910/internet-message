@@ -10,7 +10,7 @@ import com.jy.im.base.component.writer.tcp.netty.NettyCommonUserStringMessageWri
 import com.jy.im.base.component.writer.tcp.netty.NettyMessageWriter;
 import com.jy.im.client.message.listener.CommonLoginResponseMessageListener;
 import com.jy.im.client.message.listener.CommonUserStringMessageListener;
-import com.jy.im.client.tcp.netty.handler.NettyClientMessageHandler;
+import com.jy.im.client.tcp.netty.handler.NettyClientBaseMessageHandler;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.ByteToMessageDecoder;
 
@@ -38,7 +38,7 @@ public class NettyTcpClientInitializer extends AbstractNettyTcpInitializer {
 
     @Override
     public List<ChannelInboundHandlerAdapter> getMessageHandlerList() {
-        NettyClientMessageHandler clientMessageHandler = new NettyClientMessageHandler();
+        NettyClientBaseMessageHandler clientMessageHandler = new NettyClientBaseMessageHandler();
         clientMessageHandler.addMessageListener(new CommonUserStringMessageListener());
         clientMessageHandler.addMessageListener(new CommonLoginResponseMessageListener());
         List<ChannelInboundHandlerAdapter> channelInboundHandlerAdapters = new ArrayList<>();
