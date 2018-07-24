@@ -43,10 +43,11 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
             //ensure bytes enough
             if(length == -1) {
                 length = in.readShort();
-                if(in.readableBytes() < length) {
-                    return;
-                }
             }
+            if(in.readableBytes() < length) {
+                return;
+            }
+            //mark current reader index
             markReaderIndex(in);
             if (currentMessageAnalyser == null) {
                 MessageAnalyser<ByteBuf> messageAnalyser = nettyMessageAnalyserManager.selectMessageAnalyser(in);

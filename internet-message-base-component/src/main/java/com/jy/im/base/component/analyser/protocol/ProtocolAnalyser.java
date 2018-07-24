@@ -13,6 +13,8 @@ public interface ProtocolAnalyser<In> {
      */
     boolean support(In in);
 
+
+
     /**
      * 解析消息
      */

@@ -8,11 +8,12 @@ import io.netty.buffer.ByteBuf;
  */
 public class NettyCommonMessageProtocolAnalyser extends NettyMessageProtocolAnalyser {
 
+
     /**
      * 通用协议在netty中取首字节
      * */
     @Override
-    public MessageProtocol analyser(ByteBuf byteBuf) {
+    public MessageProtocol doAnalyser(ByteBuf byteBuf) {
         return MessageProtocol.getMessageProtocol(byteBuf.readByte());
     }
 
