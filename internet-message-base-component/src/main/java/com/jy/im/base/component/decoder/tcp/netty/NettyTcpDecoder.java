@@ -23,7 +23,7 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
 
     private static final InternalLogger logger = Log4JLoggerFactory.getInstance(NettyTcpDecoder.class);
 
-    private int length = -1;
+    private short length = -1;
     private MessageAnalyser<ByteBuf> currentMessageAnalyser;
     private NettyMessageAnalyserManager nettyMessageAnalyserManager;
 
@@ -45,7 +45,6 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
             if(in.readableBytes() < length) {
                 return;
             }
-            //mark current reader index
             in.markReaderIndex();
             ByteBuf bufToAnalyse = in.duplicate();
             if (currentMessageAnalyser == null) {
@@ -61,7 +60,9 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
                 if (message != null) {
                     logger.info(message.toString());
                     out.add(message);
-                    //读取完一条消息后reset当前handler
+                    //update reader index
+                    in.readerIndex(bufToAnalyse.readerIndex());
+                    //reset handler
                     reset();
                 } else {
                     //reset reader index

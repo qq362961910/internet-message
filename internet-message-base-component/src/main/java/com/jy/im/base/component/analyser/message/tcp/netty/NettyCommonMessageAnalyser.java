@@ -9,6 +9,11 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * netty common message analyser
+ *
+ * COMMON协议数据结构
+ * message type: 1 byte
+ * message body: n byes
+ *
  * */
 public class NettyCommonMessageAnalyser extends NettyMessageAnalyser {
 
