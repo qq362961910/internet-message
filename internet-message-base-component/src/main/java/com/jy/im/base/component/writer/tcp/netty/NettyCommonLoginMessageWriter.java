@@ -15,4 +15,5 @@ public class NettyCommonLoginMessageWriter extends NettyMessageWriter<CommonLogi
         //code(0)
         //todo
     }
+
 }

@@ -15,6 +15,8 @@ public class CommonLoginResponseMessageWriter extends NettyMessageWriter<CommonL
     public void doEncode(ChannelHandlerContext ctx, CommonLoginResponseMessage message, ByteBuf out) {
         //code(4)
         out.writeInt(message.getCode());
+        //user id
+        out.writeLong(message.getUserId());
         //ticket(32)
         out.writeBytes(message.getTicket());
     }

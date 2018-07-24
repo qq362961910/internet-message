@@ -128,6 +128,10 @@ public abstract class AbstractDaemonClient<Listener extends DaemonListener> impl
      * write any message
      * */
     public void writeMessage(Object message) {
-        clientChannel.writeAndFlush(message);
+        clientChannel.writeAndFlush(message).addListener(f -> {
+            if(!f.isSuccess()) {
+                logger.error("", f.cause());
+            }
+        });
     }
 }

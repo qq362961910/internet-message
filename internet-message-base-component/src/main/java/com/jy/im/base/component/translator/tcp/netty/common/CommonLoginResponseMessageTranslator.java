@@ -14,7 +14,9 @@ public class CommonLoginResponseMessageTranslator extends NettyCommonMessageTran
         //1. code
         message.setCode(in.readInt());
         if (message.getCode() == CommonMessageCode.SUCCESS.value) {
-            //2.ticket
+            //2.user id
+            message.setUserId(in.readLong());
+            //3.ticket
             byte[] ticket = new byte[32];
             in.readBytes(ticket);
             message.setTicket(ticket);

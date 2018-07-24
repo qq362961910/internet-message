@@ -4,7 +4,17 @@ import com.jy.im.common.constants.MessageType;
 
 public class CommonLoginResponseMessage extends ResponsiveMessage {
 
+    private Long userId;
+
     private byte[] ticket;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public byte[] getTicket() {
         return ticket;

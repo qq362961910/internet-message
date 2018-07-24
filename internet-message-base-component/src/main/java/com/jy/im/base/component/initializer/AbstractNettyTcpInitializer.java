@@ -13,7 +13,7 @@ import java.util.List;
 public abstract class AbstractNettyTcpInitializer extends ChannelInitializer<NioSocketChannel> {
 
     @Override
-    protected void initChannel(NioSocketChannel ch) throws Exception {
+    protected void initChannel(NioSocketChannel ch) {
         ChannelPipeline pipeline = ch.pipeline();
         //decoder
         pipeline.addLast(getByteToMessageDecoder());

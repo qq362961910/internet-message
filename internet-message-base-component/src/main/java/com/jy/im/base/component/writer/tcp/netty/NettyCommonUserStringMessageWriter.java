@@ -19,4 +19,5 @@ public class NettyCommonUserStringMessageWriter extends NettyMessageWriter<Commo
         //content(content.length)
         out.writeBytes(message.getContent());
     }
+
 }

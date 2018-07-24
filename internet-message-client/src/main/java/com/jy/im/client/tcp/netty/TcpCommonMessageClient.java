@@ -8,11 +8,15 @@ import com.jy.im.common.constants.MessageSource;
 import com.jy.im.common.entity.CommonLoginRequestMessage;
 import com.jy.im.common.entity.CommonUserStringMessage;
 import com.jy.im.common.util.PasswordUtil;
+import io.netty.util.internal.logging.InternalLogger;
+import io.netty.util.internal.logging.Log4JLoggerFactory;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 public class TcpCommonMessageClient {
+
+    private static final InternalLogger logger = Log4JLoggerFactory.getInstance(TcpCommonMessageClient.class);
 
     /**
      * 远程主机
@@ -30,10 +34,30 @@ public class TcpCommonMessageClient {
      * TCP消息客户端
      * */
     private TcpMessageClient tcpMessageClient;
+
+    private Long userId;
+
+    private String password;
     /**
      * ticket
      * */
-    private byte[] ticket;
+    public static Map<Long, byte[]> TICKET_MAP = new HashMap<>();
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public boolean connect() {
         List<NettyMessageAnalyser> nettyMessageAnalyserList = new ArrayList<>();
@@ -62,20 +86,20 @@ public class TcpCommonMessageClient {
     public void shutdown() {
         launcher.close();
     }
-    public void sendCommonStringMessage(String message) {
+    public void sendCommonStringMessage(long userId, String message) {
         CommonUserStringMessage msg = new CommonUserStringMessage();
         msg.setContent(message.getBytes());
-        msg.setToId(2);
+        msg.setToId(userId);
         msg.setToIdType(MessageSource.USER_ID_TYPE.value);
-        try {
-            msg.setTicket(PasswordUtil.encryptPassword("123454435").getBytes());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+        msg.setTicket(TICKET_MAP.get(this.userId));
         tcpMessageClient.writeMessage(msg);
     }
 
-    public void sendCommonLoginMessage(long userId, String password) throws NoSuchAlgorithmException {
+    public void sendCommonLoginMessage() throws NoSuchAlgorithmException {
+        if(userId == null || password == null) {
+            logger.error("[username] is null or [password] is null");
+            return;
+        }
         CommonLoginRequestMessage loginMessage = new CommonLoginRequestMessage();
         loginMessage.setUserId(userId);
         loginMessage.setPassword(PasswordUtil.encryptPassword(password).getBytes());
@@ -85,12 +109,8 @@ public class TcpCommonMessageClient {
 
     public static void main(String[] args) throws NoSuchAlgorithmException {
         TcpCommonMessageClient client = new TcpCommonMessageClient("localhost", 5000);
-        client.connect();
-        while (!client.isActive()) {
-            System.out.println("waiting connection");
-            try { Thread.sleep(500); } catch (InterruptedException e) { e.printStackTrace(); }
-        }
-        System.out.println("connect ok");
+        boolean connectResult = client.connect();
+        logger.info("connect result: {}", connectResult);
         Scanner scanner = new Scanner(System.in);
         while (true) {
             printMessageTypeOpt();
@@ -100,13 +120,21 @@ public class TcpCommonMessageClient {
             }
             //login
             else if("0".equals(command)) {
-                client.sendCommonLoginMessage(1, "abc");
+                System.out.println("please input the user id: ");
+                long useId = Long.valueOf(scanner.nextLine().trim());
+                System.out.println("please input the password: ");
+                String password = scanner.nextLine().trim();
+                client.setUserId(useId);
+                client.setPassword(password);
+                client.sendCommonLoginMessage();
             }
             //string message
             else if("1".equals(command)) {
+                System.out.println("please input the user id: ");
+                long useId = Long.valueOf(scanner.nextLine().trim());
                 System.out.println("please input the message: ");
                 String message = scanner.nextLine();
-                client.sendCommonStringMessage(message);
+                client.sendCommonStringMessage(useId, message);
             }
         }
         client.shutdown();

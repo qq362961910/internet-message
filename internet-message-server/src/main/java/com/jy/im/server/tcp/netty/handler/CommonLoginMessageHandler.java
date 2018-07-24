@@ -28,7 +28,7 @@ public class CommonLoginMessageHandler extends SimpleChannelInboundHandler<Commo
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, CommonLoginRequestMessage msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, CommonLoginRequestMessage msg) {
         long userId = msg.getUserId();
         String password = new String(msg.getPassword());
         User user = userService.queryUserByUserIdAndPassword(userId, password);
@@ -40,6 +40,7 @@ public class CommonLoginMessageHandler extends SimpleChannelInboundHandler<Commo
             response.setCode(CommonMessageCode.SUCCESS.value);
             byte[] ticket = TicketsHolder.generateTicket().getBytes();
             ticketsHolder.addUserTicket(user, new String(ticket));
+            response.setUserId(userId);
             response.setTicket(ticket);
             logger.info("user: {} login success with ticket: {}", userId, new String(ticket));
         }

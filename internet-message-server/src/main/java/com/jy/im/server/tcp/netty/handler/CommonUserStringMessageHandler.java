@@ -23,7 +23,7 @@ public class CommonUserStringMessageHandler extends SimpleChannelInboundHandler<
     private TicketsHolder ticketsHolder;
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, CommonUserStringMessage msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, CommonUserStringMessage msg) {
         logger.info("receive a message, type: {}", MessageType.getCommonMessageType(msg.getMessageType()));
         logger.info("length: {}", msg.getLength());
         logger.info("fromId: {}", msg.getFromId());
@@ -42,7 +42,6 @@ public class CommonUserStringMessageHandler extends SimpleChannelInboundHandler<
             User user = ticketsHolder.getUserByTicket(new String(ticket));
             if (user == null) {
                 logger.error("expired ticket, message:\r\n {}", msg);
-
             }
             logger.info("handle a user message from: userId: {}", user.getId());
         }
