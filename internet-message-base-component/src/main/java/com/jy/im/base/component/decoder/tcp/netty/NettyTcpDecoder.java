@@ -24,7 +24,6 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
     private static final InternalLogger logger = Log4JLoggerFactory.getInstance(NettyTcpDecoder.class);
 
     private int length = -1;
-    private int currentReaderIndex = -1;
     private MessageAnalyser<ByteBuf> currentMessageAnalyser;
     private NettyMessageAnalyserManager nettyMessageAnalyserManager;
 
@@ -38,7 +37,6 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
             copied.readBytes(content);
             String hex = DatatypeConverter.printHexBinary(content);
             logger.info("hex: \r\n" + hex);
-            logger.info("string: \r\n" + new String(content));
             logger.info("bytes: \r\n" + Arrays.toString(content));
             //ensure bytes enough
             if(length == -1) {
@@ -48,9 +46,10 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
                 return;
             }
             //mark current reader index
-            markReaderIndex(in);
+            in.markReaderIndex();
+            ByteBuf bufToAnalyse = in.duplicate();
             if (currentMessageAnalyser == null) {
-                MessageAnalyser<ByteBuf> messageAnalyser = nettyMessageAnalyserManager.selectMessageAnalyser(in);
+                MessageAnalyser<ByteBuf> messageAnalyser = nettyMessageAnalyserManager.selectMessageAnalyser(bufToAnalyse);
                 //未找到消息解析器
                 if (messageAnalyser == null) {
                     throw new NoMessageAnalyserFoundException("no MessageAnalyser found");
@@ -58,7 +57,7 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
                 currentMessageAnalyser = messageAnalyser;
             }
             try {
-                Object message = currentMessageAnalyser.analyse(in);
+                Object message = currentMessageAnalyser.analyse(bufToAnalyse);
                 if (message != null) {
                     logger.info(message.toString());
                     out.add(message);
@@ -66,7 +65,7 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
                     reset();
                 } else {
                     //reset reader index
-                    resetReaderIndex(in);
+                    in.resetReaderIndex();
                 }
             } catch (UnsupportedMessageTypeException | NoMessageTranslatorFoundException e) {
                 logger.error("", e);
@@ -78,16 +77,6 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         logger.error("app analyse message from: " + ctx.channel().localAddress() + "exception, connection is closing!", cause);
     }
-
-    private void markReaderIndex(ByteBuf in) {
-        currentReaderIndex = in.readerIndex();
-    }
-
-    private void resetReaderIndex(ByteBuf in) {
-        in.readerIndex(currentReaderIndex);
-        currentReaderIndex = -1;
-    }
-
 
     private void reset() {
         currentMessageAnalyser = null;
