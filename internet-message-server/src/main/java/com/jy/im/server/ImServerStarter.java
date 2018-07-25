@@ -4,7 +4,6 @@ import com.jy.im.base.component.launcher.DefaultLauncher;
 import com.jy.im.common.constants.EnvConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
@@ -22,12 +21,7 @@ public class ImServerStarter {
 
     private Environment env;
 
-    @Autowired
     private DefaultLauncher defaultLauncher;
-
-    public ImServerStarter(Environment env) {
-        this.env = env;
-    }
 
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(ImServerStarter.class);
@@ -56,4 +50,8 @@ public class ImServerStarter {
         defaultLauncher.startup();
     }
 
+    public ImServerStarter(Environment env, DefaultLauncher defaultLauncher) {
+        this.env = env;
+        this.defaultLauncher = defaultLauncher;
+    }
 }

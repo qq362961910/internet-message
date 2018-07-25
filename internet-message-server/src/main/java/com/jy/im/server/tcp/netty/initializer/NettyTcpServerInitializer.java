@@ -10,18 +10,12 @@ import com.jy.im.server.tcp.netty.writer.CommonLoginFailResponseMessageWriter;
 import com.jy.im.server.tcp.netty.writer.CommonLoginSuccessResponseMessageWriter;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Scope("prototype")
-@Component
 public class NettyTcpServerInitializer extends AbstractNettyTcpInitializer {
 
-    @Autowired
     private ApplicationContextHelper applicationContextHelper;
 
     @Override
@@ -43,6 +37,10 @@ public class NettyTcpServerInitializer extends AbstractNettyTcpInitializer {
         channelInboundHandlerAdapters.add(applicationContextHelper.getBean(CommonLoginMessageHandler.class));
         channelInboundHandlerAdapters.add(applicationContextHelper.getBean(CommonUserStringMessageHandler.class));
         return channelInboundHandlerAdapters;
+    }
+
+    public NettyTcpServerInitializer(ApplicationContextHelper applicationContextHelper) {
+        this.applicationContextHelper = applicationContextHelper;
     }
 }
 

@@ -9,11 +9,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
-@Scope("prototype")
-@Component
 public class CommonUserStringMessageHandler extends SimpleChannelInboundHandler<CommonUserStringMessage> {
 
     private Logger logger = LoggerFactory.getLogger(CommonUserStringMessageHandler.class);
