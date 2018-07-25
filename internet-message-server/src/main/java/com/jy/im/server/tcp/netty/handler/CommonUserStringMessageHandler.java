@@ -3,13 +3,12 @@ package com.jy.im.server.tcp.netty.handler;
 import com.jy.im.common.constants.MessageSource;
 import com.jy.im.common.constants.MessageType;
 import com.jy.im.common.entity.CommonUserStringMessage;
-import com.jy.im.server.resource.TicketsHolder;
+import com.jy.im.service.TicketService;
 import com.jy.im.service.entity.User;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +18,7 @@ public class CommonUserStringMessageHandler extends SimpleChannelInboundHandler<
 
     private Logger logger = LoggerFactory.getLogger(CommonUserStringMessageHandler.class);
 
-    @Autowired
-    private TicketsHolder ticketsHolder;
+    private TicketService ticketService;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CommonUserStringMessage msg) {
@@ -38,7 +36,7 @@ public class CommonUserStringMessageHandler extends SimpleChannelInboundHandler<
                 ctx.close();
                 return;
             }
-            User user = ticketsHolder.getUserByTicket(new String(ticket));
+            User user = ticketService.getUserByTicket(new String(ticket));
             if (user == null) {
                 logger.error("expired ticket, message:\r\n {}", msg);
             }
@@ -50,4 +48,8 @@ public class CommonUserStringMessageHandler extends SimpleChannelInboundHandler<
         }
     }
 
+    public CommonUserStringMessageHandler(TicketService ticketService) {
+        super(true);
+        this.ticketService = ticketService;
+    }
 }

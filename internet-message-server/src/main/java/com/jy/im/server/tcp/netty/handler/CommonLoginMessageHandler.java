@@ -4,7 +4,7 @@ import com.jy.im.common.constants.CommonMessageCode;
 import com.jy.im.common.entity.CommonLoginFailResponseMessage;
 import com.jy.im.common.entity.CommonLoginRequestMessage;
 import com.jy.im.common.entity.CommonLoginSuccessResponseMessage;
-import com.jy.im.server.resource.TicketsHolder;
+import com.jy.im.service.TicketService;
 import com.jy.im.service.UserService;
 import com.jy.im.service.entity.User;
 import io.netty.channel.ChannelHandlerContext;
@@ -21,11 +21,11 @@ public class CommonLoginMessageHandler extends SimpleChannelInboundHandler<Commo
     private static final Logger logger = LoggerFactory.getLogger(CommonLoginMessageHandler.class);
 
     private UserService userService;
-    private TicketsHolder ticketsHolder;
+    private TicketService ticketService;
 
-    public CommonLoginMessageHandler(UserService userService, TicketsHolder ticketsHolder) {
+    public CommonLoginMessageHandler(UserService userService, TicketService ticketService) {
         this.userService = userService;
-        this.ticketsHolder = ticketsHolder;
+        this.ticketService = ticketService;
     }
 
     @Override
@@ -47,13 +47,12 @@ public class CommonLoginMessageHandler extends SimpleChannelInboundHandler<Commo
             });
         } else {
             CommonLoginSuccessResponseMessage response = new CommonLoginSuccessResponseMessage();
-            byte[] ticket = TicketsHolder.generateTicket().getBytes();
-            ticketsHolder.addUserTicket(user, new String(ticket));
+            String ticket = ticketService.bindUserTicket(user);
             response.setMessageId(msg.getMessageId());
             response.setErrorCode(CommonMessageCode.SUCCESS);
             response.setUserId(userId);
-            response.setTicket(ticket);
-            logger.info("user: {} login success with ticket: {}", userId, new String(ticket));
+            response.setTicket(ticket.getBytes());
+            logger.info("user: {} login success with ticket: {}", userId, ticket);
             ctx.writeAndFlush(response).addListener(f -> {
                 if(!f.isSuccess()) {
                     logger.error("", f.cause());

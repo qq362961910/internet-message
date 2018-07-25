@@ -1,6 +1,7 @@
-package com.jy.im.server.resource;
+package com.jy.im.service.impl;
 
 import com.jy.im.common.util.PasswordUtil;
+import com.jy.im.service.TicketService;
 import com.jy.im.service.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,21 +12,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class TicketsHolder {
+public class TicketServiceImpl implements TicketService {
 
-    private static final Logger logger = LoggerFactory.getLogger(TicketsHolder.class);
+    private static final Logger logger = LoggerFactory.getLogger(TicketServiceImpl.class);
 
     private final Map<String, User> userTicket = new HashMap<>();
 
-    public void addUserTicket(User user, String ticket) {
+    @Override
+    public String bindUserTicket(User user) {
+        String ticket = generateTicket();
         userTicket.put(ticket, user);
+        return ticket;
     }
 
+    @Override
     public User getUserByTicket(String ticket) {
         return userTicket.get(ticket);
     }
 
-    public static String generateTicket() {
+    private static String generateTicket() {
         try {
             return PasswordUtil.encryptPassword(String.valueOf(System.currentTimeMillis()));
         } catch (NoSuchAlgorithmException e) {
@@ -33,5 +38,4 @@ public class TicketsHolder {
             return "default";
         }
     }
-
 }
