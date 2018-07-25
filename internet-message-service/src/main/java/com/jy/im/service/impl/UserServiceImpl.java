@@ -2,7 +2,9 @@ package com.jy.im.service.impl;
 
 import com.jy.im.service.UserService;
 import com.jy.im.service.entity.User;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl implements UserService {
     @Override
     public User queryUserByUserIdAndPassword(long userId, String password) {
