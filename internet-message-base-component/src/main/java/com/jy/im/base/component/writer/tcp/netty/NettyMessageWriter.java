@@ -14,7 +14,7 @@ public abstract class NettyMessageWriter <Entity extends BaseMessage> extends Me
     private byte lengthBytes = 2;
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, Entity msg, ByteBuf out) throws Exception {
+    protected void encode(ChannelHandlerContext ctx, Entity msg, ByteBuf out) {
         int beginIndex = out.writerIndex();
         //长度占位 2 bytes
         out.writeZero(lengthBytes);

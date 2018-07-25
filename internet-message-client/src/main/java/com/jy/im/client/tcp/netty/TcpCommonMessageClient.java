@@ -7,6 +7,7 @@ import com.jy.im.client.tcp.netty.initializer.NettyTcpClientInitializer;
 import com.jy.im.common.constants.MessageSource;
 import com.jy.im.common.entity.CommonLoginRequestMessage;
 import com.jy.im.common.entity.CommonUserStringMessage;
+import com.jy.im.common.util.MessageIdUtil;
 import com.jy.im.common.util.PasswordUtil;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.Log4JLoggerFactory;
@@ -101,6 +102,7 @@ public class TcpCommonMessageClient {
             return;
         }
         CommonLoginRequestMessage loginMessage = new CommonLoginRequestMessage();
+        loginMessage.setMessageId(MessageIdUtil.generateLoginMessageId());
         loginMessage.setUserId(userId);
         loginMessage.setPassword(PasswordUtil.encryptPassword(password).getBytes());
         tcpMessageClient.writeMessage(loginMessage);

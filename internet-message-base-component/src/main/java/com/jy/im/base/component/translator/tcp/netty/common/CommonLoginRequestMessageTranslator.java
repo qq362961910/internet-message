@@ -1,19 +1,14 @@
 package com.jy.im.base.component.translator.tcp.netty.common;
 
-import com.jy.im.base.component.translator.tcp.netty.NettyCommonMessageTranslator;
+import com.jy.im.base.component.translator.tcp.netty.NettyCommonRequestMessageTranslator;
 import com.jy.im.common.constants.MessageType;
 import com.jy.im.common.entity.CommonLoginRequestMessage;
 import io.netty.buffer.ByteBuf;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class CommonLoginRequestMessageTranslator extends NettyCommonMessageTranslator {
-
-    private static final List<MessageType> SUPPORT_MESSAGE_TYPES = new ArrayList<>();
+public class CommonLoginRequestMessageTranslator extends NettyCommonRequestMessageTranslator {
 
     @Override
-    public Object translate(ByteBuf in) {
+    public Object doTranslate(int messageId, ByteBuf in) {
         //1. userId
         long userId = in.readLong();
         //2.password
@@ -23,7 +18,7 @@ public class CommonLoginRequestMessageTranslator extends NettyCommonMessageTrans
         //todo
         //package the message
         CommonLoginRequestMessage message = new CommonLoginRequestMessage();
-        message.setMessageType(MessageType.CONNECT.value);
+        message.setMessageId(messageId);
         message.setUserId(userId);
         message.setPassword(password);
         return message;
@@ -31,10 +26,7 @@ public class CommonLoginRequestMessageTranslator extends NettyCommonMessageTrans
 
     @Override
     public boolean support(MessageType type) {
-        return MessageType.CONNECT == type;
+        return MessageType.CLIENT_LOGIN == type;
     }
 
-    public CommonLoginRequestMessageTranslator() {
-        SUPPORT_MESSAGE_TYPES.add(MessageType.STRING);
-    }
 }

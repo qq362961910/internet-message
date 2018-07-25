@@ -25,7 +25,6 @@ public class CommonUserStringMessageHandler extends SimpleChannelInboundHandler<
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CommonUserStringMessage msg) {
         logger.info("receive a message, type: {}", MessageType.getCommonMessageType(msg.getMessageType()));
-        logger.info("length: {}", msg.getLength());
         logger.info("fromId: {}", msg.getFromId());
         logger.info("toId: {}", msg.getToId());
         logger.info("message content: {}", new String(msg.getContent()));

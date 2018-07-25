@@ -75,7 +75,7 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         logger.error("app analyse message from: " + ctx.channel().localAddress() + "exception, connection is closing!", cause);
     }
 

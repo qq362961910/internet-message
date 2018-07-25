@@ -4,10 +4,10 @@ import com.jy.im.common.entity.CommonLoginRequestMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
-public class NettyCommonLoginMessageWriter extends NettyMessageWriter<CommonLoginRequestMessage> {
+public class NettyCommonLoginRequestMessageWriter extends NettyRequestMessageWriter<CommonLoginRequestMessage> {
 
     @Override
-    public void doEncode(ChannelHandlerContext ctx, CommonLoginRequestMessage message, ByteBuf out) {
+    public void doEncode0(ChannelHandlerContext ctx, CommonLoginRequestMessage message, ByteBuf out) {
         //userId(8)
         out.writeLong(message.getUserId());
         //password(32)
@@ -15,5 +15,4 @@ public class NettyCommonLoginMessageWriter extends NettyMessageWriter<CommonLogi
         //code(0)
         //todo
     }
-
 }

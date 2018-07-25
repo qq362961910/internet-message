@@ -1,49 +1,30 @@
 package com.jy.im.common.entity;
 
+import com.jy.im.common.constants.MessageProtocol;
+import com.jy.im.common.constants.MessageType;
+
 public class BaseMessage {
 
     /**
      * 协议
-     * 1 byte
-     */
-    protected byte protocol;
-    /**
-     * length
-     * 2 bytes
-     */
-    protected short length;
-
+     * */
+    private final byte protocol;
     /**
      * 消息类型
      * 1 byte
      */
-    protected byte messageType;
+    protected final byte messageType;
 
     public byte getProtocol() {
         return protocol;
-    }
-
-    public void setProtocol(byte protocol) {
-        this.protocol = protocol;
     }
 
     public byte getMessageType() {
         return messageType;
     }
 
-    public void setMessageType(byte messageType) {
-        this.messageType = messageType;
-    }
-
-    public short getLength() {
-        return length;
-    }
-
-    public void setLength(short length) {
-        this.length = length;
-    }
-
-    public BaseMessage(byte protocol) {
-        this.protocol = protocol;
+    public BaseMessage(MessageProtocol protocol, MessageType messageType) {
+        this.protocol = protocol.value;
+        this.messageType = messageType.value;
     }
 }

@@ -23,7 +23,7 @@ public class CommonUserStringMessage extends CommonUserMessage {
     }
 
     public CommonUserStringMessage() {
-        messageType = MessageType.STRING.value;
+        super(MessageType.STRING);
     }
 
     @Override

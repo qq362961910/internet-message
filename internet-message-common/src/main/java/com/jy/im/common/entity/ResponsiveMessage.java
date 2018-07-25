@@ -1,20 +1,32 @@
 package com.jy.im.common.entity;
 
+import com.jy.im.common.constants.CommonMessageCode;
 import com.jy.im.common.constants.MessageProtocol;
+import com.jy.im.common.constants.MessageType;
 
 public class ResponsiveMessage extends BaseMessage {
 
-    protected int code;
+    protected int messageId;
 
-    public int getCode() {
-        return code;
+    private CommonMessageCode errorCode;
+
+    public CommonMessageCode getErrorCode() {
+        return errorCode;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setErrorCode(CommonMessageCode errorCode) {
+        this.errorCode = errorCode;
     }
 
-    public ResponsiveMessage() {
-        super(MessageProtocol.COMMON.value);
+    public int getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(int messageId) {
+        this.messageId = messageId;
+    }
+
+    public ResponsiveMessage(MessageProtocol protocol, MessageType messageType) {
+        super(protocol, messageType);
     }
 }

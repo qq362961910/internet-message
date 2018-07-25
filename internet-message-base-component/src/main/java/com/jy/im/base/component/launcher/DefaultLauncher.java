@@ -36,7 +36,7 @@ public class DefaultLauncher extends AbstractLauncher {
             final HashedWheelTimer timer = new HashedWheelTimer();
             final int period = launcherConfig.getHealthyCheckInSecond();
             timer.newTimeout(new TimerTask() {
-                public void run(Timeout timeout) throws Exception {
+                public void run(Timeout timeout) {
                     logger.info("check down server....");
                     if (downDaemonList.size() > 0) {
                         logger.info("find down server, size: {}", downDaemonList.size());

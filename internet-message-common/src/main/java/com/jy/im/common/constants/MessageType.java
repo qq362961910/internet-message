@@ -1,9 +1,5 @@
 package com.jy.im.common.constants;
 
-/**
- * 协议位占一个长度,一个厂商一个协议
- * 消息结构为: T(1 byte) L(2 bytes) V(XXX)
- */
 public enum MessageType {
 
     /**
@@ -37,14 +33,34 @@ public enum MessageType {
     EVENT((byte) 5, "EVENT"),
 
     /**
-     * CONNECT
+     * CLIENT LOGIN
      */
-    CONNECT((byte) 124, "CONNECT"),
+    CLIENT_LOGIN((byte) 123, "CLIENT_LOGIN"),
 
     /**
-     * CLOSE
+     * SERVER LOGIN SUCCESS
+     * */
+    SERVER_LOGIN_SUCCESS((byte) 124, "SERVER_LOGIN_SUCCESS"),
+
+    /**
+     * SERVER LOGIN FAIL
+     * */
+    SERVER_LOGIN_FAIL((byte) -124, "SERVER_LOGIN_FAIL"),
+
+    /**
+     * CLIENT LOGOUT
      */
-    CLOSE((byte) 125, "CLOSE");
+    CLIENT_LOGOUT((byte) 125, "CLIENT_LOGOUT"),
+
+    /**
+     * SERVER LOGOUT SUCCESS
+     */
+    SERVER_LOGOUT_SUCCESS((byte) 126, "SERVER_LOGOUT_SUCCESS"),
+
+    /**
+     * SERVER LOGOUT FAIL
+     */
+    SERVER_LOGOUT_FAIL((byte) -126, "SERVER_LOGOUT_FAIL");
 
 
     public final byte value;

@@ -6,7 +6,8 @@ import com.jy.im.base.component.writer.tcp.netty.NettyMessageWriter;
 import com.jy.im.server.helper.ApplicationContextHelper;
 import com.jy.im.server.tcp.netty.handler.CommonLoginMessageHandler;
 import com.jy.im.server.tcp.netty.handler.CommonUserStringMessageHandler;
-import com.jy.im.server.tcp.netty.writer.CommonLoginResponseMessageWriter;
+import com.jy.im.server.tcp.netty.writer.CommonLoginFailResponseMessageWriter;
+import com.jy.im.server.tcp.netty.writer.CommonLoginSuccessResponseMessageWriter;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class NettyTcpServerInitializer extends AbstractNettyTcpInitializer {
 
     @Autowired
     private ApplicationContextHelper applicationContextHelper;
+
     @Override
     public ByteToMessageDecoder getByteToMessageDecoder() {
         return applicationContextHelper.getBean(NettyTcpDecoder.class);
@@ -30,7 +32,8 @@ public class NettyTcpServerInitializer extends AbstractNettyTcpInitializer {
     @Override
     public List<NettyMessageWriter> getNettyMessageWriters() {
         List<NettyMessageWriter> nettyMessageWriters = new ArrayList<>();
-        nettyMessageWriters.add(applicationContextHelper.getBean(CommonLoginResponseMessageWriter.class));
+        nettyMessageWriters.add(applicationContextHelper.getBean(CommonLoginSuccessResponseMessageWriter.class));
+        nettyMessageWriters.add(applicationContextHelper.getBean(CommonLoginFailResponseMessageWriter.class));
         return nettyMessageWriters;
     }
 
