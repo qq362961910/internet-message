@@ -108,6 +108,7 @@ public abstract class AbstractDaemonClient<Listener extends DaemonListener> impl
 
     @Override
     public void afterShutdown() {
+        clientChannel = null;
     }
 
     public String getName() {
@@ -133,5 +134,10 @@ public abstract class AbstractDaemonClient<Listener extends DaemonListener> impl
                 logger.error("", f.cause());
             }
         });
+    }
+
+    @Override
+    public boolean valid() {
+        return clientChannel != null;
     }
 }

@@ -105,16 +105,26 @@ public abstract class AbstractLauncher implements Launcher {
 
     @Override
     public void daemonStartSuccess(Daemon daemon) {
-        int count = serverSuccessCount.addAndGet(1);
-        logger.info("server alive count: {}", count);
+        int count;
+        if(daemon.valid()) {
+            count = serverSuccessCount.addAndGet(1);
+        } else {
+            count = serverSuccessCount.get();
+        }
+        logger.info("new daemon started, alive count: {}", count);
         //因为server会阻塞线程,所以在这里进行调用afterStart()
         daemon.afterStart();
     }
 
     @Override
     public void daemonShutdownSuccess(Daemon daemon) {
-        int count = serverSuccessCount.addAndGet(-1);
-        logger.info("server alive count: {}", count);
+        int count;
+        if(daemon.valid()) {
+            count = serverSuccessCount.addAndGet(-1);
+        } else {
+            count = serverSuccessCount.get();
+        }
+        logger.info("daemon stopped, alive count: {}", count);
         downDaemonList.add(daemon);
         daemon.afterShutdown();
     }

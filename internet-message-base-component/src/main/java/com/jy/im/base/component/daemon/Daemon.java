@@ -38,4 +38,9 @@ public interface Daemon {
      * after stop
      */
     void afterShutdown();
+
+    /**
+     * whether the daemon is valid
+     * */
+    boolean valid();
 }

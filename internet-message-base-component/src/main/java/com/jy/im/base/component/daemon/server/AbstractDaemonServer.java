@@ -117,6 +117,7 @@ public abstract class AbstractDaemonServer<Listener extends DaemonListener> impl
         if (!demonListenerList.isEmpty()) {
             demonListenerList.forEach(listener -> listener.afterShutdown(AbstractDaemonServer.this));
         }
+        serverChannel = null;
     }
 
     public String getName() {
@@ -141,5 +142,10 @@ public abstract class AbstractDaemonServer<Listener extends DaemonListener> impl
         if (demonListenerList != null && !demonListenerList.isEmpty()) {
             this.demonListenerList.addAll(demonListenerList);
         }
+    }
+
+    @Override
+    public boolean valid() {
+        return serverChannel != null;
     }
 }
