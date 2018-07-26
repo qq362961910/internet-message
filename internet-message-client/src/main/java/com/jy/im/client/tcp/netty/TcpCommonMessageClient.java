@@ -9,15 +9,15 @@ import com.jy.im.common.entity.LoginRequestMessage;
 import com.jy.im.common.entity.UserStringMessage;
 import com.jy.im.common.util.MessageIdUtil;
 import com.jy.im.common.util.PasswordUtil;
-import io.netty.util.internal.logging.InternalLogger;
-import io.netty.util.internal.logging.Log4JLoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 public class TcpCommonMessageClient {
 
-    private static final InternalLogger logger = Log4JLoggerFactory.getInstance(TcpCommonMessageClient.class);
+    private static final Logger logger = LoggerFactory.getLogger(TcpCommonMessageClient.class);
 
     /**
      * 远程主机

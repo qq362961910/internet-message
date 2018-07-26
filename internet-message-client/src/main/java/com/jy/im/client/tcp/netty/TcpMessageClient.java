@@ -5,12 +5,12 @@ import com.jy.im.client.tcp.netty.initializer.NettyTcpClientInitializer;
 import com.jy.im.client.tcp.netty.listener.NettyTcpClientDaemonListener;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelOption;
-import io.netty.util.internal.logging.InternalLogger;
-import io.netty.util.internal.logging.Log4JLoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TcpMessageClient extends AbstractDaemonClient<NettyTcpClientDaemonListener> {
 
-    private InternalLogger logger = Log4JLoggerFactory.getInstance(TcpMessageClient.class);
+    private Logger logger = LoggerFactory.getLogger(TcpMessageClient.class);
 
     private NettyTcpClientInitializer nettyTcpClientInitializer;
 

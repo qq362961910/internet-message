@@ -1,11 +1,11 @@
 package com.jy.im.base.component.launcher;
 
-import io.netty.util.internal.logging.InternalLogger;
-import io.netty.util.internal.logging.Log4JLoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DefaultLauncherListener implements LauncherListener {
 
-    private static final InternalLogger logger = Log4JLoggerFactory.getInstance(DefaultLauncherListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(DefaultLauncherListener.class);
 
     @Override
     public void afterStartup(AbstractLauncher launcher) {

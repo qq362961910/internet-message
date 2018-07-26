@@ -2,12 +2,12 @@ package com.jy.im.client.message.listener;
 
 import com.jy.im.base.component.daemon.client.AbstractMessageListener;
 import com.jy.im.common.entity.LoginFailResponseMessage;
-import io.netty.util.internal.logging.InternalLogger;
-import io.netty.util.internal.logging.Log4JLoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CommonLoginFailResponseMessageListener extends AbstractMessageListener<LoginFailResponseMessage> {
 
-    private static final InternalLogger logger = Log4JLoggerFactory.getInstance(CommonLoginFailResponseMessageListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(CommonLoginFailResponseMessageListener.class);
 
     @Override
     public void callback(LoginFailResponseMessage loginFailResponseMessage) {

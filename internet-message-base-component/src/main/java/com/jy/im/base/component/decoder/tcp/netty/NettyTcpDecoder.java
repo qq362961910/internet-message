@@ -8,8 +8,8 @@ import com.jy.im.base.component.exception.UnsupportedMessageTypeException;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import io.netty.util.internal.logging.InternalLogger;
-import io.netty.util.internal.logging.Log4JLoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.DatatypeConverter;
 import java.util.Arrays;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class NettyTcpDecoder extends ByteToMessageDecoder {
 
-    private static final InternalLogger logger = Log4JLoggerFactory.getInstance(NettyTcpDecoder.class);
+    private static final Logger logger = LoggerFactory.getLogger(NettyTcpDecoder.class);
 
     private short length = -1;
     private MessageAnalyser<ByteBuf> currentMessageAnalyser;

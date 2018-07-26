@@ -2,12 +2,12 @@ package com.jy.im.client.tcp.netty.listener;
 
 import com.jy.im.base.component.daemon.Daemon;
 import com.jy.im.base.component.daemon.DaemonListener;
-import io.netty.util.internal.logging.InternalLogger;
-import io.netty.util.internal.logging.Log4JLoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NettyTcpClientDaemonListener implements DaemonListener {
 
-    private static final InternalLogger logger = Log4JLoggerFactory.getInstance(NettyTcpClientDaemonListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(NettyTcpClientDaemonListener.class);
 
     @Override
     public void afterStartup(Daemon daemon) {

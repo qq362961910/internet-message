@@ -4,14 +4,14 @@ import com.jy.im.base.component.daemon.Daemon;
 import io.netty.util.HashedWheelTimer;
 import io.netty.util.Timeout;
 import io.netty.util.TimerTask;
-import io.netty.util.internal.logging.InternalLogger;
-import io.netty.util.internal.logging.Log4JLoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
 public class DefaultLauncher extends AbstractLauncher {
 
-    private InternalLogger logger = Log4JLoggerFactory.getInstance(DefaultLauncher.class);
+    private Logger logger = LoggerFactory.getLogger(DefaultLauncher.class);
     private LauncherConfig launcherConfig = LauncherConfig.defaultConfig();
 
     public void doStart() {

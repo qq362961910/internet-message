@@ -2,8 +2,8 @@ package com.jy.im.base.component.launcher;
 
 
 import com.jy.im.base.component.daemon.Daemon;
-import io.netty.util.internal.logging.InternalLogger;
-import io.netty.util.internal.logging.Log4JLoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractLauncher implements Launcher {
 
-    private static final InternalLogger logger = Log4JLoggerFactory.getInstance(AbstractLauncher.class);
+    private static final Logger logger = LoggerFactory.getLogger(AbstractLauncher.class);
 
     /**
      * 启动器状态

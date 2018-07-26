@@ -4,15 +4,15 @@ import com.jy.im.base.component.daemon.client.AbstractMessageListener;
 import com.jy.im.common.entity.BaseMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.util.internal.logging.InternalLogger;
-import io.netty.util.internal.logging.Log4JLoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NettyClientBaseMessageHandler extends SimpleChannelInboundHandler<BaseMessage> {
 
-    private static final InternalLogger logger = Log4JLoggerFactory.getInstance(NettyClientBaseMessageHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(NettyClientBaseMessageHandler.class);
 
     private List<AbstractMessageListener> messageListenerList = new ArrayList<>();
 
