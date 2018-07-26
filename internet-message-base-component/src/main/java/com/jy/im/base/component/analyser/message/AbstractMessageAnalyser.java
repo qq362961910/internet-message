@@ -40,6 +40,12 @@ public abstract class AbstractMessageAnalyser<In> implements MessageAnalyser<In>
         }
     }
 
+    public void addMessageTranslatorList(List<MessageTranslator<In>> messageTranslatorList) {
+        if(messageTranslatorList != null && messageTranslatorList.size() > 0) {
+            messageTranslators.addAll(messageTranslatorList);
+        }
+    }
+
     public MessageTranslator<In> getMessageTranslator(MessageProtocol messageProtocol, MessageType messageType) {
         for(MessageTranslator<In> messageTranslator: messageTranslators) {
             if(messageTranslator.supportMessageProtocol() == messageProtocol && messageTranslator.support(messageType)) {

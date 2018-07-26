@@ -8,7 +8,6 @@ import io.netty.buffer.ByteBuf;
  */
 public class NettyCommonMessageProtocolAnalyser extends NettyMessageProtocolAnalyser {
 
-
     /**
      * 通用协议在netty中取首字节
      * */

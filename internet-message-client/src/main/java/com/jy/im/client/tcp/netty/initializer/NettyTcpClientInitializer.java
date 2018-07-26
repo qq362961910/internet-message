@@ -1,10 +1,11 @@
 package com.jy.im.client.tcp.netty.initializer;
 
 import com.jy.im.base.component.analyser.message.tcp.netty.NettyClientCommonMessageAnalyser;
-import com.jy.im.base.component.analyser.message.tcp.netty.NettyMessageAnalyser;
-import com.jy.im.base.component.analyser.message.tcp.netty.NettyMessageAnalyserManager;
 import com.jy.im.base.component.decoder.tcp.netty.NettyTcpDecoder;
 import com.jy.im.base.component.initializer.AbstractNettyTcpInitializer;
+import com.jy.im.base.component.translator.tcp.netty.common.impl.CommonLoginResponseMessageTranslator;
+import com.jy.im.base.component.translator.tcp.netty.common.impl.CommonTicketInvalidServerNotificationMessageTranslator;
+import com.jy.im.base.component.translator.tcp.netty.common.impl.CommonUserStringMessageTranslator;
 import com.jy.im.base.component.writer.tcp.netty.NettyCommonLoginRequestMessageWriter;
 import com.jy.im.base.component.writer.tcp.netty.NettyCommonUserStringMessageWriter;
 import com.jy.im.base.component.writer.tcp.netty.NettyMessageWriter;
@@ -21,12 +22,16 @@ import java.util.List;
 
 public class NettyTcpClientInitializer extends AbstractNettyTcpInitializer {
 
-    private final List<NettyMessageAnalyser> nettyMessageAnalyserList;
 
     @Override
     public ByteToMessageDecoder getByteToMessageDecoder() {
-        NettyMessageAnalyserManager analyserManager = new NettyMessageAnalyserManager(nettyMessageAnalyserList);
-        analyserManager.addMessageAnalyser(new NettyClientCommonMessageAnalyser());
+        NettyMessageAnalyserManager analyserManager = new NettyMessageAnalyserManager();
+        NettyClientCommonMessageAnalyser nettyClientCommonMessageAnalyser = new NettyClientCommonMessageAnalyser();
+        //添加消息翻译器
+        nettyClientCommonMessageAnalyser.addMessageTranslator(new CommonLoginResponseMessageTranslator());
+        nettyClientCommonMessageAnalyser.addMessageTranslator(new CommonUserStringMessageTranslator());
+        nettyClientCommonMessageAnalyser.addMessageTranslator(new CommonTicketInvalidServerNotificationMessageTranslator());
+        analyserManager.addMessageAnalyser(nettyClientCommonMessageAnalyser);
         return new NettyTcpDecoder(analyserManager);
     }
 
@@ -48,9 +53,5 @@ public class NettyTcpClientInitializer extends AbstractNettyTcpInitializer {
         List<ChannelInboundHandlerAdapter> channelInboundHandlerAdapters = new ArrayList<>();
         channelInboundHandlerAdapters.add(clientMessageHandler);
         return channelInboundHandlerAdapters;
-    }
-
-    public NettyTcpClientInitializer(List<NettyMessageAnalyser> nettyMessageAnalyserList) {
-        this.nettyMessageAnalyserList = nettyMessageAnalyserList;
     }
 }

@@ -1,7 +1,5 @@
 package com.jy.im.client.tcp.netty;
 
-import com.jy.im.base.component.analyser.message.tcp.netty.NettyClientCommonMessageAnalyser;
-import com.jy.im.base.component.analyser.message.tcp.netty.NettyMessageAnalyser;
 import com.jy.im.base.component.launcher.DefaultLauncher;
 import com.jy.im.client.tcp.netty.initializer.NettyTcpClientInitializer;
 import com.jy.im.common.constants.MessageSource;
@@ -13,7 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class TcpCommonMessageClient {
 
@@ -61,12 +62,10 @@ public class TcpCommonMessageClient {
     }
 
     public boolean connect() {
-        List<NettyMessageAnalyser> nettyMessageAnalyserList = new ArrayList<>();
-        nettyMessageAnalyserList.add(new NettyClientCommonMessageAnalyser());
         //第一次初始化
         if (launcher == null) {
             launcher = new DefaultLauncher();
-            tcpMessageClient = new TcpMessageClient(host, port, new NettyTcpClientInitializer(nettyMessageAnalyserList));
+            tcpMessageClient = new TcpMessageClient(host, port, new NettyTcpClientInitializer());
             launcher.addDaemon(tcpMessageClient);
         }
         launcher.startup();
