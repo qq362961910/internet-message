@@ -3,7 +3,7 @@ package com.jy.im.common.entity;
 import com.jy.im.common.constants.MessageProtocol;
 import com.jy.im.common.constants.MessageType;
 
-public class CommonLoginSuccessResponseMessage extends ResponsiveMessage {
+public class LoginSuccessResponseMessage extends ResponsiveMessage {
 
     private Long userId;
 
@@ -25,7 +25,7 @@ public class CommonLoginSuccessResponseMessage extends ResponsiveMessage {
         this.ticket = ticket;
     }
 
-    public CommonLoginSuccessResponseMessage() {
+    public LoginSuccessResponseMessage() {
         super(MessageProtocol.COMMON, MessageType.SERVER_LOGIN_SUCCESS);
     }
 }

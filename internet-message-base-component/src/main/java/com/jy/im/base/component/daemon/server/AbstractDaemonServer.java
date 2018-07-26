@@ -145,7 +145,12 @@ public abstract class AbstractDaemonServer<Listener extends DaemonListener> impl
     }
 
     @Override
-    public boolean valid() {
-        return serverChannel != null;
+    public String toString() {
+        return String.format("server name: %s, listen port: %d", name, port);
+    }
+
+    @Override
+    public int hashCode() {
+        return port;
     }
 }

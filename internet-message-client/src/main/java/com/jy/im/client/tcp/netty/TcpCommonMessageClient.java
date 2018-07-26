@@ -5,8 +5,8 @@ import com.jy.im.base.component.analyser.message.tcp.netty.NettyMessageAnalyser;
 import com.jy.im.base.component.launcher.DefaultLauncher;
 import com.jy.im.client.tcp.netty.initializer.NettyTcpClientInitializer;
 import com.jy.im.common.constants.MessageSource;
-import com.jy.im.common.entity.CommonLoginRequestMessage;
-import com.jy.im.common.entity.CommonUserStringMessage;
+import com.jy.im.common.entity.LoginRequestMessage;
+import com.jy.im.common.entity.UserStringMessage;
 import com.jy.im.common.util.MessageIdUtil;
 import com.jy.im.common.util.PasswordUtil;
 import io.netty.util.internal.logging.InternalLogger;
@@ -88,7 +88,7 @@ public class TcpCommonMessageClient {
         launcher.close();
     }
     public void sendCommonStringMessage(long userId, String message) {
-        CommonUserStringMessage msg = new CommonUserStringMessage();
+        UserStringMessage msg = new UserStringMessage();
         msg.setContent(message.getBytes());
         msg.setToId(userId);
         msg.setToIdType(MessageSource.USER_ID_TYPE.value);
@@ -101,7 +101,7 @@ public class TcpCommonMessageClient {
             logger.error("[username] is null or [password] is null");
             return;
         }
-        CommonLoginRequestMessage loginMessage = new CommonLoginRequestMessage();
+        LoginRequestMessage loginMessage = new LoginRequestMessage();
         loginMessage.setMessageId(MessageIdUtil.generateLoginMessageId());
         loginMessage.setUserId(userId);
         loginMessage.setPassword(PasswordUtil.encryptPassword(password).getBytes());

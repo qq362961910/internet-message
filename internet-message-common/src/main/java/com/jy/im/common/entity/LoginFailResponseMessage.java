@@ -3,7 +3,7 @@ package com.jy.im.common.entity;
 import com.jy.im.common.constants.MessageProtocol;
 import com.jy.im.common.constants.MessageType;
 
-public class CommonLoginFailResponseMessage extends ResponsiveMessage {
+public class LoginFailResponseMessage extends ResponsiveMessage {
 
     private long userId;
 
@@ -25,7 +25,7 @@ public class CommonLoginFailResponseMessage extends ResponsiveMessage {
         this.password = password;
     }
 
-    public CommonLoginFailResponseMessage() {
+    public LoginFailResponseMessage() {
         super(MessageProtocol.COMMON, MessageType.SERVER_LOGIN_FAIL);
     }
 }

@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * 通用消息
  */
-public class CommonUserStringMessage extends CommonUserMessage {
+public class UserStringMessage extends UserMessage {
 
     /**
      * 消息内容
@@ -22,7 +22,7 @@ public class CommonUserStringMessage extends CommonUserMessage {
         this.content = content;
     }
 
-    public CommonUserStringMessage() {
+    public UserStringMessage() {
         super(MessageType.STRING);
     }
 

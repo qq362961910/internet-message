@@ -10,6 +10,7 @@ import com.jy.im.base.component.writer.tcp.netty.NettyCommonUserStringMessageWri
 import com.jy.im.base.component.writer.tcp.netty.NettyMessageWriter;
 import com.jy.im.client.message.listener.CommonLoginFailResponseMessageListener;
 import com.jy.im.client.message.listener.CommonLoginSuccessResponseMessageListener;
+import com.jy.im.client.message.listener.CommonTicketInvalidServerNotificationMessageListener;
 import com.jy.im.client.message.listener.CommonUserStringMessageListener;
 import com.jy.im.client.tcp.netty.handler.NettyClientBaseMessageHandler;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -43,6 +44,7 @@ public class NettyTcpClientInitializer extends AbstractNettyTcpInitializer {
         clientMessageHandler.addMessageListener(new CommonUserStringMessageListener());
         clientMessageHandler.addMessageListener(new CommonLoginSuccessResponseMessageListener());
         clientMessageHandler.addMessageListener(new CommonLoginFailResponseMessageListener());
+        clientMessageHandler.addMessageListener(new CommonTicketInvalidServerNotificationMessageListener());
         List<ChannelInboundHandlerAdapter> channelInboundHandlerAdapters = new ArrayList<>();
         channelInboundHandlerAdapters.add(clientMessageHandler);
         return channelInboundHandlerAdapters;

@@ -21,7 +21,7 @@ public class DefaultLauncher extends AbstractLauncher {
             long before = System.currentTimeMillis();
             daemonList.forEach(this::startServer);
             //等待直到超时
-            while (serverSuccessCount.get() != daemonList.size()) {
+            while (startedDaemonSet.size() != daemonList.size()) {
                 boolean timeout = System.currentTimeMillis() - before > launcherConfig.getTimeout();
                 if(timeout) {
                     logger.error("Launcher starts timeout!");
@@ -66,16 +66,16 @@ public class DefaultLauncher extends AbstractLauncher {
         if (!daemonList.isEmpty()) {
             logger.info("server to stop list size: {}", daemonList.size());
             daemonList.forEach(this::shutdownServer);
-            while (serverSuccessCount.get() != 0) {
+            while (startedDaemonSet.size() != 0) {
                 try {
                     Thread.sleep(500);
-                    logger.info("alive alive remain: {}", serverSuccessCount.get());
+                    logger.info("alive alive remain: {}", startedDaemonSet.size());
                 } catch (InterruptedException e) { /* do nothing */ }
             }
         }
     }
 
     public boolean isStartUpOk() {
-        return serverSuccessCount.get() == daemonList.size();
+        return startedDaemonSet.size() == daemonList.size();
     }
 }

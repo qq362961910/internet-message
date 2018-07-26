@@ -137,7 +137,7 @@ public abstract class AbstractDaemonClient<Listener extends DaemonListener> impl
     }
 
     @Override
-    public boolean valid() {
-        return clientChannel != null;
+    public String toString() {
+        return String.format("client name: %s, connect host: %s, port: %d", name, host, port);
     }
 }

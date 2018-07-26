@@ -1,10 +1,10 @@
-package com.jy.im.base.component.translator.tcp.netty.common;
+package com.jy.im.base.component.translator.tcp.netty.common.impl;
 
-import com.jy.im.base.component.translator.tcp.netty.NettyCommonResponseMessageTranslator;
+import com.jy.im.base.component.translator.tcp.netty.common.NettyCommonResponseMessageTranslator;
 import com.jy.im.common.constants.CommonMessageCode;
 import com.jy.im.common.constants.MessageType;
-import com.jy.im.common.entity.CommonLoginFailResponseMessage;
-import com.jy.im.common.entity.CommonLoginSuccessResponseMessage;
+import com.jy.im.common.entity.LoginFailResponseMessage;
+import com.jy.im.common.entity.LoginSuccessResponseMessage;
 import io.netty.buffer.ByteBuf;
 
 public class CommonLoginResponseMessageTranslator extends NettyCommonResponseMessageTranslator {
@@ -13,7 +13,7 @@ public class CommonLoginResponseMessageTranslator extends NettyCommonResponseMes
     public Object doTranslate(int messageId, CommonMessageCode code, ByteBuf in) {
         //SUCCESS
         if(CommonMessageCode.SUCCESS == code) {
-            CommonLoginSuccessResponseMessage successResponseMessage = new CommonLoginSuccessResponseMessage();
+            LoginSuccessResponseMessage successResponseMessage = new LoginSuccessResponseMessage();
             successResponseMessage.setMessageId(messageId);
             successResponseMessage.setErrorCode(code);
             //2.user id
@@ -25,7 +25,7 @@ public class CommonLoginResponseMessageTranslator extends NettyCommonResponseMes
             return successResponseMessage;
         } else {
             //FAIL
-            CommonLoginFailResponseMessage failResponseMessage = new CommonLoginFailResponseMessage();
+            LoginFailResponseMessage failResponseMessage = new LoginFailResponseMessage();
             failResponseMessage.setMessageId(messageId);
             failResponseMessage.setErrorCode(code);
             failResponseMessage.setUserId(in.readLong());

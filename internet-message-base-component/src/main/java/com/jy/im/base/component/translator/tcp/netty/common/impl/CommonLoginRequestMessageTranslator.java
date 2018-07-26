@@ -1,8 +1,8 @@
-package com.jy.im.base.component.translator.tcp.netty.common;
+package com.jy.im.base.component.translator.tcp.netty.common.impl;
 
-import com.jy.im.base.component.translator.tcp.netty.NettyCommonRequestMessageTranslator;
+import com.jy.im.base.component.translator.tcp.netty.common.NettyCommonRequestMessageTranslator;
 import com.jy.im.common.constants.MessageType;
-import com.jy.im.common.entity.CommonLoginRequestMessage;
+import com.jy.im.common.entity.LoginRequestMessage;
 import io.netty.buffer.ByteBuf;
 
 public class CommonLoginRequestMessageTranslator extends NettyCommonRequestMessageTranslator {
@@ -17,7 +17,7 @@ public class CommonLoginRequestMessageTranslator extends NettyCommonRequestMessa
         //3.code
         //todo
         //package the message
-        CommonLoginRequestMessage message = new CommonLoginRequestMessage();
+        LoginRequestMessage message = new LoginRequestMessage();
         message.setMessageId(messageId);
         message.setUserId(userId);
         message.setPassword(password);

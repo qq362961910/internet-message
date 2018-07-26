@@ -60,15 +60,16 @@ public enum MessageType {
     /**
      * SERVER LOGOUT FAIL
      */
-    SERVER_LOGOUT_FAIL((byte) -126, "SERVER_LOGOUT_FAIL");
+    SERVER_LOGOUT_FAIL((byte) -126, "SERVER_LOGOUT_FAIL"),
+
+    /**
+     * SERVER_NOTIFICATION
+     * */
+    SERVER_NOTIFICATION((byte)127,"SERVER_NOTIFICATION");
 
 
     public final byte value;
     public final String name;
-
-    public static void main(String[] args) {
-        System.out.println((char) 0xFA);
-    }
 
     public static MessageType getCommonMessageType(byte value) {
         for (MessageType type : values()) {

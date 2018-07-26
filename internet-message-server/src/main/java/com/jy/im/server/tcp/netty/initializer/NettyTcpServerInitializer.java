@@ -2,6 +2,7 @@ package com.jy.im.server.tcp.netty.initializer;
 
 import com.jy.im.base.component.decoder.tcp.netty.NettyTcpDecoder;
 import com.jy.im.base.component.initializer.AbstractNettyTcpInitializer;
+import com.jy.im.base.component.writer.tcp.netty.NettyCommonServerNotificationMessageWriter;
 import com.jy.im.base.component.writer.tcp.netty.NettyMessageWriter;
 import com.jy.im.server.helper.ApplicationContextHelper;
 import com.jy.im.server.tcp.netty.handler.CommonLoginMessageHandler;
@@ -28,6 +29,7 @@ public class NettyTcpServerInitializer extends AbstractNettyTcpInitializer {
         List<NettyMessageWriter> nettyMessageWriters = new ArrayList<>();
         nettyMessageWriters.add(applicationContextHelper.getBean(CommonLoginSuccessResponseMessageWriter.class));
         nettyMessageWriters.add(applicationContextHelper.getBean(CommonLoginFailResponseMessageWriter.class));
+        nettyMessageWriters.add(applicationContextHelper.getBean(NettyCommonServerNotificationMessageWriter.class));
         return nettyMessageWriters;
     }
 

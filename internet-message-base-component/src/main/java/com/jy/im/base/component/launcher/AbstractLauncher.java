@@ -5,13 +5,10 @@ import com.jy.im.base.component.daemon.Daemon;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.Log4JLoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class AbstractLauncher implements Launcher {
 
@@ -22,17 +19,17 @@ public abstract class AbstractLauncher implements Launcher {
      */
     protected volatile boolean stop = false;
     /**
-     * 服务器成功启动数量
-     */
-    protected final AtomicInteger serverSuccessCount = new AtomicInteger(0);
-    /**
      * 服务器实例
      */
     protected final List<Daemon> daemonList = new ArrayList<>();
     /**
+     * 启动实例
+     * */
+    protected final Set<Daemon> startedDaemonSet = Collections.synchronizedSet(new HashSet<>());
+    /**
      * 停机实例
      */
-    protected final List<Daemon> downDaemonList = new Vector<>();
+    protected final List<Daemon> downDaemonList = Collections.synchronizedList(new ArrayList<>());
     /**
      * 启动器监听器
      */
@@ -105,26 +102,16 @@ public abstract class AbstractLauncher implements Launcher {
 
     @Override
     public void daemonStartSuccess(Daemon daemon) {
-        int count;
-        if(daemon.valid()) {
-            count = serverSuccessCount.addAndGet(1);
-        } else {
-            count = serverSuccessCount.get();
-        }
-        logger.info("new daemon started, alive count: {}", count);
+        startedDaemonSet.add(daemon);
+        logger.info("new daemon started, alive count: {}", startedDaemonSet.size());
         //因为server会阻塞线程,所以在这里进行调用afterStart()
         daemon.afterStart();
     }
 
     @Override
     public void daemonShutdownSuccess(Daemon daemon) {
-        int count;
-        if(daemon.valid()) {
-            count = serverSuccessCount.addAndGet(-1);
-        } else {
-            count = serverSuccessCount.get();
-        }
-        logger.info("daemon stopped, alive count: {}", count);
+        startedDaemonSet.remove(daemon);
+        logger.info("daemon stopped, alive count: {}", startedDaemonSet.size());
         downDaemonList.add(daemon);
         daemon.afterShutdown();
     }
