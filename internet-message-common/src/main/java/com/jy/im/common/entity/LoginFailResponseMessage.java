@@ -1,7 +1,7 @@
 package com.jy.im.common.entity;
 
 import com.jy.im.common.constants.MessageProtocol;
-import com.jy.im.common.constants.MessageType;
+import com.jy.im.common.constants.MessageContentType;
 
 public class LoginFailResponseMessage extends ResponsiveMessage {
 
@@ -26,6 +26,6 @@ public class LoginFailResponseMessage extends ResponsiveMessage {
     }
 
     public LoginFailResponseMessage() {
-        super(MessageProtocol.COMMON, MessageType.SERVER_LOGIN_FAIL);
+        super(MessageProtocol.COMMON, MessageContentType.SERVER_LOGIN_FAIL);
     }
 }

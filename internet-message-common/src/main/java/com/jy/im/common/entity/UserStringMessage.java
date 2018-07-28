@@ -1,6 +1,6 @@
 package com.jy.im.common.entity;
 
-import com.jy.im.common.constants.MessageType;
+import com.jy.im.common.constants.MessageContentType;
 
 import java.util.Arrays;
 
@@ -23,7 +23,7 @@ public class UserStringMessage extends UserMessage {
     }
 
     public UserStringMessage() {
-        super(MessageType.STRING);
+        super(MessageContentType.STRING);
     }
 
     @Override

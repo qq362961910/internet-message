@@ -1,7 +1,7 @@
 package com.jy.im.common.entity;
 
 import com.jy.im.common.constants.MessageProtocol;
-import com.jy.im.common.constants.MessageType;
+import com.jy.im.common.constants.MessageContentType;
 
 public class RequestMessage extends BaseMessage {
 
@@ -15,8 +15,8 @@ public class RequestMessage extends BaseMessage {
         this.messageId = messageId;
     }
 
-    public RequestMessage(MessageProtocol protocol, MessageType messageType) {
-        super(protocol, messageType);
+    public RequestMessage(MessageProtocol protocol, MessageContentType messageContentType) {
+        super(protocol, messageContentType);
     }
 
 }

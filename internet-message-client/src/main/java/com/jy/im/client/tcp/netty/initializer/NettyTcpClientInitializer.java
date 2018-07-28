@@ -1,6 +1,7 @@
 package com.jy.im.client.tcp.netty.initializer;
 
 import com.jy.im.base.component.analyser.message.tcp.netty.NettyClientCommonMessageAnalyser;
+import com.jy.im.base.component.analyser.message.tcp.netty.NettyMessageAnalyserManager;
 import com.jy.im.base.component.decoder.tcp.netty.NettyTcpDecoder;
 import com.jy.im.base.component.initializer.AbstractNettyTcpInitializer;
 import com.jy.im.base.component.translator.tcp.netty.common.impl.CommonLoginResponseMessageTranslator;

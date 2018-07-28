@@ -1,7 +1,7 @@
 package com.jy.im.base.component.translator.tcp.netty.common.impl;
 
 import com.jy.im.base.component.translator.tcp.netty.common.NettyCommonMessageTranslator;
-import com.jy.im.common.constants.MessageType;
+import com.jy.im.common.constants.MessageContentType;
 import com.jy.im.common.entity.UserStringMessage;
 import io.netty.buffer.ByteBuf;
 
@@ -27,7 +27,7 @@ public class CommonUserStringMessageTranslator extends NettyCommonMessageTransla
     }
 
     @Override
-    public boolean support(MessageType type) {
-        return MessageType.STRING == type;
+    public boolean support(MessageContentType type) {
+        return MessageContentType.STRING == type;
     }
 }

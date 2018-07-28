@@ -1,6 +1,6 @@
 package com.jy.im.common.constants;
 
-public enum MessageType {
+public enum MessageContentType {
 
     /**
      * STRING
@@ -71,8 +71,8 @@ public enum MessageType {
     public final byte value;
     public final String name;
 
-    public static MessageType getCommonMessageType(byte value) {
-        for (MessageType type : values()) {
+    public static MessageContentType getMessageContentType(byte value) {
+        for (MessageContentType type : values()) {
             if (type.value == value) {
                 return type;
             }
@@ -80,14 +80,14 @@ public enum MessageType {
         return null;
     }
 
-    MessageType(byte value, String name) {
+    MessageContentType(byte value, String name) {
         this.value = value;
         this.name = name;
     }
 
     @Override
     public String toString() {
-        return "MessageType{" +
+        return "MessageContentType{" +
             "value=" + value +
             ", name='" + name + '\'' +
             '}';

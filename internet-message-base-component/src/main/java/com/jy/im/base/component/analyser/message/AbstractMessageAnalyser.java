@@ -3,7 +3,7 @@ package com.jy.im.base.component.analyser.message;
 import com.jy.im.base.component.analyser.protocol.ProtocolAnalyser;
 import com.jy.im.base.component.translator.MessageTranslator;
 import com.jy.im.common.constants.MessageProtocol;
-import com.jy.im.common.constants.MessageType;
+import com.jy.im.common.constants.MessageContentType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +46,9 @@ public abstract class AbstractMessageAnalyser<In> implements MessageAnalyser<In>
         }
     }
 
-    public MessageTranslator<In> getMessageTranslator(MessageProtocol messageProtocol, MessageType messageType) {
+    public MessageTranslator<In> getMessageTranslator(MessageProtocol messageProtocol, MessageContentType messageContentType) {
         for(MessageTranslator<In> messageTranslator: messageTranslators) {
-            if(messageTranslator.supportMessageProtocol() == messageProtocol && messageTranslator.support(messageType)) {
+            if(messageTranslator.supportMessageProtocol() == messageProtocol && messageTranslator.support(messageContentType)) {
                 return messageTranslator;
             }
         }

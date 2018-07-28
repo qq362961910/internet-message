@@ -20,8 +20,8 @@ public abstract class NettyMessageWriter <Entity extends BaseMessage> extends Me
         out.writeZero(lengthBytes);
         //protocol 1 byte
         out.writeByte(msg.getProtocol());
-        //消息类型 1 byte
-        out.writeByte(msg.getMessageType());
+        //消息内容类型 1 byte
+        out.writeByte(msg.getMessageContentType());
         //子类写出数据
         doEncode(ctx, msg, out);
         int endIndex = out.writerIndex();

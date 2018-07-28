@@ -2,7 +2,7 @@ package com.jy.im.common.entity;
 
 import com.jy.im.common.constants.CommonMessageCode;
 import com.jy.im.common.constants.MessageProtocol;
-import com.jy.im.common.constants.MessageType;
+import com.jy.im.common.constants.MessageContentType;
 
 public class ResponsiveMessage extends BaseMessage {
 
@@ -26,7 +26,7 @@ public class ResponsiveMessage extends BaseMessage {
         this.messageId = messageId;
     }
 
-    public ResponsiveMessage(MessageProtocol protocol, MessageType messageType) {
-        super(protocol, messageType);
+    public ResponsiveMessage(MessageProtocol protocol, MessageContentType messageContentType) {
+        super(protocol, messageContentType);
     }
 }

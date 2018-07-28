@@ -1,10 +1,10 @@
 package com.jy.im.base.component.analyser.message.tcp.netty;
 
 import com.jy.im.base.component.exception.NoMessageTranslatorFoundException;
-import com.jy.im.base.component.exception.UnsupportedMessageTypeException;
+import com.jy.im.base.component.exception.UnsupportedMessageContentTypeException;
 import com.jy.im.base.component.translator.MessageTranslator;
 import com.jy.im.common.constants.MessageProtocol;
-import com.jy.im.common.constants.MessageType;
+import com.jy.im.common.constants.MessageContentType;
 import io.netty.buffer.ByteBuf;
 
 /**
@@ -23,17 +23,17 @@ public class NettyCommonMessageAnalyser extends NettyMessageAnalyser {
     }
 
     @Override
-    public Object analyse(ByteBuf in) throws UnsupportedMessageTypeException, NoMessageTranslatorFoundException {
+    public Object analyse(ByteBuf in) throws UnsupportedMessageContentTypeException, NoMessageTranslatorFoundException {
         //消息种类
-        byte messageType = in.readByte();
-        MessageType type = MessageType.getCommonMessageType(messageType);
+        byte messageContentType = in.readByte();
+        MessageContentType type = MessageContentType.getMessageContentType(messageContentType);
         if(type == null) {
-            throw new UnsupportedMessageTypeException("message type: " + messageType);
+            throw new UnsupportedMessageContentTypeException("message content type: " + messageContentType);
         }
         //找到具体消息转换器解析消息
         MessageTranslator<ByteBuf> translator = getMessageTranslator(supportMessageProtocol(), type);
         if(translator == null) {
-            throw new NoMessageTranslatorFoundException("message type: " + messageType);
+            throw new NoMessageTranslatorFoundException("message content type: " + messageContentType);
         }
         return translator.translate(in);
     }

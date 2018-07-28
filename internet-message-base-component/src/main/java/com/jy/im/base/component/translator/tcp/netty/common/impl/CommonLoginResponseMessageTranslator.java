@@ -2,7 +2,7 @@ package com.jy.im.base.component.translator.tcp.netty.common.impl;
 
 import com.jy.im.base.component.translator.tcp.netty.common.NettyCommonResponseMessageTranslator;
 import com.jy.im.common.constants.CommonMessageCode;
-import com.jy.im.common.constants.MessageType;
+import com.jy.im.common.constants.MessageContentType;
 import com.jy.im.common.entity.LoginFailResponseMessage;
 import com.jy.im.common.entity.LoginSuccessResponseMessage;
 import io.netty.buffer.ByteBuf;
@@ -37,8 +37,8 @@ public class CommonLoginResponseMessageTranslator extends NettyCommonResponseMes
     }
 
     @Override
-    public boolean support(MessageType type) {
-        return MessageType.SERVER_LOGIN_SUCCESS == type || MessageType.SERVER_LOGIN_FAIL == type;
+    public boolean support(MessageContentType type) {
+        return MessageContentType.SERVER_LOGIN_SUCCESS == type || MessageContentType.SERVER_LOGIN_FAIL == type;
     }
 
 }

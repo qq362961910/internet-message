@@ -1,7 +1,7 @@
 package com.jy.im.common.entity;
 
 import com.jy.im.common.constants.MessageProtocol;
-import com.jy.im.common.constants.MessageType;
+import com.jy.im.common.constants.MessageContentType;
 
 public class LoginRequestMessage extends RequestMessage {
 
@@ -45,6 +45,6 @@ public class LoginRequestMessage extends RequestMessage {
     }
 
     public LoginRequestMessage() {
-        super(MessageProtocol.COMMON, MessageType.CLIENT_LOGIN);
+        super(MessageProtocol.COMMON, MessageContentType.CLIENT_LOGIN);
     }
 }

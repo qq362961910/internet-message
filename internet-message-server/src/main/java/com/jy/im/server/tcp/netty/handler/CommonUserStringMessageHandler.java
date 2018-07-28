@@ -1,7 +1,7 @@
 package com.jy.im.server.tcp.netty.handler;
 
 import com.jy.im.common.constants.MessageSource;
-import com.jy.im.common.constants.MessageType;
+import com.jy.im.common.constants.MessageContentType;
 import com.jy.im.common.entity.TicketInvalidServerNotificationMessage;
 import com.jy.im.common.entity.UserStringMessage;
 import com.jy.im.service.TicketService;
@@ -19,13 +19,13 @@ public class CommonUserStringMessageHandler extends SimpleChannelInboundHandler<
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, UserStringMessage msg) {
-        logger.info("receive a message, type: {}", MessageType.getCommonMessageType(msg.getMessageType()));
+        logger.info("receive a message, content type: {}", MessageContentType.getMessageContentType(msg.getMessageContentType()));
         logger.info("fromId: {}", msg.getFromId());
         logger.info("toId: {}", msg.getToId());
         logger.info("message content: {}", new String(msg.getContent()));
 
-        //用户消息
-        if (msg.getFromIdType() == MessageSource.USER_ID_TYPE.value) {
+        //用户点对点消息
+        if (msg.getToIdType() == MessageSource.USER_ID_TYPE.value) {
             //ticket检查
             byte[] ticket = msg.getTicket();
             if (ticket == null) {
@@ -44,7 +44,7 @@ public class CommonUserStringMessageHandler extends SimpleChannelInboundHandler<
         }
         //其他消息
         else {
-            logger.error("unhandled message, message type: {}", MessageType.getCommonMessageType(msg.getMessageType()));
+            logger.error("unhandled message, message type: {}", MessageContentType.getMessageContentType(msg.getMessageContentType()));
         }
     }
 

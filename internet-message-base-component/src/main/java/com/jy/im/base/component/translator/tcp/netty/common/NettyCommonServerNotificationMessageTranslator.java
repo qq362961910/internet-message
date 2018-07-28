@@ -1,14 +1,14 @@
 package com.jy.im.base.component.translator.tcp.netty.common;
 
-import com.jy.im.common.constants.MessageType;
+import com.jy.im.common.constants.MessageContentType;
 import com.jy.im.common.constants.ServerNotificationType;
 import io.netty.buffer.ByteBuf;
 
 public abstract class NettyCommonServerNotificationMessageTranslator extends NettyCommonMessageTranslator {
 
     @Override
-    public boolean support(MessageType type) {
-        return MessageType.SERVER_NOTIFICATION == type;
+    public boolean support(MessageContentType type) {
+        return MessageContentType.SERVER_NOTIFICATION == type;
     }
 
     @Override

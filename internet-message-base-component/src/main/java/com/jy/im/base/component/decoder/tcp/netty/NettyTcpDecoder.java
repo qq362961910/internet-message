@@ -4,7 +4,7 @@ import com.jy.im.base.component.analyser.message.MessageAnalyser;
 import com.jy.im.base.component.analyser.message.tcp.netty.NettyMessageAnalyserManager;
 import com.jy.im.base.component.exception.NoMessageAnalyserFoundException;
 import com.jy.im.base.component.exception.NoMessageTranslatorFoundException;
-import com.jy.im.base.component.exception.UnsupportedMessageTypeException;
+import com.jy.im.base.component.exception.UnsupportedMessageContentTypeException;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -73,7 +73,7 @@ public class NettyTcpDecoder extends ByteToMessageDecoder {
                     //reset reader index
                     in.resetReaderIndex();
                 }
-            } catch (UnsupportedMessageTypeException | NoMessageTranslatorFoundException e) {
+            } catch (UnsupportedMessageContentTypeException | NoMessageTranslatorFoundException e) {
                 logger.error("", e);
             }
         }

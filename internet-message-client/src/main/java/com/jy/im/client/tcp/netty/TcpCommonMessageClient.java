@@ -114,7 +114,7 @@ public class TcpCommonMessageClient {
         logger.info("connect result: {}", connectResult);
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            printMessageTypeOpt();
+            printMessageContentTypeOpt();
             String command = scanner.nextLine();
             if ("99".equals(command)) {
                 break;
@@ -141,7 +141,7 @@ public class TcpCommonMessageClient {
         client.shutdown();
     }
 
-    private static void printMessageTypeOpt() {
+    private static void printMessageContentTypeOpt() {
         System.out.println("chose message type: ");
         for(Map.Entry<String, String> entry: options.entrySet()) {
             System.out.println(entry.getKey() + " : " + entry.getValue());

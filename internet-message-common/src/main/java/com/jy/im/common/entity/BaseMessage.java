@@ -1,7 +1,7 @@
 package com.jy.im.common.entity;
 
 import com.jy.im.common.constants.MessageProtocol;
-import com.jy.im.common.constants.MessageType;
+import com.jy.im.common.constants.MessageContentType;
 
 public class BaseMessage {
 
@@ -13,18 +13,18 @@ public class BaseMessage {
      * 消息类型
      * 1 byte
      */
-    protected final byte messageType;
+    protected final byte messageContentType;
 
     public byte getProtocol() {
         return protocol;
     }
 
-    public byte getMessageType() {
-        return messageType;
+    public byte getMessageContentType() {
+        return messageContentType;
     }
 
-    public BaseMessage(MessageProtocol protocol, MessageType messageType) {
+    public BaseMessage(MessageProtocol protocol, MessageContentType messageContentType) {
         this.protocol = protocol.value;
-        this.messageType = messageType.value;
+        this.messageContentType = messageContentType.value;
     }
 }
